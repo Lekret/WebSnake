@@ -29,24 +29,29 @@ namespace WebSnake.Web
                 await Task.Yield();
             }
 
-            var byteArray = ArrayPool<byte>.Shared.Rent(8192);
+            var requestBytes = ArrayPool<byte>.Shared.Rent(8192);
+            var responseBytes = ArrayPool<byte>.Shared.Rent(8192);
 
             try
             {
-                var json = JsonConvert.SerializeObject(data);
-                var bytes = Encoding.UTF8.GetBytes(json);
+                var request = JsonConvert.SerializeObject(data);
+#if UNITY_EDITOR
+                Debug.Log($"Request: {request}");
+#endif
+                var requestBytesCount = Encoding.UTF8.GetBytes(request, requestBytes);
                 await _webSocket.SendAsync(
-                    new ArraySegment<byte>(bytes),
+                    new ArraySegment<byte>(requestBytes, 0, requestBytesCount),
                     WebSocketMessageType.Text,
                     true,
                     _cts.Token);
 
-                var buffer = new ArraySegment<byte>(byteArray);
+                var buffer = new ArraySegment<byte>(responseBytes);
                 using var ms = new MemoryStream();
                 WebSocketReceiveResult result;
+                
                 do
                 {
-                    result = await _webSocket.ReceiveAsync(byteArray, _cts.Token);
+                    result = await _webSocket.ReceiveAsync(responseBytes, _cts.Token);
                     ms.Write(buffer.Array, buffer.Offset, result.Count);
                 } while (!result.EndOfMessage);
 
@@ -62,6 +67,9 @@ namespace WebSnake.Web
                         return;
                     }
 
+#if UNITY_EDITOR
+                    Debug.Log($"Response: {response}");
+#endif
                     _responses.Add(JsonConvert.DeserializeObject(response, responseType));
                 }
                 else
@@ -75,7 +83,8 @@ namespace WebSnake.Web
             }
             finally
             {
-                ArrayPool<byte>.Shared.Return(byteArray);
+                ArrayPool<byte>.Shared.Return(requestBytes);
+                ArrayPool<byte>.Shared.Return(responseBytes);
             }
         }
 

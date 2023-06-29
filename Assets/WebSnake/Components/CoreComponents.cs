@@ -5,6 +5,21 @@ using WebSnake.Web;
 
 namespace WebSnake.Components
 {
+    public struct GameId : IComponentShared
+    {
+        public int Value;
+    }
+    
+    public struct GameLoaded : IStructComponent, IComponentShared
+    {
+        
+    }
+
+    public struct GameLaunched : IStructComponent, IComponentShared
+    {
+        
+    }
+    
     public struct GameWebSocket : IStructCopyable<GameWebSocket>, IComponentDisposable<GameWebSocket>
     {
         public WebSocketWrapper Value;
@@ -25,16 +40,6 @@ namespace WebSnake.Components
         }
     }
 
-    public struct GameId : IComponentShared
-    {
-        public int Value;
-    }
-
-    public struct CollectedApplesCount : IComponentShared
-    {
-        public int Value;
-    }
-
     public struct SendRequest : IStructCopyable<SendRequest>
     {
         public object Data;
@@ -53,24 +58,14 @@ namespace WebSnake.Components
         }
     }
 
-    public struct ReceivedResponse : IComponentOneShot
+    public struct CollectedApplesCount : IComponentShared
     {
-        public string Value;
+        public int Value;
     }
-
-    public struct GenerateGrid : IComponentOneShot
+    
+    public struct GenerateGrid : IComponentShared, IComponentOneShot
     {
         public int Width;
         public int Height;
-    }
-
-    public struct GameLoaded : IComponentShared
-    {
-        
-    }
-
-    public struct GameLaunched : IStructComponent, IComponentShared
-    {
-        
     }
 }

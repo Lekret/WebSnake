@@ -7,7 +7,7 @@ namespace WebSnake.Systems
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
 #endif
-    public sealed class SnakeMovementSystem : ISystem, IUpdate
+    public sealed class SnakeMovementSystem : ISystem, IAdvanceTick
     {
         public Filter Filter;
 
@@ -22,7 +22,7 @@ namespace WebSnake.Systems
         {
         }
 
-        public void Update(in float deltaTime)
+        public void AdvanceTick(in float deltaTime)
         {
             
         }

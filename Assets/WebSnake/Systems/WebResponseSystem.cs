@@ -11,19 +11,19 @@ namespace WebSnake.Systems
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
 #endif
-    public class WebResponseSystem : ISystem, IUpdate
+    public class WebResponseSystem : ISystem, IAdvanceTick
     {
         public World world { get; set; }
 
-        public void OnConstruct()
+        void ISystemBase.OnConstruct()
         {
         }
 
-        public void OnDeconstruct()
+        void ISystemBase.OnDeconstruct()
         {
         }
 
-        public void Update(in float deltaTime)
+        void IAdvanceTick.AdvanceTick(in float deltaTime)
         {
             if (!world.HasSharedData<GameWebSocket>())
                 return;
@@ -31,9 +31,12 @@ namespace WebSnake.Systems
             var webSocket = world.ReadSharedData<GameWebSocket>();
             while (webSocket.Value.TryRead(out CreateGameResponse createGameResponse))
             {
-#if UNITY_EDITOR
-                Debug.Log($"CreateGameResponse: {JsonConvert.SerializeObject(createGameResponse)}");
-#endif
+                world.SetSharedDataOneShot(new GenerateGrid
+                {
+                    Width = 32,
+                    Height = 32
+                });
+                world.SetSharedData(new GameLoaded());
             }
 
             while (webSocket.Value.TryRead(out EndGameResponse endGameResponse))

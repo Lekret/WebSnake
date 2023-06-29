@@ -14,18 +14,18 @@ namespace WebSnake.Systems
         public Filter Filter;
         
         public World world { get; set; }
-        
-        public void OnConstruct()
+
+        void ISystemBase.OnConstruct()
         {
             Filter.Create("Filter-WebRequestSystem").With<SendRequest>().Push(ref Filter);
         }
 
-        public void OnDeconstruct()
+        void ISystemBase.OnDeconstruct()
         {
             
         }
 
-        public void AdvanceTick(in float deltaTime)
+        void IAdvanceTick.AdvanceTick(in float deltaTime)
         {
             if (!world.HasSharedData<GameWebSocket>())
                 return;

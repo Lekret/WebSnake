@@ -18,8 +18,7 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GameWebSocket>(false, false, false, false, true, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SendRequest>(false, false, false, false, true, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Died>(true, false, false, false, false, false, false, false, true);
-            WorldUtilities.InitComponentTypeId<WebSnake.Components.GenerateGrid>(false, false, false, false, false, false, false, false, true);
-            WorldUtilities.InitComponentTypeId<WebSnake.Components.ReceivedResponse>(false, false, false, false, false, false, false, false, true);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.GenerateGrid>(false, false, false, false, false, false, false, true, true);
 
         }
 
@@ -39,8 +38,7 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GameWebSocket>(false, false, false, false, true, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SendRequest>(false, false, false, false, true, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Died>(true, false, false, false, false, false, false, false, true);
-            WorldUtilities.InitComponentTypeId<WebSnake.Components.GenerateGrid>(false, false, false, false, false, false, false, false, true);
-            WorldUtilities.InitComponentTypeId<WebSnake.Components.ReceivedResponse>(false, false, false, false, false, false, false, false, true);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.GenerateGrid>(false, false, false, false, false, false, false, true, true);
 
             ComponentsInitializerWorld.Setup(ComponentsInitializerWorldGen.Init);
             CoreComponentsInitializer.Init(state, ref noState);
@@ -56,7 +54,6 @@ namespace ME.ECS {
             state.structComponents.ValidateCopyable<WebSnake.Components.SendRequest>(false);
             noState.storage.ValidateOneShot<WebSnake.Components.Died>(true);
             noState.storage.ValidateOneShot<WebSnake.Components.GenerateGrid>(false);
-            noState.storage.ValidateOneShot<WebSnake.Components.ReceivedResponse>(false);
 
         }
 
@@ -77,7 +74,6 @@ namespace ME.ECS {
             entity.ValidateDataCopyable<WebSnake.Components.SendRequest>(false);
             entity.ValidateDataOneShot<WebSnake.Components.Died>(true);
             entity.ValidateDataOneShot<WebSnake.Components.GenerateGrid>(false);
-            entity.ValidateDataOneShot<WebSnake.Components.ReceivedResponse>(false);
 
         }
 

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using ME.ECS;
+﻿using ME.ECS;
 using UnityEngine;
 using WebSnake.Systems;
 
@@ -13,6 +12,8 @@ namespace WebSnake.Features
     [CreateAssetMenu(menuName = "Features/" + nameof(GameplayFeature), fileName = nameof(GameplayFeature))]
     public sealed class GameplayFeature : Feature
     {
+        public GameObject CellPrefab;
+
         protected override void OnConstruct()
         {
             AddSystem<StartupSystem>();
