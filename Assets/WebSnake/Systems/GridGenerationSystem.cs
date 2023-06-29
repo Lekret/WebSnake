@@ -12,18 +12,14 @@ namespace WebSnake.Systems
 #endif
     public sealed class GridGenerationSystem : ISystem, IAdvanceTick
     {
-        public Filter Filter;
-
         public World world { get; set; }
 
         void ISystemBase.OnConstruct()
         {
-            Filter.Create("Filter-GridGenerationSystem").With<GenerateGrid>().Push(ref Filter);
         }
 
         void ISystemBase.OnDeconstruct()
         {
-            
         }
         
         public void AdvanceTick(in float deltaTime)
