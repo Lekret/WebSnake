@@ -1,10 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Net.WebSockets;
-using System.Text;
-using System.Threading;
-using ME.ECS;
-using UnityEngine;
+﻿using ME.ECS;
 using WebSnake.Components;
 using WebSnake.Web;
 

@@ -1,4 +1,6 @@
 ﻿using ME.ECS;
+using ME.ECS.Views;
+using ME.ECS.Views.Providers;
 using UnityEngine;
 using WebSnake.Systems;
 
@@ -13,14 +15,20 @@ namespace WebSnake.Features
     public sealed class GameplayFeature : Feature
     {
         public GameObject CellPrefab;
+        public MonoBehaviourViewBase SnakeView;
 
+        public ViewId SnakeViewId { get; private set; }
+        
         protected override void OnConstruct()
         {
+            AddModule<ViewsModule>();
             AddSystem<StartupSystem>();
-            AddSystem<WebResponseSystem>();
+            AddSystem<GameFlowWebResponseSystem>();
             AddSystem<GridGenerationSystem>();
+            AddSystem<SnakeSpawnSystem>();
             AddSystem<SnakeMovementSystem>();
             AddSystem<WebRequestSystem>();
+            SnakeViewId = world.RegisterViewSource(SnakeView);
         }
 
         protected override void OnDeconstruct()

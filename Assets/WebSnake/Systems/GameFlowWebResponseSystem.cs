@@ -1,8 +1,9 @@
 ﻿using ME.ECS;
+using Newtonsoft.Json;
 using UnityEngine;
 using WebSnake.Components;
 using WebSnake.Features;
-using Grid = WebSnake.Components.Grid;
+using WebSnake.Web;
 
 namespace WebSnake.Systems
 {
@@ -11,7 +12,7 @@ namespace WebSnake.Systems
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
 #endif
-    public sealed class GridGenerationSystem : ISystem, IAdvanceTick
+    public class GameFlowWebResponseSystem : ISystem, IAdvanceTick
     {
         public World world { get; set; }
 
@@ -25,36 +26,27 @@ namespace WebSnake.Systems
 
         void IAdvanceTick.AdvanceTick(in float deltaTime)
         {
-            if (!world.HasSharedDataOneShot<GenerateGrid>())
+            if (!world.HasSharedData<GameWebSocket>())
                 return;
 
             var gameplayFeature = world.GetFeature<GameplayFeature>();
             if (!gameplayFeature)
                 return;
-
-            var generateGrid = world.GetSharedDataOneShot<GenerateGrid>();
-
-            world.AddEntity()
-                .Set<Grid>()
-                .Set(new GridSize
-                {
-                    Width = generateGrid.Width,
-                    Height = generateGrid.Height
-                });
-
-            Transform cellsParent = null;
-#if UNITY_EDITOR
-            cellsParent = new GameObject("CellsParent").transform;
-#endif
             
-            for (var x = 0; x < generateGrid.Width; x++)
+            var webSocket = world.ReadSharedData<GameWebSocket>();
+            while (webSocket.Value.TryRead(out CreateGameResponse createGameResponse))
             {
-                for (var z = 0; z < generateGrid.Height; z++)
+                world.SetSharedDataOneShot(new GenerateGrid
                 {
-                    var spawnPosition = new Vector3(x, 0, z);
+                    Width = 32,
+                    Height = 32
+                });
+                world.SetSharedData(new GameLoaded());
+                world.SetSharedDataOneShot(new SpawnSnake());
+            }
 
-                    Object.Instantiate(gameplayFeature.CellPrefab, spawnPosition, Quaternion.identity, cellsParent);
-                }
+            while (webSocket.Value.TryRead(out EndGameResponse endGameResponse))
+            {
             }
         }
     }

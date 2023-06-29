@@ -22,7 +22,7 @@ namespace WebSnake.Systems
         {
         }
 
-        public void AdvanceTick(in float deltaTime)
+        void IAdvanceTick.AdvanceTick(in float deltaTime)
         {
             
         }

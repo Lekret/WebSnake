@@ -1,29 +1,27 @@
 ﻿using ME.ECS;
+using UnityEngine;
+using WebSnake.Components;
 
-namespace WebSnake.Views {
-    
+namespace WebSnake.Views
+{
     using ME.ECS.Views.Providers;
-    
-    public class SnakeView : MonoBehaviourView {
-        
-        public override bool applyStateJob => false;
 
-        public override void OnInitialize() {
-            
+    public class SnakeView : MonoBehaviourView
+    {
+        public override bool applyStateJob => false;
+        
+        public override void OnInitialize()
+        {
+            Debug.Log($"Snake View Created: {entity}");
+        }
+
+        public override void OnDeInitialize()
+        {
         }
         
-        public override void OnDeInitialize() {
-            
+        public override void ApplyState(float deltaTime, bool immediately)
+        {
+            transform.position = entity.Read<Position>().Value;
         }
-        
-        public override void ApplyStateJob(UnityEngine.Jobs.TransformAccess transform, float deltaTime, bool immediately) {
-            
-        }
-        
-        public override void ApplyState(float deltaTime, bool immediately) {
-            
-        }
-        
     }
-    
 }

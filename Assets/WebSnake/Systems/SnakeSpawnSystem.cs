@@ -1,8 +1,6 @@
 ﻿using ME.ECS;
-using Newtonsoft.Json;
-using UnityEngine;
 using WebSnake.Components;
-using WebSnake.Web;
+using WebSnake.Features;
 
 namespace WebSnake.Systems
 {
@@ -11,7 +9,7 @@ namespace WebSnake.Systems
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
 #endif
-    public class WebResponseSystem : ISystem, IAdvanceTick
+    public class SnakeSpawnSystem : ISystem, IAdvanceTick
     {
         public World world { get; set; }
 
@@ -25,23 +23,18 @@ namespace WebSnake.Systems
 
         void IAdvanceTick.AdvanceTick(in float deltaTime)
         {
-            if (!world.HasSharedData<GameWebSocket>())
+            if (!world.HasSharedDataOneShot<SpawnSnake>())
                 return;
 
-            var webSocket = world.ReadSharedData<GameWebSocket>();
-            while (webSocket.Value.TryRead(out CreateGameResponse createGameResponse))
-            {
-                world.SetSharedDataOneShot(new GenerateGrid
-                {
-                    Width = 32,
-                    Height = 32
-                });
-                world.SetSharedData(new GameLoaded());
-            }
-
-            while (webSocket.Value.TryRead(out EndGameResponse endGameResponse))
-            {
-            }
+            var gameplayFeature = world.GetFeature<GameplayFeature>();
+            if (!gameplayFeature)
+                return;
+            
+            var snakeEntity = world.AddEntity("Snake")
+                .Set<SnakeTag>()
+                .Set<Position>()
+                .Set<Rotation>();
+            world.InstantiateView(gameplayFeature.SnakeViewId, snakeEntity);
         }
     }
 }
