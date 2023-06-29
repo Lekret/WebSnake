@@ -1,0 +1,19 @@
+{
+    "name": "WebSnake",
+    "rootNamespace": "",
+    "references": [
+        "ME.ECS",
+        "ME.Pools",
+        "ME.ECS.Serializer",
+        "ME.ECS.IL2CPP"
+        
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}
