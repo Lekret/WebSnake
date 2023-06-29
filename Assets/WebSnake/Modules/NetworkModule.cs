@@ -11,31 +11,26 @@ namespace WebSnake.Modules {
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
     #endif
-    public sealed class NetworkModule : ME.ECS.Network.NetworkModule<TState> {
-
-        protected override int GetRPCOrder() {
-
+    public sealed class NetworkModule : ME.ECS.Network.NetworkModule<TState>
+    {
+        protected override int GetRPCOrder() 
+        {
             // Order all RPC packages by world id
             return this.world.id;
-
         }
 
-        protected override ME.ECS.Network.NetworkType GetNetworkType() {
-            
+        protected override ME.ECS.Network.NetworkType GetNetworkType() 
+        {
             // Initialize network with RunLocal and SendToNet
             return ME.ECS.Network.NetworkType.SendToNet | ME.ECS.Network.NetworkType.RunLocal;
-            
         }
 
-        protected override void OnInitialize() {
-
+        protected override void OnInitialize() 
+        {
             // TODO: Set your transport layer and serializer
             // var instance = (ME.ECS.Network.INetworkModuleBase)this;
             // instance.SetTransporter(new CustomTransport()); // ITransporter
             // instance.SetSerializer(new CustomSerializer()); // ISerializer
-
         }
-
     }
-    
 }
