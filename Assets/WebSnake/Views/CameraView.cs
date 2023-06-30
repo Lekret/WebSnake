@@ -1,17 +1,16 @@
 ﻿using ME.ECS;
 using ME.ECS.Views.Providers;
-using UnityEngine;
 using WebSnake.Components;
 
 namespace WebSnake.Views
 {
-    public class SnakeView : MonoBehaviourView
+    public class CameraView : MonoBehaviourView
     {
         public override bool applyStateJob => false;
         
         public override void OnInitialize()
         {
-            Debug.Log($"Snake View Created: {entity}");
+            
         }
 
         public override void OnDeInitialize()

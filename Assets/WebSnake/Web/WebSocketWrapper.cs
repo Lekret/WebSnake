@@ -11,11 +11,11 @@ using UnityEngine;
 
 namespace WebSnake.Web
 {
-    public class WebSocketWrapper : IDisposable
+    public class WebSocketWrapper : IGameWebSocket
     {
         private readonly CancellationTokenSource _cts = new();
         private readonly ClientWebSocket _webSocket = new();
-        private readonly List<object> _responses = new();
+        private readonly Dictionary<Type, Queue<object>> _responsesMap = new();
 
         public async void Connect(string uri)
         {
@@ -70,7 +70,8 @@ namespace WebSnake.Web
 #if UNITY_EDITOR
                     Debug.Log($"Response: {response}");
 #endif
-                    _responses.Add(JsonConvert.DeserializeObject(response, responseType));
+                    var responses = GetResponsesOfType(responseType);
+                    responses.Enqueue(JsonConvert.DeserializeObject(response, responseType));
                 }
                 else
                 {
@@ -90,13 +91,10 @@ namespace WebSnake.Web
 
         public bool TryRead<T>(out T data)
         {
-            for (var i = 0; i < _responses.Count; i++)
+            var responses = _responsesMap[typeof(T)];
+            if (responses.TryDequeue(out var rawData))
             {
-                if (_responses[i].GetType() != typeof(T))
-                    continue;
-
-                data = (T) _responses[i];
-                _responses.RemoveAt(i);
+                data = (T) rawData;
                 return true;
             }
 
@@ -108,6 +106,17 @@ namespace WebSnake.Web
         {
             _cts?.Dispose();
             _webSocket?.Dispose();
+        }
+
+        private Queue<object> GetResponsesOfType(Type type)
+        {
+            if (!_responsesMap.TryGetValue(type, out var result))
+            {
+                result = new Queue<object>();
+                _responsesMap.Add(type, result);
+            }
+
+            return result;
         }
     }
 }

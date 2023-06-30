@@ -1,5 +1,6 @@
 ﻿using ME.ECS;
 using WebSnake.Components;
+using WebSnake.Web;
 
 namespace WebSnake.Systems
 {
@@ -8,15 +9,12 @@ namespace WebSnake.Systems
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
 #endif
-    public sealed class WebRequestSystem : ISystem, IAdvanceTick
+    public sealed class GameEndedSystem : ISystem, IAdvanceTick
     {
-        private Filter _filter;
-
         public World world { get; set; }
 
         void ISystemBase.OnConstruct()
         {
-            _filter = Filter.Create("Filter-WebRequestSystem").With<SendRequest>().Push();
         }
 
         void ISystemBase.OnDeconstruct()
@@ -28,14 +26,16 @@ namespace WebSnake.Systems
             if (!world.HasSharedData<GameWebSocket>())
                 return;
 
-            var socket = world.ReadSharedData<GameWebSocket>();
-
-            foreach (var entity in _filter)
+            var webSocket = world.ReadSharedData<GameWebSocket>();
+            while (webSocket.Value.TryRead(out EndGameResponse response))
             {
-                var sendRequest = entity.Read<SendRequest>();
-                socket.Value.SendData(sendRequest.Data, sendRequest.ResponseType);
-                entity.Remove<SendRequest>();
+                EndGame(response);
             }
+        }
+
+        private void EndGame(EndGameResponse response)
+        {
+            
         }
     }
 }

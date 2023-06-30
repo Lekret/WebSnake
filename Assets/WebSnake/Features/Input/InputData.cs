@@ -2,7 +2,7 @@
 
 namespace WebSnake.Features.Input
 {
-    public struct SnakeInput
+    public struct InputData
     {
         public Vector2 MovementDirection;
     }

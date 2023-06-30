@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace WebSnake.Components
 {
-    public struct GameId : IComponentShared
+    public struct GameId : IStructComponent, IComponentShared
     {
         public int Value;
     }
@@ -16,11 +16,7 @@ namespace WebSnake.Components
     {
     }
 
-    public struct CameraTag
-    {
-    }
-
-    public struct CollectedApplesCount : IComponentShared
+    public struct CollectedApplesCount : IStructComponent, IComponentShared
     {
         public int Value;
     }

@@ -1,9 +1,6 @@
 ﻿using ME.ECS;
 using UnityEngine;
-using WebSnake.Components;
-using WebSnake.Features;
 using WebSnake.Features.Input;
-using WebSnake.Markers;
 
 namespace WebSnake.Systems
 {
@@ -12,7 +9,7 @@ namespace WebSnake.Systems
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
 #endif
-    public class PlayerInputSystem : ISystem, IUpdate
+    public sealed class PlayerInputSystem : ISystem, IUpdate
     {
         public World world { get; set; }
 
@@ -26,8 +23,8 @@ namespace WebSnake.Systems
 
         void IUpdate.Update(in float deltaTime)
         {
-            var gameplayFeature = world.GetFeature<GameplayFeature>();
-            if (!gameplayFeature)
+            var inputFeature = world.GetFeature<InputFeature>();
+            if (!inputFeature)
                 return;
 
             var direction = Vector2.zero;
@@ -46,7 +43,7 @@ namespace WebSnake.Systems
             if (direction == Vector2.zero)
                 return;
 
-            gameplayFeature.SnakeInput = new SnakeInput
+            inputFeature.InputData = new InputData
             {
                 MovementDirection = direction
             };

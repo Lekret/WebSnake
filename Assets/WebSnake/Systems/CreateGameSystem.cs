@@ -9,25 +9,23 @@ namespace WebSnake.Systems
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
 #endif
-    public sealed class StartupSystem : ISystem, IAdvanceTick
+    public sealed class CreateGameSystem : ISystem, IAdvanceTick
     {
         public World world { get; set; }
 
         void ISystemBase.OnConstruct()
         {
-            
         }
 
         void ISystemBase.OnDeconstruct()
         {
-            
         }
 
         void IAdvanceTick.AdvanceTick(in float deltaTime)
         {
             if (world.HasSharedData<GameLaunched>())
                 return;
-            
+
             var webSocket = new WebSocketWrapper();
             webSocket.Connect("wss://dev.match.qubixinfinity.io/snake");
             world.SetSharedData(new GameWebSocket {Value = webSocket});

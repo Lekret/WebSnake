@@ -1,7 +1,7 @@
 ﻿using ME.ECS;
 using UnityEngine;
 using WebSnake.Components;
-using WebSnake.Features;
+using WebSnake.Features.Gameplay;
 using Grid = WebSnake.Components.Grid;
 
 namespace WebSnake.Systems
@@ -48,13 +48,14 @@ namespace WebSnake.Systems
 #endif
 
             for (var x = 0; x < generateGrid.Width; x++)
+            for (var z = 0; z < generateGrid.Height; z++)
             {
-                for (var z = 0; z < generateGrid.Height; z++)
-                {
-                    var spawnPosition = new Vector3(x, 0, z);
-
-                    Object.Instantiate(gameplayFeature.CellPrefab, spawnPosition, Quaternion.identity, cellsParent);
-                }
+                var spawnPosition = new Vector3(x, 0, z);
+                Object.Instantiate(
+                    gameplayFeature.CellPrefab,
+                    spawnPosition,
+                    Quaternion.identity,
+                    cellsParent);
             }
         }
     }

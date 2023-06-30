@@ -1,8 +1,7 @@
 ﻿using ME.ECS;
 using UnityEngine;
 using WebSnake.Components;
-using WebSnake.Features;
-using WebSnake.Markers;
+using WebSnake.Features.Input;
 
 namespace WebSnake.Systems
 {
@@ -36,9 +35,7 @@ namespace WebSnake.Systems
                 ref var currentDirection = ref entity.Get<MovementDirection>();
                 if (worldInputDirection != Vector3.zero &&
                     Mathf.Approximately(Vector3.Dot(currentDirection.Value, worldInputDirection), 0))
-                {
                     currentDirection.Value = worldInputDirection;
-                }
 
                 var speed = entity.Read<Speed>();
                 ref var position = ref entity.Get<Position>();
@@ -48,10 +45,10 @@ namespace WebSnake.Systems
 
         private Vector2 ReadDirectionInput()
         {
-            var gameplayFeature = world.GetFeature<GameplayFeature>();
-            if (gameplayFeature)
-                return gameplayFeature.SnakeInput.MovementDirection;
-            
+            var inputFeature = world.GetFeature<InputFeature>();
+            if (inputFeature)
+                return inputFeature.InputData.MovementDirection;
+
             return Vector2.zero;
         }
     }

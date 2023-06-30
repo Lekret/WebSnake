@@ -7,7 +7,7 @@ namespace WebSnake.Components
 {
     public struct GameWebSocket : IStructCopyable<GameWebSocket>, IComponentDisposable<GameWebSocket>
     {
-        public WebSocketWrapper Value;
+        public IGameWebSocket Value;
 
         public void CopyFrom(in GameWebSocket other) => Value = other.Value;
 
