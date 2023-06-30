@@ -15,16 +15,13 @@ namespace WebSnake.Systems
     public class PlayerInputSystem : ISystem, IUpdate
     {
         public World world { get; set; }
-        
 
         void ISystemBase.OnConstruct()
         {
-  
         }
 
         void ISystemBase.OnDeconstruct()
         {
-            
         }
 
         void IUpdate.Update(in float deltaTime)
@@ -36,13 +33,13 @@ namespace WebSnake.Systems
             var direction = Vector2.zero;
             if (Input.GetKeyDown(KeyCode.W))
                 direction.y += 1;
-            
+
             if (Input.GetKeyDown(KeyCode.S))
                 direction.y -= 1;
-            
+
             if (Input.GetKeyDown(KeyCode.A))
                 direction.x -= 1;
-  
+
             if (Input.GetKeyDown(KeyCode.D))
                 direction.x += 1;
 

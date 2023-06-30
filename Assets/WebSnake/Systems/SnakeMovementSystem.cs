@@ -13,13 +13,13 @@ namespace WebSnake.Systems
 #endif
     public sealed class SnakeMovementSystem : ISystem, IAdvanceTick
     {
-        public Filter SnakeFilter;
+        private Filter _snakeFilter;
 
         public World world { get; set; }
 
         void ISystemBase.OnConstruct()
         {
-            SnakeFilter = Filter.Create("SnakeFilter-SnakeMovementSystem").With<SnakeTag>().Push();
+            _snakeFilter = Filter.Create("SnakeFilter-SnakeMovementSystem").With<SnakeTag>().Push();
         }
 
         void ISystemBase.OnDeconstruct()
@@ -31,7 +31,7 @@ namespace WebSnake.Systems
             var directionInput = ReadDirectionInput();
             var worldInputDirection = new Vector3(directionInput.x, 0, directionInput.y);
 
-            foreach (var entity in SnakeFilter)
+            foreach (var entity in _snakeFilter)
             {
                 ref var currentDirection = ref entity.Get<MovementDirection>();
                 if (worldInputDirection != Vector3.zero &&

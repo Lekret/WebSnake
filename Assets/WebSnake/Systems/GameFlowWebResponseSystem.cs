@@ -32,7 +32,7 @@ namespace WebSnake.Systems
             var gameplayFeature = world.GetFeature<GameplayFeature>();
             if (!gameplayFeature)
                 return;
-            
+
             var webSocket = world.ReadSharedData<GameWebSocket>();
             while (webSocket.Value.TryRead(out CreateGameResponse createGameResponse))
             {

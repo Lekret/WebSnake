@@ -46,7 +46,7 @@ namespace WebSnake.Systems
 #if UNITY_EDITOR
             cellsParent = new GameObject("CellsParent").transform;
 #endif
-            
+
             for (var x = 0; x < generateGrid.Width; x++)
             {
                 for (var z = 0; z < generateGrid.Height; z++)
