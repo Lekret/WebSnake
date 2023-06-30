@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace WebSnake.Components
 {
-    public struct SpawnSnake : IComponentShared, IComponentOneShot
+    public struct SpawnSnake : IComponentOneShot
     {
     }
 
@@ -13,7 +13,12 @@ namespace WebSnake.Components
 
     public struct MovementDirection : IStructComponent
     {
-        public Vector2 Value;
+        public Vector3 Value;
+    }
+    
+    public struct Speed : IStructComponent
+    {
+        public float Value;
     }
 
     public struct BodyLength : IStructComponent

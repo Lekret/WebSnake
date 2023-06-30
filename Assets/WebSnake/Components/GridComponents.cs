@@ -2,7 +2,7 @@
 
 namespace WebSnake.Components
 {
-    public struct GenerateGrid : IStructComponent, IComponentShared, IComponentOneShot
+    public struct GenerateGrid : IComponentShared, IComponentOneShot
     {
         public int Width;
         public int Height;

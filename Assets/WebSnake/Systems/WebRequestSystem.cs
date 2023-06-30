@@ -17,7 +17,7 @@ namespace WebSnake.Systems
 
         void ISystemBase.OnConstruct()
         {
-            Filter.Create("Filter-WebRequestSystem").With<SendRequest>().Push(ref Filter);
+            Filter = Filter.Create("Filter-WebRequestSystem").With<SendRequest>().Push();
         }
 
         void ISystemBase.OnDeconstruct()

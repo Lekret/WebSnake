@@ -6,7 +6,8 @@
         "ME.Pools",
         "ME.ECS.Serializer",
         "ME.ECS.IL2CPP",
-        "Unity.Collections"
+        "Unity.Collections",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

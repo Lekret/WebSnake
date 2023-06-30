@@ -22,12 +22,15 @@ namespace WebSnake.Features
         protected override void OnConstruct()
         {
             AddModule<ViewsModule>();
+            
+            AddSystem<PlayerInputSystem>();
             AddSystem<StartupSystem>();
             AddSystem<GameFlowWebResponseSystem>();
             AddSystem<GridGenerationSystem>();
             AddSystem<SnakeSpawnSystem>();
             AddSystem<SnakeMovementSystem>();
             AddSystem<WebRequestSystem>();
+            
             SnakeViewId = world.RegisterViewSource(SnakeView);
         }
 

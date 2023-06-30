@@ -16,6 +16,7 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.MovementDirection>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Position>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Rotation>(false, true, true, false, false, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.Speed>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GameLaunched>(true, true, true, false, false, false, false, true, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GameLoaded>(true, true, true, false, false, false, false, true, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Grid>(true, true, true, false, false, false, false, false, false);
@@ -24,7 +25,8 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SendRequest>(false, false, false, false, true, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Died>(true, false, false, false, false, false, false, false, true);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GenerateGrid>(false, false, false, false, false, false, false, true, true);
-            WorldUtilities.InitComponentTypeId<WebSnake.Components.SpawnSnake>(true, false, false, false, false, false, false, true, true);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.MovementDirectionInput>(false, false, false, false, false, false, false, false, true);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.SpawnSnake>(true, false, false, false, false, false, false, false, true);
 
         }
 
@@ -42,6 +44,7 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.MovementDirection>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Position>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Rotation>(false, true, true, false, false, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.Speed>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GameLaunched>(true, true, true, false, false, false, false, true, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GameLoaded>(true, true, true, false, false, false, false, true, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Grid>(true, true, true, false, false, false, false, false, false);
@@ -50,7 +53,8 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SendRequest>(false, false, false, false, true, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Died>(true, false, false, false, false, false, false, false, true);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GenerateGrid>(false, false, false, false, false, false, false, true, true);
-            WorldUtilities.InitComponentTypeId<WebSnake.Components.SpawnSnake>(true, false, false, false, false, false, false, true, true);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.MovementDirectionInput>(false, false, false, false, false, false, false, false, true);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.SpawnSnake>(true, false, false, false, false, false, false, false, true);
 
             ComponentsInitializerWorld.Setup(ComponentsInitializerWorldGen.Init);
             CoreComponentsInitializer.Init(state, ref noState);
@@ -63,6 +67,7 @@ namespace ME.ECS {
             state.structComponents.ValidateUnmanaged<WebSnake.Components.MovementDirection>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.Position>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.Rotation>(ref state.allocator, false);
+            state.structComponents.ValidateUnmanaged<WebSnake.Components.Speed>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.GameLaunched>(ref state.allocator, true);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.GameLoaded>(ref state.allocator, true);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.Grid>(ref state.allocator, true);
@@ -71,6 +76,7 @@ namespace ME.ECS {
             state.structComponents.ValidateCopyable<WebSnake.Components.SendRequest>(false);
             noState.storage.ValidateOneShot<WebSnake.Components.Died>(true);
             noState.storage.ValidateOneShot<WebSnake.Components.GenerateGrid>(false);
+            noState.storage.ValidateOneShot<WebSnake.Components.MovementDirectionInput>(false);
             noState.storage.ValidateOneShot<WebSnake.Components.SpawnSnake>(true);
 
         }
@@ -89,6 +95,7 @@ namespace ME.ECS {
             entity.ValidateDataUnmanaged<WebSnake.Components.MovementDirection>(false);
             entity.ValidateDataUnmanaged<WebSnake.Components.Position>(false);
             entity.ValidateDataUnmanaged<WebSnake.Components.Rotation>(false);
+            entity.ValidateDataUnmanaged<WebSnake.Components.Speed>(false);
             entity.ValidateDataUnmanaged<WebSnake.Components.GameLaunched>(true);
             entity.ValidateDataUnmanaged<WebSnake.Components.GameLoaded>(true);
             entity.ValidateDataUnmanaged<WebSnake.Components.Grid>(true);
@@ -97,6 +104,7 @@ namespace ME.ECS {
             entity.ValidateDataCopyable<WebSnake.Components.SendRequest>(false);
             entity.ValidateDataOneShot<WebSnake.Components.Died>(true);
             entity.ValidateDataOneShot<WebSnake.Components.GenerateGrid>(false);
+            entity.ValidateDataOneShot<WebSnake.Components.MovementDirectionInput>(false);
             entity.ValidateDataOneShot<WebSnake.Components.SpawnSnake>(true);
 
         }

@@ -1,7 +1,6 @@
 ﻿using ME.ECS;
 using UnityEngine;
 using WebSnake.Components;
-using WebSnake.Features;
 
 namespace WebSnake.Systems
 {
@@ -10,34 +9,43 @@ namespace WebSnake.Systems
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
 #endif
-    public class SnakeSpawnSystem : ISystem, IAdvanceTick
+    public class PlayerInputSystem : ISystem, IAdvanceTick
     {
         public World world { get; set; }
+        
 
         void ISystemBase.OnConstruct()
         {
+  
         }
 
         void ISystemBase.OnDeconstruct()
         {
+            
         }
 
         void IAdvanceTick.AdvanceTick(in float deltaTime)
         {
-            if (!world.HasSharedDataOneShot<SpawnSnake>())
-                return;
+            var direction = Vector2.zero;
+            if (Input.GetKeyDown(KeyCode.W))
+                direction.y += 1;
+            
+            if (Input.GetKeyDown(KeyCode.S))
+                direction.y -= 1;
+            
+            if (Input.GetKeyDown(KeyCode.A))
+                direction.x -= 1;
+  
+            if (Input.GetKeyDown(KeyCode.D))
+                direction.x += 1;
 
-            var gameplayFeature = world.GetFeature<GameplayFeature>();
-            if (!gameplayFeature)
+            if (direction == Vector2.zero)
                 return;
-
-            var snakeEntity = world.AddEntity("Snake")
-                .Set<SnakeTag>()
-                .Set<Position>()
-                .Set<Rotation>()
-                .Set(new MovementDirection {Value = Vector3.forward})
-                .Set(new Speed {Value = 8.0f});
-            world.InstantiateView(gameplayFeature.SnakeViewId, snakeEntity);
+            
+            world.AddEntity("Input", EntityFlag.DestroyWithoutComponents).SetOneShot(new MovementDirectionInput
+            {
+                Value = direction
+            });
         }
     }
 }

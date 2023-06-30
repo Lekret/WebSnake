@@ -12,6 +12,7 @@ namespace WebSnake.Views
         
         public override void OnInitialize()
         {
+            Camera.main.transform.SetParent(transform);
             Debug.Log($"Snake View Created: {entity}");
         }
 
@@ -22,6 +23,7 @@ namespace WebSnake.Views
         public override void ApplyState(float deltaTime, bool immediately)
         {
             transform.position = entity.Read<Position>().Value;
+            transform.rotation = entity.Read<Rotation>().Value;
         }
     }
 }
