@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -104,7 +104,7 @@ NavMeshSettings:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_BuildSettings:
-    serializedVersion: 2
+    serializedVersion: 3
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
@@ -117,7 +117,7 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualTileSize: 0
     tileSize: 256
-    accuratePlacement: 0
+    buildHeightMesh: 0
     maxJobWorkers: 0
     preserveTilesOutsideBounds: 0
     debug:
@@ -257,9 +257,17 @@ Camera:
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -294,7 +302,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 6.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -306,8 +314,25 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4958016069329523290, guid: 2b0b0158106825442be0cd23f266fd34, type: 3}
+      propertyPath: configurations.Array.data[0].defines.Array.size
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 4958016069329523290, guid: 2b0b0158106825442be0cd23f266fd34, type: 3}
+      propertyPath: configurations.Array.data[1].defines.Array.size
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 4958016069329523290, guid: 2b0b0158106825442be0cd23f266fd34, type: 3}
+      propertyPath: configurations.Array.data[0].defines.Array.data[21].name
+      value: WORLD_MARKERS_MANAGED
+      objectReference: {fileID: 0}
+    - target: {fileID: 4958016069329523290, guid: 2b0b0158106825442be0cd23f266fd34, type: 3}
+      propertyPath: configurations.Array.data[1].defines.Array.data[17].name
+      value: WORLD_MARKERS_MANAGED
+      objectReference: {fileID: 0}
     - target: {fileID: 6009573824331432541, guid: 2b0b0158106825442be0cd23f266fd34, type: 3}
       propertyPath: m_Name
       value: WebSnakeInitializer
@@ -357,4 +382,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b0b0158106825442be0cd23f266fd34, type: 3}

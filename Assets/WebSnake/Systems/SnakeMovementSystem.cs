@@ -1,6 +1,8 @@
 ﻿using ME.ECS;
 using UnityEngine;
 using WebSnake.Components;
+using WebSnake.Features;
+using WebSnake.Markers;
 
 namespace WebSnake.Systems
 {
@@ -12,14 +14,12 @@ namespace WebSnake.Systems
     public sealed class SnakeMovementSystem : ISystem, IAdvanceTick
     {
         public Filter SnakeFilter;
-        public Filter InputFilter;
 
         public World world { get; set; }
 
         void ISystemBase.OnConstruct()
         {
             SnakeFilter = Filter.Create("SnakeFilter-SnakeMovementSystem").With<SnakeTag>().Push();
-            InputFilter = Filter.Create("InputFilter-SnakeMovementSystem").With<MovementDirectionInput>().Push();
         }
 
         void ISystemBase.OnDeconstruct()
@@ -28,9 +28,9 @@ namespace WebSnake.Systems
 
         void IAdvanceTick.AdvanceTick(in float deltaTime)
         {
-            var directionInput = GetTotalMovementDirectionInput();
+            var directionInput = ReadDirectionInput();
             var worldInputDirection = new Vector3(directionInput.x, 0, directionInput.y);
-            
+
             foreach (var entity in SnakeFilter)
             {
                 ref var currentDirection = ref entity.Get<MovementDirection>();
@@ -46,16 +46,13 @@ namespace WebSnake.Systems
             }
         }
 
-        private Vector2 GetTotalMovementDirectionInput()
+        private Vector2 ReadDirectionInput()
         {
-            var Result = Vector2.zero;
+            var gameplayFeature = world.GetFeature<GameplayFeature>();
+            if (gameplayFeature)
+                return gameplayFeature.SnakeInput.MovementDirection;
             
-            foreach (var entity in InputFilter)
-            {
-                Result += entity.GetOneShot<MovementDirectionInput>().Value;
-            }
-
-            return Result;
+            return Vector2.zero;
         }
     }
 }

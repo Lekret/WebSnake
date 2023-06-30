@@ -12,7 +12,6 @@ namespace WebSnake.Views
         
         public override void OnInitialize()
         {
-            Camera.main.transform.SetParent(transform);
             Debug.Log($"Snake View Created: {entity}");
         }
 

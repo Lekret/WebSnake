@@ -36,7 +36,7 @@ namespace WebSnake.Systems
                 .Set<Position>()
                 .Set<Rotation>()
                 .Set(new MovementDirection {Value = Vector3.forward})
-                .Set(new Speed {Value = 8.0f});
+                .Set(new Speed {Value = 2.0f});
             world.InstantiateView(gameplayFeature.SnakeViewId, snakeEntity);
         }
     }

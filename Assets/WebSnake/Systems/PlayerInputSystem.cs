@@ -1,6 +1,9 @@
 ﻿using ME.ECS;
 using UnityEngine;
 using WebSnake.Components;
+using WebSnake.Features;
+using WebSnake.Features.Input;
+using WebSnake.Markers;
 
 namespace WebSnake.Systems
 {
@@ -9,7 +12,7 @@ namespace WebSnake.Systems
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
 #endif
-    public class PlayerInputSystem : ISystem, IAdvanceTick
+    public class PlayerInputSystem : ISystem, IUpdate
     {
         public World world { get; set; }
         
@@ -24,8 +27,12 @@ namespace WebSnake.Systems
             
         }
 
-        void IAdvanceTick.AdvanceTick(in float deltaTime)
+        void IUpdate.Update(in float deltaTime)
         {
+            var gameplayFeature = world.GetFeature<GameplayFeature>();
+            if (!gameplayFeature)
+                return;
+
             var direction = Vector2.zero;
             if (Input.GetKeyDown(KeyCode.W))
                 direction.y += 1;
@@ -41,11 +48,11 @@ namespace WebSnake.Systems
 
             if (direction == Vector2.zero)
                 return;
-            
-            world.AddEntity("Input", EntityFlag.DestroyWithoutComponents).SetOneShot(new MovementDirectionInput
+
+            gameplayFeature.SnakeInput = new SnakeInput
             {
-                Value = direction
-            });
+                MovementDirection = direction
+            };
         }
     }
 }
