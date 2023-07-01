@@ -8,11 +8,11 @@ namespace WebSnake.Components
         public int Value;
     }
 
-    public struct GameLoaded : IStructComponent, IComponentShared
+    public struct GameLoaded : IStructComponent, IComponentShared, IComponentsTag
     {
     }
 
-    public struct GameLaunched : IStructComponent, IComponentShared
+    public struct GameLaunched : IStructComponent, IComponentShared, IComponentsTag
     {
     }
 

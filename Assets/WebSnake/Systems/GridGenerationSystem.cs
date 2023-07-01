@@ -32,7 +32,7 @@ namespace WebSnake.Systems
             var configFeature = world.GetFeature<ConfigFeature>();
             if (!configFeature)
             {
-                Debug.LogError("Config feature is null");
+                Debug.LogError("ConfigFeature is null");
                 return;
             }
 
@@ -52,14 +52,16 @@ namespace WebSnake.Systems
 #endif
 
             for (var x = 0; x < generateGrid.Width; x++)
-            for (var z = 0; z < generateGrid.Height; z++)
             {
-                var spawnPosition = new Vector3(x, 0, z);
-                Object.Instantiate(
-                    configFeature.TilePrefab,
-                    spawnPosition,
-                    Quaternion.identity,
-                    tilesParent);
+                for (var z = 0; z < generateGrid.Height; z++)
+                {
+                    var spawnPosition = new Vector3(x, 0, z);
+                    Object.Instantiate(
+                        configFeature.TilePrefab,
+                        spawnPosition,
+                        Quaternion.identity,
+                        tilesParent);
+                }
             }
         }
     }

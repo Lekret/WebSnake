@@ -1,4 +1,5 @@
 ﻿using ME.ECS;
+using UnityEngine;
 using WebSnake.Components;
 using WebSnake.Features.Config;
 using WebSnake.Web;
@@ -37,12 +38,18 @@ namespace WebSnake.Systems
         private void StartGame(CreateGameResponse createGameResponse)
         {
             var configFeature = world.GetFeature<ConfigFeature>();
+            if (!configFeature)
+            {
+                Debug.LogError("ConfigFeature is null");
+                return;
+            }
+
             world.SetSharedData(new GameId {Value = createGameResponse.Payload.Id});
             world.SetSharedData(new CollectedApplesCount {Value = createGameResponse.Payload.CollectedApples});
             world.SetSharedDataOneShot(new GenerateGrid
             {
-                Width = configFeature ? configFeature.GridWidth : 32,
-                Height = configFeature ? configFeature.GridHeight : 32
+                Width = configFeature.GridWidth,
+                Height = configFeature.GridHeight
             });
             world.SetSharedDataOneShot(new SpawnSnake());
             world.SetSharedData(new GameLoaded());
