@@ -1,6 +1,7 @@
 ﻿using ME.ECS;
 using UnityEngine;
 using WebSnake.Components;
+using WebSnake.Features.Config;
 using WebSnake.Features.Gameplay;
 using Grid = WebSnake.Components.Grid;
 
@@ -28,13 +29,16 @@ namespace WebSnake.Systems
             if (!world.HasSharedDataOneShot<GenerateGrid>())
                 return;
 
-            var gameplayFeature = world.GetFeature<GameplayFeature>();
-            if (!gameplayFeature)
+            var configFeature = world.GetFeature<ConfigFeature>();
+            if (!configFeature)
+            {
+                Debug.LogError("Config feature is null");
                 return;
+            }
 
             var generateGrid = world.GetSharedDataOneShot<GenerateGrid>();
 
-            world.AddEntity()
+            world.AddEntity("Grid")
                 .Set<Grid>()
                 .Set(new GridSize
                 {
@@ -42,9 +46,9 @@ namespace WebSnake.Systems
                     Height = generateGrid.Height
                 });
 
-            Transform cellsParent = null;
+            Transform tilesParent = null;
 #if UNITY_EDITOR
-            cellsParent = new GameObject("CellsParent").transform;
+            tilesParent = new GameObject("Tiles").transform;
 #endif
 
             for (var x = 0; x < generateGrid.Width; x++)
@@ -52,10 +56,10 @@ namespace WebSnake.Systems
             {
                 var spawnPosition = new Vector3(x, 0, z);
                 Object.Instantiate(
-                    gameplayFeature.CellPrefab,
+                    configFeature.TilePrefab,
                     spawnPosition,
                     Quaternion.identity,
-                    cellsParent);
+                    tilesParent);
             }
         }
     }

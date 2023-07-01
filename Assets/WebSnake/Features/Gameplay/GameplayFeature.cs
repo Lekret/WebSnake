@@ -14,26 +14,19 @@ namespace WebSnake.Features.Gameplay
     [CreateAssetMenu(menuName = "Features/" + nameof(GameplayFeature), fileName = nameof(GameplayFeature))]
     public sealed class GameplayFeature : Feature
     {
-        public GameObject CellPrefab;
-        public MonoBehaviourViewBase SnakeView;
-
-        public ViewId SnakeViewId { get; private set; }
-
         protected override void OnConstruct()
         {
             AddModule<ViewsModule>();
 
-            AddSystem<PlayerInputSystem>();
             AddSystem<CreateGameSystem>();
             AddSystem<GameCreatedSystem>();
             AddSystem<GridGenerationSystem>();
             AddSystem<SnakeSpawnSystem>();
+            AddSystem<SnakeDirectionSystem>();
             AddSystem<SnakeMovementSystem>();
             AddSystem<CameraFollowSystem>();
             AddSystem<GameEndedSystem>();
             AddSystem<WebRequestSystem>();
-
-            SnakeViewId = world.RegisterViewSource(SnakeView);
         }
 
         protected override void OnDeconstruct()

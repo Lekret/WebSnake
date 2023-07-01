@@ -36,18 +36,21 @@ namespace WebSnake.Systems
                 return;
 
             var configFeature = world.GetFeature<ConfigFeature>();
-            var gameplayFeature = world.GetFeature<GameplayFeature>();
-            if (!gameplayFeature)
+            if (!configFeature)
+            {
+                Debug.LogError("Config feature is null");
                 return;
+            }
 
+            var gameplayFeature = world.GetFeature<GameplayFeature>();
             var snakeEntity = world.AddEntity("Snake")
                 .Set<SnakeTag>()
-                .Set(new BodyLength {Value = configFeature ? configFeature.SnakeLength : 1})
+                .Set(new BodyLength {Value = configFeature.SnakeLength})
                 .Set(new Position { Value = GetSnakePosition() })
                 .Set<Rotation>()
-                .Set(new MovementDirection {Value = Vector3.forward})
-                .Set(new Speed {Value = 2.0f});
-            world.InstantiateView(gameplayFeature.SnakeViewId, snakeEntity);
+                .Set(new MovementDirection {Value = Vector2Int.up})
+                .Set(new MovementInterval {Value = configFeature ? configFeature.SnakeMovementInterval : 1});
+            world.InstantiateView(configFeature.SnakeViewId, snakeEntity);
         }
 
         private Vector3 GetSnakePosition()

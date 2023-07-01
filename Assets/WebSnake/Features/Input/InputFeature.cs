@@ -1,5 +1,6 @@
 ﻿using ME.ECS;
 using UnityEngine;
+using WebSnake.Systems;
 
 namespace WebSnake.Features.Input
 {
@@ -15,6 +16,8 @@ namespace WebSnake.Features.Input
 
         protected override void OnConstruct()
         {
+            AddSystem<PlayerInputSystem>();
+            AddSystem<PlayerInputCleanupSystem>();
         }
 
         protected override void OnDeconstruct()

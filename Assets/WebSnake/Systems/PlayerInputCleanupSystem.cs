@@ -1,5 +1,4 @@
 ﻿using ME.ECS;
-using UnityEngine;
 using WebSnake.Features.Input;
 
 namespace WebSnake.Systems
@@ -9,7 +8,7 @@ namespace WebSnake.Systems
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
 #endif
-    public sealed class PlayerInputSystem : ISystem, IUpdate
+    public sealed class PlayerInputCleanupSystem : ISystem, IAdvanceTickPost
     {
         public World world { get; set; }
 
@@ -21,33 +20,13 @@ namespace WebSnake.Systems
         {
         }
 
-        void IUpdate.Update(in float deltaTime)
+        void IAdvanceTickPost.AdvanceTickPost(in float deltaTime)
         {
             var inputFeature = world.GetFeature<InputFeature>();
-            if (!inputFeature)
-                return;
-
-            var direction = Vector2Int.zero;
-            if (Input.GetKeyDown(KeyCode.W))
-                direction.y += 1;
-
-            if (Input.GetKeyDown(KeyCode.S))
-                direction.y -= 1;
-
-            if (Input.GetKeyDown(KeyCode.A))
-                direction.x -= 1;
-
-            if (Input.GetKeyDown(KeyCode.D))
-                direction.x += 1;
-
-            var inputData = inputFeature.InputData;
-
-            if (direction != Vector2.zero)
+            if (inputFeature)
             {
-                inputData.MovementDirection = direction;
+                inputFeature.InputData = default;
             }
-
-            inputFeature.InputData = inputData;
         }
     }
 }

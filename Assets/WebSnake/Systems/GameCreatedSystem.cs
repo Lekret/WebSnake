@@ -28,7 +28,10 @@ namespace WebSnake.Systems
                 return;
 
             var webSocket = world.ReadSharedData<GameWebSocket>();
-            while (webSocket.Value.TryRead(out CreateGameResponse createGameResponse)) StartGame(createGameResponse);
+            while (webSocket.Value.TryRead(out CreateGameResponse createGameResponse))
+            {
+                StartGame(createGameResponse);
+            }
         }
 
         private void StartGame(CreateGameResponse createGameResponse)
@@ -41,8 +44,8 @@ namespace WebSnake.Systems
                 Width = configFeature ? configFeature.GridWidth : 32,
                 Height = configFeature ? configFeature.GridHeight : 32
             });
-            world.SetSharedData(new GameLoaded());
             world.SetSharedDataOneShot(new SpawnSnake());
+            world.SetSharedData(new GameLoaded());
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using ME.ECS;
 using UnityEngine;
 using WebSnake.Components;
-using Vector3 = UnityEngine.Vector3;
+using WebSnake.Features.Input;
 
 namespace WebSnake.Systems
 {
@@ -10,7 +10,7 @@ namespace WebSnake.Systems
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
 #endif
-    public sealed class SnakeMovementSystem : ISystem, IAdvanceTick
+    public sealed class SnakeDirectionSystem : ISystem, IAdvanceTick
     {
         private Filter _snakeFilter;
 
@@ -27,24 +27,30 @@ namespace WebSnake.Systems
 
         void IAdvanceTick.AdvanceTick(in float deltaTime)
         {
+            var directionInput = ReadDirectionInput();
+            if (directionInput == Vector2.zero)
+                return;
+            
             foreach (var entity in _snakeFilter)
             {
-                ref var movementIntervalAccum = ref entity.Get<MovementIntervalAccum>();
-                movementIntervalAccum.Value += deltaTime;
-                if (movementIntervalAccum.Value < entity.Read<MovementInterval>().Value)
-                    continue;
-
-                movementIntervalAccum.Value = 0f;
-                ref var movementDirection = ref entity.Get<MovementDirection>();
-                if (entity.Has<NewMovementDirection>())
+                var movementDirection = entity.Read<MovementDirection>();
+                if (Mathf.Approximately(Vector2.Dot(movementDirection.Value, directionInput), 0))
                 {
-                    movementDirection.Value = entity.Read<NewMovementDirection>().Value;
-                    entity.Remove<NewMovementDirection>();
+                    entity.Set(new NewMovementDirection
+                    {
+                        Value = directionInput
+                    });
                 }
-
-                ref var position = ref entity.Get<Position>();
-                position.Value += new Vector3(movementDirection.Value.x, 0, movementDirection.Value.y);
             }
+        }
+
+        private Vector2Int ReadDirectionInput()
+        {
+            var inputFeature = world.GetFeature<InputFeature>();
+            if (inputFeature)
+                return inputFeature.InputData.MovementDirection;
+
+            return Vector2Int.zero;
         }
     }
 }

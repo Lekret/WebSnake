@@ -91,6 +91,8 @@ MonoBehaviour:
       name: STATIC_API_DISABLED
     - enabled: 0
       name: COMPONENTS_COPYABLE
+    - enabled: 0
+      name: WORLD_MARKERS_MANAGED
   - name: Release
     isDirty: 0
     configurationType: 1
@@ -129,9 +131,25 @@ MonoBehaviour:
       name: STATIC_API_DISABLED
     - enabled: 0
       name: COMPONENTS_COPYABLE
+    - enabled: 0
+      name: WORLD_MARKERS_MANAGED
   selectedConfiguration: Debug
   featuresListCategories:
     items:
+    - folderCaption: Config
+      features:
+        features:
+        - enabled: 1
+          feature: {fileID: 11400000, guid: 3c20965564ddcfb42a290b1a831e6b33, type: 2}
+          innerFeatures:
+            features: []
+    - folderCaption: Input
+      features:
+        features:
+        - enabled: 1
+          feature: {fileID: 11400000, guid: ddc218256dd54764a8646a6035590160, type: 2}
+          innerFeatures:
+            features: []
     - folderCaption: Gameplay
       features:
         features:
@@ -152,7 +170,7 @@ MonoBehaviour:
       unityGameObjectProviderDisableJobs: 0
       unityParticlesProviderDisableJobs: 0
   worldDebugSettings:
-    createGameObjectsRepresentation: 0
+    createGameObjectsRepresentation: 1
     collectStatistic: 0
     statisticsObject: {fileID: 0}
     showViewsOnScene: 1

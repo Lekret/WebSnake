@@ -91,7 +91,7 @@ namespace WebSnake.Web
 
         public bool TryRead<T>(out T data)
         {
-            var responses = _responsesMap[typeof(T)];
+            var responses = GetResponsesOfType(typeof(T));
             if (responses.TryDequeue(out var rawData))
             {
                 data = (T) rawData;

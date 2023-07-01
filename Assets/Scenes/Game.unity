@@ -224,22 +224,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4958016069329523290, guid: 2b0b0158106825442be0cd23f266fd34, type: 3}
-      propertyPath: configurations.Array.data[0].defines.Array.size
-      value: 22
-      objectReference: {fileID: 0}
-    - target: {fileID: 4958016069329523290, guid: 2b0b0158106825442be0cd23f266fd34, type: 3}
-      propertyPath: configurations.Array.data[1].defines.Array.size
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 4958016069329523290, guid: 2b0b0158106825442be0cd23f266fd34, type: 3}
-      propertyPath: configurations.Array.data[0].defines.Array.data[21].name
-      value: WORLD_MARKERS_MANAGED
-      objectReference: {fileID: 0}
-    - target: {fileID: 4958016069329523290, guid: 2b0b0158106825442be0cd23f266fd34, type: 3}
-      propertyPath: configurations.Array.data[1].defines.Array.data[17].name
-      value: WORLD_MARKERS_MANAGED
-      objectReference: {fileID: 0}
     - target: {fileID: 6009573824331432541, guid: 2b0b0158106825442be0cd23f266fd34, type: 3}
       propertyPath: m_Name
       value: WebSnakeInitializer
