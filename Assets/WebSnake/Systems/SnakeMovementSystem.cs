@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ME.ECS;
+using UnityEngine;
 using WebSnake.Components;
 using WebSnake.Utils;
 using Vector3 = UnityEngine.Vector3;
@@ -53,7 +54,7 @@ namespace WebSnake.Systems
 
                 ref var position = ref snake.Get<Position>();
                 snake.Get<PreviousPosition>().Value = position.Value;
-                position.Value += new Vector3(movementDirection.Value.x, 0, movementDirection.Value.y);
+                position.Value += movementDirection.Value;
 
                 var segmentBuffer = PoolList<Entity>.Spawn(100);
                 SnakeUtils.GetOrderedSegments(_segmentFilter, segmentBuffer, snake.id);
@@ -73,8 +74,10 @@ namespace WebSnake.Systems
                 var prevSegment = segmentsBuffer[i - 1];
                 var currentSegment = segmentsBuffer[i];
                 ref var curPosition = ref currentSegment.Get<Position>();
-                currentSegment.Get<PreviousPosition>().Value = curPosition.Value;
+                ref var prevPosition = ref currentSegment.Get<PreviousPosition>();
+                prevPosition.Value = curPosition.Value;
                 curPosition.Value = prevSegment.Read<PreviousPosition>().Value;
+                currentSegment.Get<MovementDirection>().Value = curPosition.Value - prevPosition.Value;
             }
         }
     }

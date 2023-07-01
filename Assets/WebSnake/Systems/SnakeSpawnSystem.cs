@@ -54,7 +54,7 @@ namespace WebSnake.Systems
                 .Set(new BodyLength {Value = configFeature.SnakeLength})
                 .Set(new Position {Value = GetSnakePosition()})
                 .Set(new Rotation {Value = Quaternion.identity})
-                .Set(new MovementDirection {Value = Vector2Int.up})
+                .Set(new MovementDirection {Value = Vector3.forward})
                 .Set(new MovementInterval {Value = configFeature.SnakeMovementInterval});
             world.InstantiateView(configFeature.SnakeViewId, snake);
             return snake;

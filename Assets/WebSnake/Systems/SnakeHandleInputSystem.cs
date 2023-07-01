@@ -31,7 +31,7 @@ namespace WebSnake.Systems
         void ISystemBase.OnDeconstruct()
         {
         }
-        
+
         public void Update(in float deltaTime)
         {
             if (world.GetMarker(out InputMovementDirection input))
@@ -46,12 +46,10 @@ namespace WebSnake.Systems
             foreach (var entity in _snakeFilter)
             {
                 var movementDirection = entity.Read<MovementDirection>();
-                if (Mathf.Approximately(Vector2.Dot(movementDirection.Value, input.Value), 0))
+                var newMovementDirection = new Vector3(input.Value.x, 0, input.Value.y);
+                if (Mathf.Approximately(Vector3.Dot(movementDirection.Value, newMovementDirection), 0))
                 {
-                    entity.Set(new NewMovementDirection
-                    {
-                        Value = input.Value
-                    });
+                    entity.Get<NewMovementDirection>().Value = newMovementDirection;
                 }
             }
         }

@@ -1,5 +1,4 @@
 ﻿using ME.ECS;
-using ME.ECS.Views;
 using UnityEngine;
 using WebSnake.Components;
 using WebSnake.Features.Config;
@@ -55,15 +54,16 @@ namespace WebSnake.Systems
                 for (var idx = segmentBuffer.Count; idx < bodyLength.Value; idx++)
                 {
                     var prevSegment = segmentBuffer[idx - 1];
-                    var segmentPosition = prevSegment.Has<PreviousPosition>()
-                        ? prevSegment.Get<PreviousPosition>().Value
-                        : prevSegment.Get<Position>().Value + Vector3.back; // TODO Find empty tile
-                    
+                    var prevMovementDirection = prevSegment.Read<MovementDirection>();
+                    var segmentPosition = prevSegment.Read<Position>().Value -
+                                          prevMovementDirection.Value;
+
                     var segmentEntity = world.AddEntity("SnakeSegment")
                         .Set<SnakeSegmentTag>()
                         .Set(new SnakeSegmentIndex {Value = idx})
                         .Set(new ParentId {Value = snake.id})
-                        .Set(new Position {Value = segmentPosition});
+                        .Set(new Position {Value = segmentPosition})
+                        .Set(prevMovementDirection);
                     world.InstantiateView(configFeature.SnakeSegmentView, segmentEntity);
                     segmentBuffer.Add(segmentEntity);
                     

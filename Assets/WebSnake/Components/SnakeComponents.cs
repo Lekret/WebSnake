@@ -34,12 +34,12 @@ namespace WebSnake.Components
 
     public struct MovementDirection : IStructComponent
     {
-        public Vector2Int Value;
+        public Vector3 Value;
     }
 
     public struct NewMovementDirection : IStructComponent
     {
-        public Vector2Int Value;
+        public Vector3 Value;
     }
 
     public struct MovementInterval : IStructComponent
