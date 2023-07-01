@@ -16,6 +16,16 @@ namespace WebSnake.Components
     {
     }
 
+    public struct CameraTag : IStructComponent, IComponentsTag
+    {
+        
+    }
+
+    public struct CameraTarget : IStructComponent
+    {
+        public int EntityId;
+    }
+
     public struct CollectedApplesCount : IStructComponent, IComponentShared
     {
         public int Value;

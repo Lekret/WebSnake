@@ -16,7 +16,6 @@ namespace WebSnake.Features.Config
         
         public int GridWidth = 32;
         public int GridHeight = 32;
-        public int CameraHeight = 30;
         public int SnakeLength = 3;
         public float SnakeMovementInterval = 0.33f;
 

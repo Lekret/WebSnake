@@ -15,8 +15,7 @@ MonoBehaviour:
   editorComment: 
   TilePrefab: {fileID: 7860541400674361870, guid: c6893c88f431b9f43b8fb7d9456d646a, type: 3}
   SnakeView: {fileID: 6759398930853582208, guid: 999f07c82fab8ce4388dfc61d5c009ff, type: 3}
-  GridWidth: 0
-  GridHeight: 0
-  CameraHeight: 0
+  GridWidth: 32
+  GridHeight: 32
   SnakeLength: 3
   SnakeMovementInterval: 0.33

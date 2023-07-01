@@ -1,4 +1,5 @@
 ﻿using ME.ECS;
+using ME.ECS.Views.Providers;
 using UnityEngine;
 using WebSnake.Components;
 using WebSnake.Features.Config;

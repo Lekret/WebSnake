@@ -1,16 +1,17 @@
-﻿using ME.ECS;
+﻿using Cinemachine;
 using ME.ECS.Views.Providers;
-using WebSnake.Components;
+using UnityEngine;
 
 namespace WebSnake.Views
 {
     public class CameraView : MonoBehaviourView
     {
+        [SerializeField] private CinemachineVirtualCamera _virtualCamera;
+        
         public override bool applyStateJob => false;
         
         public override void OnInitialize()
         {
-            
         }
 
         public override void OnDeInitialize()
@@ -19,8 +20,7 @@ namespace WebSnake.Views
         
         public override void ApplyState(float deltaTime, bool immediately)
         {
-            transform.position = entity.Read<Position>().Value;
-            transform.rotation = entity.Read<Rotation>().Value;
+            
         }
     }
 }
