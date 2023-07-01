@@ -29,6 +29,7 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GameLoaded>(true, true, true, false, false, false, false, true, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Grid>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SnakeTag>(true, true, true, false, false, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.TransformView>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GameWebSocket>(false, false, false, false, true, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SendRequest>(false, false, false, false, true, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GenerateGrid>(false, false, false, false, false, false, false, true, true);
@@ -63,6 +64,7 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GameLoaded>(true, true, true, false, false, false, false, true, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Grid>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SnakeTag>(true, true, true, false, false, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.TransformView>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GameWebSocket>(false, false, false, false, true, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SendRequest>(false, false, false, false, true, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GenerateGrid>(false, false, false, false, false, false, false, true, true);
@@ -92,6 +94,7 @@ namespace ME.ECS {
             state.structComponents.ValidateUnmanaged<WebSnake.Components.GameLoaded>(ref state.allocator, true);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.Grid>(ref state.allocator, true);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.SnakeTag>(ref state.allocator, true);
+            state.structComponents.ValidateUnmanaged<WebSnake.Components.TransformView>(ref state.allocator, true);
             state.structComponents.ValidateCopyable<WebSnake.Components.GameWebSocket>(false);
             state.structComponents.ValidateCopyable<WebSnake.Components.SendRequest>(false);
             noState.storage.ValidateOneShot<WebSnake.Components.GenerateGrid>(false);
@@ -126,6 +129,7 @@ namespace ME.ECS {
             entity.ValidateDataUnmanaged<WebSnake.Components.GameLoaded>(true);
             entity.ValidateDataUnmanaged<WebSnake.Components.Grid>(true);
             entity.ValidateDataUnmanaged<WebSnake.Components.SnakeTag>(true);
+            entity.ValidateDataUnmanaged<WebSnake.Components.TransformView>(true);
             entity.ValidateDataCopyable<WebSnake.Components.GameWebSocket>(false);
             entity.ValidateDataCopyable<WebSnake.Components.SendRequest>(false);
             entity.ValidateDataOneShot<WebSnake.Components.GenerateGrid>(false);

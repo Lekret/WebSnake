@@ -1,7 +1,7 @@
 ﻿using ME.ECS;
 using ME.ECS.Views.Providers;
-using UnityEngine;
 using WebSnake.Components;
+using WebSnake.Extensions;
 
 namespace WebSnake.Views
 {
@@ -11,11 +11,12 @@ namespace WebSnake.Views
         
         public override void OnInitialize()
         {
-            Debug.Log($"Snake View Created: {entity}");
+            world.GetViewsRepo().RegisterView(this, entity.id);
         }
 
         public override void OnDeInitialize()
         {
+            world.GetViewsRepo().UnregisterView(this);
         }
         
         public override void ApplyState(float deltaTime, bool immediately)

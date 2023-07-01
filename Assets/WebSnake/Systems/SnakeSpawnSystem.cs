@@ -1,9 +1,10 @@
 ﻿using ME.ECS;
-using ME.ECS.Views.Providers;
+using ME.ECS.Views;
 using UnityEngine;
 using WebSnake.Components;
 using WebSnake.Features.Config;
 using WebSnake.Features.Gameplay;
+using WebSnake.Views;
 using Grid = WebSnake.Components.Grid;
 
 namespace WebSnake.Systems
@@ -36,15 +37,35 @@ namespace WebSnake.Systems
             if (!world.HasSharedDataOneShot<SpawnSnake>())
                 return;
 
+            var snakeEntity = CreateSnake();
+            CreateSnakeCamera(snakeEntity.id);
+        }
+
+        private Entity CreateSnake()
+        {
             var configFeature = world.GetFeature<ConfigFeature>();
             var snakeEntity = world.AddEntity("Snake")
                 .Set<SnakeTag>()
                 .Set(new BodyLength {Value = configFeature.SnakeLength})
-                .Set(new Position { Value = GetSnakePosition() })
+                .Set(new Position {Value = GetSnakePosition()})
                 .Set<Rotation>()
                 .Set(new MovementDirection {Value = Vector2Int.up})
                 .Set(new MovementInterval {Value = configFeature.SnakeMovementInterval});
             world.InstantiateView(configFeature.SnakeViewId, snakeEntity);
+            return snakeEntity;
+        }
+
+        private void CreateSnakeCamera(int targetEntityId)
+        {
+            var cameraEntity = world.AddEntity("Camera")
+                .Set<CameraTag>()
+                .Set(new CameraTarget
+                {
+                    EntityId = targetEntityId
+                });
+
+            var gameplayFeature = world.GetFeature<GameplayFeature>();
+            world.AssignView(gameplayFeature.CameraViewId, cameraEntity, DestroyViewBehaviour.LeaveOnScene);
         }
 
         private Vector3 GetSnakePosition()

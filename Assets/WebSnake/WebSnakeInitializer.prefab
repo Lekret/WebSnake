@@ -170,13 +170,13 @@ MonoBehaviour:
       unityGameObjectProviderDisableJobs: 0
       unityParticlesProviderDisableJobs: 0
   worldDebugSettings:
-    createGameObjectsRepresentation: 1
+    createGameObjectsRepresentation: 0
     collectStatistic: 0
     statisticsObject: {fileID: 0}
     showViewsOnScene: 1
     viewsSettings:
-      unityGameObjectProviderShowOnScene: 1
-      unityParticlesProviderShowOnScene: 1
+      unityGameObjectProviderShowOnScene: 0
+      unityParticlesProviderShowOnScene: 0
   tickTime: 0.033
   inputTicks: 3
   entitiesCapacity: 200

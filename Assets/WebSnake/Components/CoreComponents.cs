@@ -20,7 +20,7 @@ namespace WebSnake.Components
     {
         
     }
-
+    
     public struct CameraTarget : IStructComponent
     {
         public int EntityId;
@@ -39,5 +39,10 @@ namespace WebSnake.Components
     public struct Rotation : IStructComponent
     {
         public Quaternion Value;
+    }
+
+    public struct TransformView : IStructComponent
+    {
+        
     }
 }

@@ -1,26 +1,11 @@
-using System;
 using ME.ECS.Views;
 using UnityEngine;
-using WebSnake.Features;
-
-#region Namespaces
-
-namespace WebSnake.Generator.Systems { }
-namespace WebSnake.Generator.Components { }
-namespace WebSnake.Generator.Modules { }
-namespace WebSnake.Generator.Features { }
-namespace WebSnake.Generator.Markers { }
-namespace WebSnake.Generator.Views { }
-
-#endregion
+using WebSnake.Modules;
 
 namespace WebSnake.Generator
 {
     using TState = WebSnakeState;
-    using WebSnake.Modules;
     using ME.ECS;
-    using ME.ECS.Views.Providers;
-    using WebSnake.Generator.Modules;
 
 #if ECS_COMPILE_IL2CPP_OPTIONS
     [Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.NullChecks, false),
@@ -35,7 +20,7 @@ namespace WebSnake.Generator
         public float tickTime = 0.033f;
         public uint inputTicks = 3;
         public int entitiesCapacity = 200;
-
+        
         public void OnDrawGizmos()
         {
             if (world != null)
@@ -80,13 +65,13 @@ namespace WebSnake.Generator
 
         public void LateUpdate()
         {
-            if (world != null && world.IsLoaded() == true) 
+            if (world != null && world.IsLoaded())
                 world.LateUpdate(Time.deltaTime);
         }
 
         public void OnDestroy()
         {
-            if (world == null || world.isActive == false) 
+            if (world == null || world.isActive == false)
                 return;
 
             DeInitializeFeatures(world);

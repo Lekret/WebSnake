@@ -2,6 +2,7 @@
 using ME.ECS.Views;
 using ME.ECS.Views.Providers;
 using UnityEngine;
+using WebSnake.Extensions;
 using WebSnake.Systems;
 
 namespace WebSnake.Features.Gameplay
@@ -14,8 +15,17 @@ namespace WebSnake.Features.Gameplay
     [CreateAssetMenu(menuName = "Features/" + nameof(GameplayFeature), fileName = nameof(GameplayFeature))]
     public sealed class GameplayFeature : Feature
     {
+        private GameSceneProvider _gameSceneProvider;
+
+        public ViewId CameraViewId { get; private set; }
+        public IMonoViewsRepo ViewsRepo { get; private set; }
+
         protected override void OnConstruct()
         {
+            _gameSceneProvider = FindObjectOfType<GameSceneProvider>();
+            ViewsRepo = new MonoViewsRepo();
+            CameraViewId = world.RegisterViewSource(_gameSceneProvider.CameraView);
+            
             AddModule<ViewsModule>();
 
             AddSystem<CreateGameSystem>();
@@ -24,7 +34,6 @@ namespace WebSnake.Features.Gameplay
             AddSystem<SnakeSpawnSystem>();
             AddSystem<SnakeHandleInputSystem>();
             AddSystem<SnakeMovementSystem>();
-            AddSystem<CameraFollowSystem>();
             AddSystem<GameEndedSystem>();
             AddSystem<WebRequestSystem>();
         }
