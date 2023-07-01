@@ -1,6 +1,7 @@
 ﻿using ME.ECS;
 using UnityEngine;
 using WebSnake.Features.Input;
+using WebSnake.Markers;
 
 namespace WebSnake.Systems
 {
@@ -23,10 +24,6 @@ namespace WebSnake.Systems
 
         void IUpdate.Update(in float deltaTime)
         {
-            var inputFeature = world.GetFeature<InputFeature>();
-            if (!inputFeature)
-                return;
-
             var direction = Vector2Int.zero;
             if (Input.GetKeyDown(KeyCode.W))
                 direction.y += 1;
@@ -40,14 +37,13 @@ namespace WebSnake.Systems
             if (Input.GetKeyDown(KeyCode.D))
                 direction.x += 1;
 
-            var inputData = inputFeature.InputData;
-
-            if (direction != Vector2.zero)
+            if (direction != Vector2Int.zero)
             {
-                inputData.MovementDirection = direction;
+                world.AddMarker(new InputMovementDirection
+                {
+                    Value = direction
+                });
             }
-
-            inputFeature.InputData = inputData;
         }
     }
 }

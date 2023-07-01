@@ -12,12 +12,9 @@ namespace WebSnake.Features.Input
     [CreateAssetMenu(menuName = "Features/" + nameof(InputFeature), fileName = nameof(InputFeature))]
     public class InputFeature : Feature
     {
-        public InputData InputData { get; set; }
-
         protected override void OnConstruct()
         {
             AddSystem<PlayerInputSystem>();
-            AddSystem<PlayerInputCleanupSystem>();
         }
 
         protected override void OnDeconstruct()

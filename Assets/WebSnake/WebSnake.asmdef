@@ -6,6 +6,7 @@
         "ME.Pools",
         "ME.ECS.Serializer",
         "ME.ECS.IL2CPP",
+        "ME.ECS.Markers",
         "Unity.Collections",
         "Cinemachine"
     ],

@@ -15,6 +15,21 @@
       },
       "hash": "b514888190be674ab21f074193fa1126ee747f27"
     },
+    "com.me.ecs.markers": {
+      "version": "https://github.com/chromealex/me.ecs-markers.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.collections": "1.0.0-pre.6",
+        "com.unity.ui": "1.0.0-preview.18",
+        "com.unity.addressables": "1.19.9",
+        "com.unity.burst": "1.5.6",
+        "com.unity.mathematics": "1.2.1",
+        "com.unity.localization": "1.0.5",
+        "com.unity.profiling.core": "1.0.0"
+      },
+      "hash": "1517c80981eab80c722fb92b455f78903be9bb59"
+    },
     "com.unity.addressables": {
       "version": "1.19.19",
       "depth": 1,
@@ -44,6 +59,15 @@
       "source": "registry",
       "dependencies": {
         "com.unity.mathematics": "1.2.1"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.cinemachine": {
+      "version": "2.8.9",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.test-framework": "1.1.31"
       },
       "url": "https://packages.unity.com"
     },

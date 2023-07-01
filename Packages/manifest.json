@@ -1,7 +1,9 @@
 {
   "dependencies": {
+    "com.me.ecs.markers": "https://github.com/chromealex/me.ecs-markers.git",
     "com.me.ecs": "https://github.com/chromealex/ecs-submodule.git",
     "com.unity.ai.navigation": "1.1.4",
+    "com.unity.cinemachine": "2.8.9",
     "com.unity.feature.development": "1.0.1",
     "com.unity.ide.rider": "3.0.24",
     "com.unity.ide.visualstudio": "2.0.18",

@@ -1,6 +1,7 @@
 ﻿using ME.ECS;
 using WebSnake.Components;
 using WebSnake.Web;
+using GameWebSocket = WebSnake.Components.GameWebSocket;
 
 namespace WebSnake.Systems
 {

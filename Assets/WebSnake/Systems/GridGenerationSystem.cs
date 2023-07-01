@@ -30,12 +30,6 @@ namespace WebSnake.Systems
                 return;
 
             var configFeature = world.GetFeature<ConfigFeature>();
-            if (!configFeature)
-            {
-                Debug.LogError("ConfigFeature is null");
-                return;
-            }
-
             var generateGrid = world.GetSharedDataOneShot<GenerateGrid>();
 
             world.AddEntity("Grid")

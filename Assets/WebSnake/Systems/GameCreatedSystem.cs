@@ -3,6 +3,7 @@ using UnityEngine;
 using WebSnake.Components;
 using WebSnake.Features.Config;
 using WebSnake.Web;
+using GameWebSocket = WebSnake.Components.GameWebSocket;
 
 namespace WebSnake.Systems
 {
@@ -38,12 +39,6 @@ namespace WebSnake.Systems
         private void StartGame(CreateGameResponse createGameResponse)
         {
             var configFeature = world.GetFeature<ConfigFeature>();
-            if (!configFeature)
-            {
-                Debug.LogError("ConfigFeature is null");
-                return;
-            }
-
             world.SetSharedData(new GameId {Value = createGameResponse.Payload.Id});
             world.SetSharedData(new CollectedApplesCount {Value = createGameResponse.Payload.CollectedApples});
             world.SetSharedDataOneShot(new GenerateGrid

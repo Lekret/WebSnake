@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace WebSnake.Web
 {
-    public class WebSocketWrapper : IGameWebSocket
+    public class GameWebSocket : IGameWebSocket
     {
         private readonly CancellationTokenSource _cts = new();
         private readonly ClientWebSocket _webSocket = new();

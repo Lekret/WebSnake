@@ -37,12 +37,6 @@ namespace WebSnake.Systems
                 return;
 
             var configFeature = world.GetFeature<ConfigFeature>();
-            if (!configFeature)
-            {
-                Debug.LogError("ConfigFeature is null");
-                return;
-            }
-
             var snakeEntity = world.AddEntity("Snake")
                 .Set<SnakeTag>()
                 .Set(new BodyLength {Value = configFeature.SnakeLength})

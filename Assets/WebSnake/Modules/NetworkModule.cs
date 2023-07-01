@@ -1,3 +1,5 @@
+using WebSnake.Modules.FakeNetworking;
+
 namespace WebSnake.Modules {
     
     using TState = WebSnakeState;
@@ -15,22 +17,19 @@ namespace WebSnake.Modules {
     {
         protected override int GetRPCOrder() 
         {
-            // Order all RPC packages by world id
             return this.world.id;
         }
 
         protected override ME.ECS.Network.NetworkType GetNetworkType() 
         {
-            // Initialize network with RunLocal and SendToNet
             return ME.ECS.Network.NetworkType.SendToNet | ME.ECS.Network.NetworkType.RunLocal;
         }
 
         protected override void OnInitialize() 
         {
-            // TODO: Set your transport layer and serializer
-            // var instance = (ME.ECS.Network.INetworkModuleBase)this;
-            // instance.SetTransporter(new CustomTransport()); // ITransporter
-            // instance.SetSerializer(new CustomSerializer()); // ISerializer
+            var instance = (ME.ECS.Network.INetworkModuleBase)this;
+            instance.SetTransporter(new FakeTransporter(GetNetworkType()));
+            instance.SetSerializer(new FSSerializer());
         }
     }
 }

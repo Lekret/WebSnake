@@ -22,7 +22,7 @@ namespace WebSnake.Features.Gameplay
             AddSystem<GameCreatedSystem>();
             AddSystem<GridGenerationSystem>();
             AddSystem<SnakeSpawnSystem>();
-            AddSystem<SnakeDirectionSystem>();
+            AddSystem<SnakeHandleInputSystem>();
             AddSystem<SnakeMovementSystem>();
             AddSystem<CameraFollowSystem>();
             AddSystem<GameEndedSystem>();
