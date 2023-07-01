@@ -13,17 +13,30 @@ namespace WebSnake.Features.Config
     {
         public GameObject TilePrefab;
         public GameObject SnakeView;
+        public GameObject SnakeSegmentView;
+        public GameObject AppleView;
+        public GameObject BananaView;
         
+        [Header("Grid")]
         public int GridWidth = 32;
         public int GridHeight = 32;
+        
+        [Header("Snake")]
         public int SnakeLength = 3;
         public float SnakeMovementInterval = 0.33f;
+        
+        [Header("Food")]
+        public int AppleFoodBodyLenghtGain = 1;
+        public int BananaFoodBodyLengthGain = 2;
+        public float BananaExistTimer;
 
         public ViewId SnakeViewId { get; private set; }
+        public ViewId SnakeSegmentViewId { get; private set; }
         
         protected override void OnConstruct()
         {
             SnakeViewId = world.RegisterViewSource(SnakeView);
+            SnakeSegmentViewId = world.RegisterViewSource(SnakeSegmentView);
         }
 
         protected override void OnDeconstruct()

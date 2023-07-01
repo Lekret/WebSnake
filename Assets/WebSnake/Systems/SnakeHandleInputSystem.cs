@@ -21,7 +21,7 @@ namespace WebSnake.Systems
 
         void ISystemBase.OnConstruct()
         {
-            _snakeFilter = Filter.Create("SnakeFilter-SnakeMovementSystem").With<SnakeTag>().Without<Dead>().Push();
+            _snakeFilter = Filter.Create("SnakeFilter-SnakeMovementSystem").With<SnakeTag>().Without<DeadTag>().Push();
             var net = world.GetModule<NetworkModule>();
             net.RegisterObject(this);
             _inputMovementDirectionRpc = net

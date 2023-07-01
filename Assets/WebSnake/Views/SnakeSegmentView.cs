@@ -1,11 +1,10 @@
 ﻿using ME.ECS;
 using ME.ECS.Views.Providers;
 using WebSnake.Components;
-using WebSnake.Utils;
 
 namespace WebSnake.Views
 {
-    public class SnakeView : MonoBehaviourView
+    public class SnakeSegmentView : MonoBehaviourView
     {
         public override bool applyStateJob => false;
         

@@ -24,7 +24,7 @@ namespace WebSnake.Systems
 
         void IAdvanceTick.AdvanceTick(in float deltaTime)
         {
-            if (world.HasSharedData<GameLaunched>())
+            if (world.HasSharedData<GameLaunchedTag>())
                 return;
 
             var webSocket = new GameWebSocket();
@@ -35,7 +35,7 @@ namespace WebSnake.Systems
                 Data = new CreateGameRequest(),
                 ResponseType = typeof(CreateGameResponse)
             });
-            world.SetSharedData(new GameLaunched());
+            world.SetSharedData(new GameLaunchedTag());
         }
     }
 }

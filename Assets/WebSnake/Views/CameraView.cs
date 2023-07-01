@@ -4,7 +4,7 @@ using ME.ECS.Views;
 using ME.ECS.Views.Providers;
 using UnityEngine;
 using WebSnake.Components;
-using WebSnake.Extensions;
+using WebSnake.Utils;
 
 namespace WebSnake.Views
 {
@@ -31,7 +31,7 @@ namespace WebSnake.Views
             }
 
             var cameraTarget = entity.Read<CameraTarget>();
-            if (world.GetViewsRepo().TryGetView(cameraTarget.EntityId, out var view))
+            if (world.TryGetEntityView(cameraTarget.EntityId, out var view))
             {
                 _virtualCamera.Follow = view.transform;
                 _virtualCamera.LookAt = view.transform;

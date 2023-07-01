@@ -1,11 +1,14 @@
-﻿using ME.ECS;
+﻿using System;
+using System.Collections.Generic;
+using ME.ECS;
+using ME.ECS.Collections.LowLevel.Unsafe;
 using ME.ECS.Views;
+using Unity.Collections;
 using UnityEngine;
 using WebSnake.Components;
 using WebSnake.Features.Config;
 using WebSnake.Features.Gameplay;
 using WebSnake.Views;
-using Grid = WebSnake.Components.Grid;
 
 namespace WebSnake.Systems
 {
@@ -23,7 +26,7 @@ namespace WebSnake.Systems
         void ISystemBase.OnConstruct()
         {
             _gridFilter = Filter.Create("GridFilter-SnakeSpawnSystem")
-                .With<Grid>()
+                .With<GridTag>()
                 .With<GridSize>()
                 .Push();
         }
@@ -37,22 +40,24 @@ namespace WebSnake.Systems
             if (!world.HasSharedDataOneShot<SpawnSnake>())
                 return;
 
-            var snakeEntity = CreateSnake();
-            CreateSnakeCamera(snakeEntity.id);
+            var snake = CreateSnake();
+            CreateSnakeCamera(snake.id);
         }
 
         private Entity CreateSnake()
         {
             var configFeature = world.GetFeature<ConfigFeature>();
-            var snakeEntity = world.AddEntity("Snake")
+            var snake = world.AddEntity("Snake")
                 .Set<SnakeTag>()
+                .Set<SnakeSegmentTag>()
+                .Set(new SnakeSegmentIndex {Value = 0})
                 .Set(new BodyLength {Value = configFeature.SnakeLength})
                 .Set(new Position {Value = GetSnakePosition()})
-                .Set<Rotation>()
+                .Set(new Rotation {Value = Quaternion.identity})
                 .Set(new MovementDirection {Value = Vector2Int.up})
                 .Set(new MovementInterval {Value = configFeature.SnakeMovementInterval});
-            world.InstantiateView(configFeature.SnakeViewId, snakeEntity);
-            return snakeEntity;
+            world.InstantiateView(configFeature.SnakeViewId, snake);
+            return snake;
         }
 
         private void CreateSnakeCamera(int targetEntityId)

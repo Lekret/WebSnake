@@ -47,7 +47,7 @@ namespace WebSnake.Systems
                 Height = configFeature.GridHeight
             });
             world.SetSharedDataOneShot(new SpawnSnake());
-            world.SetSharedData(new GameLoaded());
+            world.SetSharedData(new GameLoadedTag());
         }
     }
 }

@@ -8,7 +8,7 @@ namespace WebSnake.Components
         public int Height;
     }
 
-    public struct Grid : IStructComponent, IComponentsTag
+    public struct GridTag : IStructComponent, IComponentsTag
     {
         
     }

@@ -3,7 +3,6 @@ using UnityEngine;
 using WebSnake.Components;
 using WebSnake.Features.Config;
 using WebSnake.Features.Gameplay;
-using Grid = WebSnake.Components.Grid;
 
 namespace WebSnake.Systems
 {
@@ -33,7 +32,7 @@ namespace WebSnake.Systems
             var generateGrid = world.GetSharedDataOneShot<GenerateGrid>();
 
             world.AddEntity("Grid")
-                .Set<Grid>()
+                .Set<GridTag>()
                 .Set(new GridSize
                 {
                     Width = generateGrid.Width,
