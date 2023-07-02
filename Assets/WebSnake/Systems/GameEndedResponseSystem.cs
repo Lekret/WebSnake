@@ -1,7 +1,6 @@
 ﻿using ME.ECS;
 using WebSnake.Components;
 using WebSnake.Web;
-using GameWebSocket = WebSnake.Components.GameWebSocket;
 
 namespace WebSnake.Systems
 {
@@ -24,10 +23,10 @@ namespace WebSnake.Systems
 
         void IAdvanceTick.AdvanceTick(in float deltaTime)
         {
-            if (!world.HasSharedData<GameWebSocket>())
+            if (!world.HasSharedData<GameWebSocketHolder>())
                 return;
 
-            var webSocket = world.ReadSharedData<GameWebSocket>();
+            var webSocket = world.ReadSharedData<GameWebSocketHolder>();
             while (webSocket.Value.TryRead(out EndGameResponse response))
             {
                 EndGame(response);

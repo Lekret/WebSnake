@@ -3,7 +3,6 @@ using ME.ECS;
 using UnityEngine;
 using WebSnake.Components;
 using WebSnake.Features.Config;
-using WebSnake.Features.Gameplay;
 
 namespace WebSnake.Systems
 {

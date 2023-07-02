@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using ME.ECS;
-using ME.ECS.Collections.LowLevel.Unsafe;
-using ME.ECS.Views;
-using Unity.Collections;
+﻿using ME.ECS;
 using UnityEngine;
 using WebSnake.Components;
 using WebSnake.Features.Config;
 using WebSnake.Features.Gameplay;
 using WebSnake.Utils;
-using WebSnake.Views;
 
 namespace WebSnake.Systems
 {

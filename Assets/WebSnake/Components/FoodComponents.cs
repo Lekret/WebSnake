@@ -15,6 +15,14 @@ namespace WebSnake.Components
         public int Value;
     }
 
+    public struct CollectableTag : IStructComponent, IComponentsTag
+    {
+    }
+
+    public struct AppleCollected : IComponentOneShot
+    {
+    }
+
     public struct CollectedBy : IComponentOneShot
     {
         public int Value;

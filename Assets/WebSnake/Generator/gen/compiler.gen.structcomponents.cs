@@ -9,9 +9,9 @@ namespace ME.ECS {
             CoreComponentsInitializer.InitTypeId();
 
 
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.ApplesCollected>(false, true, true, false, false, true, false, true, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.BodyLength>(false, true, true, false, false, true, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.CameraTarget>(false, true, true, false, false, false, false, false, false);
-            WorldUtilities.InitComponentTypeId<WebSnake.Components.CollectedApplesCount>(false, true, true, false, false, false, false, true, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GameId>(false, true, true, false, false, false, false, true, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GridSize>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.MovementDirection>(false, true, true, false, false, false, false, false, false);
@@ -28,6 +28,7 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.AppleTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.BananaTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.CameraTag>(true, true, true, false, false, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.CollectableTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.DeadTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.DestroyedTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GameLaunchedTag>(true, true, true, false, false, false, false, true, false);
@@ -37,11 +38,13 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SnakeSegmentTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SnakeTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.TransformView>(true, true, true, false, false, false, false, false, false);
-            WorldUtilities.InitComponentTypeId<WebSnake.Components.GameWebSocket>(false, false, false, false, true, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.GameWebSocketHolder>(false, false, false, false, true, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.PositionToTile>(false, false, false, false, true, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SendRequest>(false, false, false, false, true, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.AppleCollected>(true, false, false, false, false, false, false, false, true);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.CollectedBy>(false, false, false, false, false, false, false, false, true);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GenerateGrid>(false, false, false, false, false, false, false, true, true);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.Moved>(true, false, false, false, false, false, false, false, true);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SpawnSnake>(true, false, false, false, false, false, false, true, true);
 
         }
@@ -53,9 +56,9 @@ namespace ME.ECS {
             CoreComponentsInitializer.InitTypeId();
 
 
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.ApplesCollected>(false, true, true, false, false, true, false, true, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.BodyLength>(false, true, true, false, false, true, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.CameraTarget>(false, true, true, false, false, false, false, false, false);
-            WorldUtilities.InitComponentTypeId<WebSnake.Components.CollectedApplesCount>(false, true, true, false, false, false, false, true, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GameId>(false, true, true, false, false, false, false, true, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GridSize>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.MovementDirection>(false, true, true, false, false, false, false, false, false);
@@ -72,6 +75,7 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.AppleTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.BananaTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.CameraTag>(true, true, true, false, false, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.CollectableTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.DeadTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.DestroyedTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GameLaunchedTag>(true, true, true, false, false, false, false, true, false);
@@ -81,20 +85,22 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SnakeSegmentTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SnakeTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.TransformView>(true, true, true, false, false, false, false, false, false);
-            WorldUtilities.InitComponentTypeId<WebSnake.Components.GameWebSocket>(false, false, false, false, true, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.GameWebSocketHolder>(false, false, false, false, true, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.PositionToTile>(false, false, false, false, true, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SendRequest>(false, false, false, false, true, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.AppleCollected>(true, false, false, false, false, false, false, false, true);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.CollectedBy>(false, false, false, false, false, false, false, false, true);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GenerateGrid>(false, false, false, false, false, false, false, true, true);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.Moved>(true, false, false, false, false, false, false, false, true);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SpawnSnake>(true, false, false, false, false, false, false, true, true);
 
             ComponentsInitializerWorld.Setup(ComponentsInitializerWorldGen.Init);
             CoreComponentsInitializer.Init(state, ref noState);
 
 
+            state.structComponents.ValidateUnmanaged<WebSnake.Components.ApplesCollected>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.BodyLength>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.CameraTarget>(ref state.allocator, false);
-            state.structComponents.ValidateUnmanaged<WebSnake.Components.CollectedApplesCount>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.GameId>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.GridSize>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.MovementDirection>(ref state.allocator, false);
@@ -111,6 +117,7 @@ namespace ME.ECS {
             state.structComponents.ValidateUnmanaged<WebSnake.Components.AppleTag>(ref state.allocator, true);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.BananaTag>(ref state.allocator, true);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.CameraTag>(ref state.allocator, true);
+            state.structComponents.ValidateUnmanaged<WebSnake.Components.CollectableTag>(ref state.allocator, true);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.DeadTag>(ref state.allocator, true);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.DestroyedTag>(ref state.allocator, true);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.GameLaunchedTag>(ref state.allocator, true);
@@ -120,11 +127,13 @@ namespace ME.ECS {
             state.structComponents.ValidateUnmanaged<WebSnake.Components.SnakeSegmentTag>(ref state.allocator, true);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.SnakeTag>(ref state.allocator, true);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.TransformView>(ref state.allocator, true);
-            state.structComponents.ValidateCopyable<WebSnake.Components.GameWebSocket>(false);
+            state.structComponents.ValidateCopyable<WebSnake.Components.GameWebSocketHolder>(false);
             state.structComponents.ValidateCopyable<WebSnake.Components.PositionToTile>(false);
             state.structComponents.ValidateCopyable<WebSnake.Components.SendRequest>(false);
+            noState.storage.ValidateOneShot<WebSnake.Components.AppleCollected>(true);
             noState.storage.ValidateOneShot<WebSnake.Components.CollectedBy>(false);
             noState.storage.ValidateOneShot<WebSnake.Components.GenerateGrid>(false);
+            noState.storage.ValidateOneShot<WebSnake.Components.Moved>(true);
             noState.storage.ValidateOneShot<WebSnake.Components.SpawnSnake>(true);
 
         }
@@ -136,9 +145,9 @@ namespace ME.ECS {
         public static void Init(Entity entity) {
 
 
+            entity.ValidateDataUnmanaged<WebSnake.Components.ApplesCollected>(false);
             entity.ValidateDataUnmanaged<WebSnake.Components.BodyLength>(false);
             entity.ValidateDataUnmanaged<WebSnake.Components.CameraTarget>(false);
-            entity.ValidateDataUnmanaged<WebSnake.Components.CollectedApplesCount>(false);
             entity.ValidateDataUnmanaged<WebSnake.Components.GameId>(false);
             entity.ValidateDataUnmanaged<WebSnake.Components.GridSize>(false);
             entity.ValidateDataUnmanaged<WebSnake.Components.MovementDirection>(false);
@@ -155,6 +164,7 @@ namespace ME.ECS {
             entity.ValidateDataUnmanaged<WebSnake.Components.AppleTag>(true);
             entity.ValidateDataUnmanaged<WebSnake.Components.BananaTag>(true);
             entity.ValidateDataUnmanaged<WebSnake.Components.CameraTag>(true);
+            entity.ValidateDataUnmanaged<WebSnake.Components.CollectableTag>(true);
             entity.ValidateDataUnmanaged<WebSnake.Components.DeadTag>(true);
             entity.ValidateDataUnmanaged<WebSnake.Components.DestroyedTag>(true);
             entity.ValidateDataUnmanaged<WebSnake.Components.GameLaunchedTag>(true);
@@ -164,11 +174,13 @@ namespace ME.ECS {
             entity.ValidateDataUnmanaged<WebSnake.Components.SnakeSegmentTag>(true);
             entity.ValidateDataUnmanaged<WebSnake.Components.SnakeTag>(true);
             entity.ValidateDataUnmanaged<WebSnake.Components.TransformView>(true);
-            entity.ValidateDataCopyable<WebSnake.Components.GameWebSocket>(false);
+            entity.ValidateDataCopyable<WebSnake.Components.GameWebSocketHolder>(false);
             entity.ValidateDataCopyable<WebSnake.Components.PositionToTile>(false);
             entity.ValidateDataCopyable<WebSnake.Components.SendRequest>(false);
+            entity.ValidateDataOneShot<WebSnake.Components.AppleCollected>(true);
             entity.ValidateDataOneShot<WebSnake.Components.CollectedBy>(false);
             entity.ValidateDataOneShot<WebSnake.Components.GenerateGrid>(false);
+            entity.ValidateDataOneShot<WebSnake.Components.Moved>(true);
             entity.ValidateDataOneShot<WebSnake.Components.SpawnSnake>(true);
 
         }

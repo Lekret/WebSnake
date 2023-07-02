@@ -53,6 +53,7 @@ namespace WebSnake.Systems
 
                 var apple = world.AddEntity("Apple")
                     .Set<AppleTag>()
+                    .Set<CollectableTag>()
                     .Set(new Nutrition {Value = configFeature.AppleNutrition})
                     .Set(tile.Read<Position>());
                 world.InstantiateView(configFeature.AppleViewId, apple);

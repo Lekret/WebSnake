@@ -2,7 +2,6 @@
 using ME.ECS;
 using WebSnake.Components;
 using WebSnake.Utils;
-using Vector3 = UnityEngine.Vector3;
 
 namespace WebSnake.Systems
 {
@@ -64,8 +63,7 @@ namespace WebSnake.Systems
                 MoveSegments(segmentBuffer);
                 PoolList<Entity>.Recycle(segmentBuffer);
                 
-                TryCollectAtTile(position.Value, snake.id);
-                GridUtils.OccupyTile(world, snake);
+                snake.SetOneShot<Moved>();
             }
         }
 
@@ -104,21 +102,6 @@ namespace WebSnake.Systems
                 curSegment.Get<MovementDirection>().Value = curPosition.Value - prevPosition.Value;
                 GridUtils.OccupyTile(world, curSegment);
             }
-        }
-        
-        private void TryCollectAtTile(Vector3 tilePosition, int snakeId)
-        {
-            var tile = GridUtils.GetTileAtPosition(world, tilePosition);
-            if (!tile.Has<OccupiedBy>())
-                return;
-            
-            var occupantId = tile.Read<OccupiedBy>().Value;
-            var occupant = world.GetEntityById(occupantId);
-            occupant.SetOneShot(new CollectedBy
-            {
-                Value = snakeId
-            });
-            GridUtils.DeoccupyTile(tile);
         }
     }
 }

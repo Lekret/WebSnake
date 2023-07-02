@@ -17,9 +17,14 @@ namespace WebSnake.Web
         [JsonProperty("type")] public readonly string Type = "collect-apple";
         [JsonProperty("payload")] public Data Payload;
 
-        public AppleCollectedRequest()
+        public AppleCollectedRequest(int applesCount, int snakeLength, int gameId)
         {
-            Payload = new Data();
+            Payload = new Data
+            {
+                AppleCount = applesCount,
+                SnakeLength = snakeLength,
+                GameId = gameId
+            };
         }
     }
 }

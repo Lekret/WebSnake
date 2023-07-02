@@ -35,6 +35,10 @@ namespace WebSnake.Components
         public Vector3 Value;
     }
 
+    public struct Moved : IComponentOneShot
+    {
+    }
+
     public struct NewMovementDirection : IStructComponent
     {
         public Vector3 Value;

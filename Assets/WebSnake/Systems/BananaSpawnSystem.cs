@@ -44,7 +44,7 @@ namespace WebSnake.Systems
                 return;
 
             var configFeature = world.GetFeature<ConfigFeature>();
-            var collectedApplesCount = world.ReadSharedData<CollectedApplesCount>().Value;
+            var collectedApplesCount = world.ReadSharedData<ApplesCollected>().Value;
             if (collectedApplesCount % configFeature.ApplesCollectedToSpawnBanana != 0) 
                 return;
             
@@ -57,6 +57,7 @@ namespace WebSnake.Systems
                     
             var banana = world.AddEntity("Banana")
                 .Set<AppleTag>()
+                .Set<CollectableTag>()
                 .Set(new Nutrition {Value = configFeature.BananaNutrition})
                 .Set(tile.Read<Position>());
             world.InstantiateView(configFeature.BananaViewId, banana);

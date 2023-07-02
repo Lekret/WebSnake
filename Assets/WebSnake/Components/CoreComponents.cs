@@ -25,7 +25,7 @@ namespace WebSnake.Components
         public int EntityId;
     }
 
-    public struct CollectedApplesCount : IStructComponent, IComponentShared
+    public struct ApplesCollected : IStructComponent, IComponentShared, IVersioned
     {
         public int Value;
     }

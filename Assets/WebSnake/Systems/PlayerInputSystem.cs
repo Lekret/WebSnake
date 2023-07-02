@@ -1,6 +1,5 @@
 ﻿using ME.ECS;
 using UnityEngine;
-using WebSnake.Features.Input;
 using WebSnake.Markers;
 
 namespace WebSnake.Systems

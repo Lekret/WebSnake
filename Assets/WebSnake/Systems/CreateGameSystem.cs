@@ -1,7 +1,6 @@
 ﻿using ME.ECS;
 using WebSnake.Components;
 using WebSnake.Web;
-using GameWebSocket = WebSnake.Web.GameWebSocket;
 
 namespace WebSnake.Systems
 {
@@ -29,12 +28,13 @@ namespace WebSnake.Systems
 
             var webSocket = new GameWebSocket();
             webSocket.Connect("wss://dev.match.qubixinfinity.io/snake");
-            world.SetSharedData(new Components.GameWebSocket {Value = webSocket});
-            world.AddEntity("CreateGameRequest", EntityFlag.DestroyWithoutComponents).Set(new SendRequest
-            {
-                Data = new CreateGameRequest(),
-                ResponseType = typeof(CreateGameResponse)
-            });
+            world.SetSharedData(new GameWebSocketHolder {Value = webSocket});
+            world.AddEntity(nameof(CreateGameRequest), EntityFlag.DestroyWithoutComponents)
+                .Set(new SendRequest
+                {
+                    Data = new CreateGameRequest(),
+                    ResponseType = typeof(CreateGameResponse)
+                });
             world.SetSharedData(new GameLaunchedTag());
         }
     }

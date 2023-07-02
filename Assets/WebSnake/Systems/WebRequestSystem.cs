@@ -25,10 +25,10 @@ namespace WebSnake.Systems
 
         void IAdvanceTick.AdvanceTick(in float deltaTime)
         {
-            if (!world.HasSharedData<GameWebSocket>())
+            if (!world.HasSharedData<GameWebSocketHolder>())
                 return;
 
-            var socket = world.ReadSharedData<GameWebSocket>();
+            var socket = world.ReadSharedData<GameWebSocketHolder>();
 
             foreach (var entity in _filter)
             {

@@ -1,9 +1,7 @@
 ﻿using ME.ECS;
-using UnityEngine;
 using WebSnake.Components;
 using WebSnake.Features.Config;
 using WebSnake.Web;
-using GameWebSocket = WebSnake.Components.GameWebSocket;
 
 namespace WebSnake.Systems
 {
@@ -26,10 +24,10 @@ namespace WebSnake.Systems
 
         void IAdvanceTick.AdvanceTick(in float deltaTime)
         {
-            if (!world.HasSharedData<GameWebSocket>())
+            if (!world.HasSharedData<GameWebSocketHolder>())
                 return;
 
-            var webSocket = world.ReadSharedData<GameWebSocket>();
+            var webSocket = world.ReadSharedData<GameWebSocketHolder>();
             while (webSocket.Value.TryRead(out CreateGameResponse createGameResponse))
             {
                 StartGame(createGameResponse);
@@ -40,7 +38,7 @@ namespace WebSnake.Systems
         {
             var configFeature = world.GetFeature<ConfigFeature>();
             world.SetSharedData(new GameId {Value = createGameResponse.Payload.Id});
-            world.SetSharedData(new CollectedApplesCount {Value = createGameResponse.Payload.CollectedApples});
+            world.SetSharedData(new ApplesCollected {Value = createGameResponse.Payload.CollectedApples});
             world.SetSharedDataOneShot(new GenerateGrid
             {
                 Width = configFeature.GridWidth,

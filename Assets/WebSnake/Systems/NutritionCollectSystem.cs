@@ -38,6 +38,12 @@ namespace WebSnake.Systems
                 {
                     collector.Get<BodyLength>().Value += nutrition.Value;
                 }
+
+                if (collected.Has<AppleTag>())
+                {
+                    world.AddEntity("AppleCollected", EntityFlag.DestroyWithoutComponents).SetOneShot<AppleCollected>();
+                }
+
                 collected.Destroy();
             }
         }

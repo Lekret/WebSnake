@@ -13,5 +13,14 @@ namespace WebSnake.Web
         }
 
         [JsonProperty("type")] public readonly string Type = "end-game";
+        [JsonProperty("payload")] public readonly Data Payload;
+
+        public EndGameRequest(int gameId)
+        {
+            Payload = new Data
+            {
+                GameId = gameId
+            };
+        }
     }
 }
