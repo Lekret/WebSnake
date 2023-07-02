@@ -20,9 +20,9 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.NewMovementDirection>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Nutrition>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.OccupiedBy>(false, true, true, false, false, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.OldMovementDirection>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.ParentId>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Position>(false, true, true, false, false, false, false, false, false);
-            WorldUtilities.InitComponentTypeId<WebSnake.Components.PreviousPosition>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Rotation>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SnakeSegmentIndex>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.AppleTag>(true, true, true, false, false, false, false, false, false);
@@ -68,9 +68,9 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.NewMovementDirection>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Nutrition>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.OccupiedBy>(false, true, true, false, false, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.OldMovementDirection>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.ParentId>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Position>(false, true, true, false, false, false, false, false, false);
-            WorldUtilities.InitComponentTypeId<WebSnake.Components.PreviousPosition>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Rotation>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SnakeSegmentIndex>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.AppleTag>(true, true, true, false, false, false, false, false, false);
@@ -111,9 +111,9 @@ namespace ME.ECS {
             state.structComponents.ValidateUnmanaged<WebSnake.Components.NewMovementDirection>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.Nutrition>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.OccupiedBy>(ref state.allocator, false);
+            state.structComponents.ValidateUnmanaged<WebSnake.Components.OldMovementDirection>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.ParentId>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.Position>(ref state.allocator, false);
-            state.structComponents.ValidateUnmanaged<WebSnake.Components.PreviousPosition>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.Rotation>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.SnakeSegmentIndex>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.AppleTag>(ref state.allocator, true);
@@ -159,9 +159,9 @@ namespace ME.ECS {
             entity.ValidateDataUnmanaged<WebSnake.Components.NewMovementDirection>(false);
             entity.ValidateDataUnmanaged<WebSnake.Components.Nutrition>(false);
             entity.ValidateDataUnmanaged<WebSnake.Components.OccupiedBy>(false);
+            entity.ValidateDataUnmanaged<WebSnake.Components.OldMovementDirection>(false);
             entity.ValidateDataUnmanaged<WebSnake.Components.ParentId>(false);
             entity.ValidateDataUnmanaged<WebSnake.Components.Position>(false);
-            entity.ValidateDataUnmanaged<WebSnake.Components.PreviousPosition>(false);
             entity.ValidateDataUnmanaged<WebSnake.Components.Rotation>(false);
             entity.ValidateDataUnmanaged<WebSnake.Components.SnakeSegmentIndex>(false);
             entity.ValidateDataUnmanaged<WebSnake.Components.AppleTag>(true);

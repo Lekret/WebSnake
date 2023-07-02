@@ -43,19 +43,21 @@ namespace WebSnake.Systems
                 if (movementIntervalAccum.Value < snake.Read<MovementInterval>().Value)
                     continue;
 
+                GridUtils.DeoccupyTile(world, snake);
+                
                 movementIntervalAccum.Value = 0f;
-                ref var movementDirection = ref snake.Get<MovementDirection>();
+                ref var movementDir = ref snake.Get<MovementDirection>();
+                ref var position = ref snake.Get<Position>();
+                ref var oldMovementDir = ref snake.Get<OldMovementDirection>();
+                oldMovementDir.Value = movementDir.Value;
+                
                 if (snake.Has<NewMovementDirection>())
                 {
-                    movementDirection.Value = snake.Read<NewMovementDirection>().Value;
+                    movementDir.Value = snake.Read<NewMovementDirection>().Value;
                     snake.Remove<NewMovementDirection>();
                 }
-
-                GridUtils.DeoccupyTile(world, snake);
-                ref var position = ref snake.Get<Position>();
-                ref var previousPosition = ref snake.Get<PreviousPosition>();
-                previousPosition.Value = position.Value;
-                position.Value += movementDirection.Value;
+                
+                position.Value += movementDir.Value;
                 TryTeleport(ref position);
 
                 var segments = PoolList<Entity>.Spawn(100);
@@ -64,23 +66,6 @@ namespace WebSnake.Systems
                 PoolList<Entity>.Recycle(segments);
                 
                 snake.SetOneShot<Moved>();
-            }
-        }
-
-        private void TryTeleport(ref Position segmentPosition)
-        {
-            foreach (var grid in _gridFilter)
-            {
-                var gridSize = grid.Read<GridSize>();
-
-                if (segmentPosition.Value.z < 0)
-                    segmentPosition.Value.z = gridSize.Height - 1;
-                else if (segmentPosition.Value.z >= gridSize.Height)
-                    segmentPosition.Value.z = 0;
-                else if (segmentPosition.Value.x < 0)
-                    segmentPosition.Value.x = gridSize.Width - 1;
-                else if (segmentPosition.Value.x >= gridSize.Width)
-                    segmentPosition.Value.x = 0;
             }
         }
 
@@ -95,12 +80,32 @@ namespace WebSnake.Systems
                 var prevSegment = segments[i - 1];
                 var curSegment = segments[i];
                 GridUtils.DeoccupyTile(world, curSegment);
-                ref var prevPosition = ref curSegment.Get<PreviousPosition>();
-                ref var curPosition = ref curSegment.Get<Position>();
-                prevPosition.Value = curPosition.Value;
-                curPosition.Value = prevSegment.Read<PreviousPosition>().Value;
-                curSegment.Get<MovementDirection>().Value = curPosition.Value - prevPosition.Value;
+                ref var position = ref curSegment.Get<Position>();
+                ref var movementDir = ref curSegment.Get<MovementDirection>();
+                ref var oldMovementDir = ref curSegment.Get<OldMovementDirection>();
+                var prevOldMovementDir = prevSegment.Read<OldMovementDirection>();
+                oldMovementDir.Value = movementDir.Value;
+                movementDir.Value = prevOldMovementDir.Value;
+                position.Value += movementDir.Value;
+                TryTeleport(ref position);
                 GridUtils.OccupyTile(world, curSegment);
+            }
+        }
+        
+        private void TryTeleport(ref Position segmentPosition)
+        {
+            foreach (var grid in _gridFilter)
+            {
+                var gridSize = grid.Read<GridSize>();
+
+                if (segmentPosition.Value.z < 0)
+                    segmentPosition.Value.z = gridSize.Height - 1;
+                else if (segmentPosition.Value.z >= gridSize.Height)
+                    segmentPosition.Value.z = 0;
+                else if (segmentPosition.Value.x < 0)
+                    segmentPosition.Value.x = gridSize.Width - 1;
+                else if (segmentPosition.Value.x >= gridSize.Width)
+                    segmentPosition.Value.x = 0;
             }
         }
     }

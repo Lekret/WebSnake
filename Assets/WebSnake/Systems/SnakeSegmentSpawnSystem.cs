@@ -55,14 +55,14 @@ namespace WebSnake.Systems
             {
                 var prevSegment = segments[idx - 1];
                 var prevMovementDirection = prevSegment.Read<MovementDirection>();
-                var segmentPosition = prevSegment.Read<PreviousPosition>().Value;
+                var prevPosition = prevSegment.Read<Position>();
+                var position = prevPosition.Value - prevMovementDirection.Value;
                 var segmentEntity = world.AddEntity("SnakeSegment")
                     .Set<SnakeSegmentTag>()
                     .Set(new SnakeSegmentIndex {Value = idx})
                     .Set(new ParentId {Value = snake.id})
-                    .Set(new Position {Value = segmentPosition})
+                    .Set(new Position {Value = position})
                     .Set(new Rotation {Value = Quaternion.identity})
-                    .Set(new PreviousPosition {Value = segmentPosition - prevMovementDirection.Value})
                     .Set(prevMovementDirection);
                 world.InstantiateView(configFeature.SnakeSegmentView, segmentEntity);
                 GridUtils.OccupyTile(world, segmentEntity);
@@ -70,7 +70,7 @@ namespace WebSnake.Systems
                 segmentEntity.Set<SnakeTailTag>();
                 segments.Add(segmentEntity);
 
-                Debug.Log($"Created ({idx}) snake segment  at {segmentPosition}");
+                Debug.Log($"Created ({idx}) snake segment  at {position}");
             }
         }
     }

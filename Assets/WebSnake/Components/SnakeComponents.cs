@@ -20,12 +20,12 @@ namespace WebSnake.Components
         public int Value;
     }
 
-    public struct PreviousPosition : IStructComponent
+    public struct MovementDirection : IStructComponent
     {
         public Vector3 Value;
     }
-
-    public struct MovementDirection : IStructComponent
+    
+    public struct OldMovementDirection : IStructComponent
     {
         public Vector3 Value;
     }

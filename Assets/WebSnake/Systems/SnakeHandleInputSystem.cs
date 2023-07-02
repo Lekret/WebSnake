@@ -45,11 +45,11 @@ namespace WebSnake.Systems
         {
             foreach (var entity in _snakeFilter)
             {
-                var movementDirection = entity.Read<MovementDirection>();
-                var newMovementDirection = new Vector3(input.Value.x, 0, input.Value.y);
-                if (Mathf.Approximately(Vector3.Dot(movementDirection.Value, newMovementDirection), 0))
+                var movementDir = entity.Read<MovementDirection>();
+                var newMovementDir = new Vector3(input.Value.x, 0, input.Value.y);
+                if (Mathf.Approximately(Vector3.Dot(movementDir.Value, newMovementDir), 0))
                 {
-                    entity.Get<NewMovementDirection>().Value = newMovementDirection;
+                    entity.Get<NewMovementDirection>().Value = newMovementDir;
                 }
             }
         }
