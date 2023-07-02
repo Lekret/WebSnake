@@ -8,7 +8,7 @@ namespace WebSnake.Systems
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
 #endif
-    public class LifetimeSystem : ISystem, IAdvanceTick
+    public sealed class LifetimeSystem : ISystem, IAdvanceTick
     {
         private Filter _filter;
         

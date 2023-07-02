@@ -19,7 +19,7 @@ namespace WebSnake.Systems
         {
             _snakeFilter = Filter.Create("SnakeFilter-GameOverSystem")
                 .With<SnakeTag>()
-                .OnChanged<DeadTag>()
+                .With<DeadTag>()
                 .Push();
         }
 
@@ -29,9 +29,12 @@ namespace WebSnake.Systems
 
         void IAdvanceTick.AdvanceTick(in float deltaTime)
         {
+            if (world.HasSharedData<GameOverTag>())
+                return;
+            
             if (_snakeFilter.Count == 0)
                 return;
-
+            
             world.SetSharedData(new GameOverTag());
             world.AddEntity(nameof(EndGameRequest), EntityFlag.DestroyWithoutComponents)
                 .Set(new SendRequest
