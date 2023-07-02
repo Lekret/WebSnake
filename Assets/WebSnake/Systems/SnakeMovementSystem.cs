@@ -39,14 +39,10 @@ namespace WebSnake.Systems
         {
             foreach (var snake in _snakeFilter)
             {
-                ref var movementIntervalAccum = ref snake.Get<MovementIntervalAccum>();
-                movementIntervalAccum.Value += deltaTime;
-                if (movementIntervalAccum.Value < snake.Read<MovementInterval>().Value)
+                UpdateMovementInterval(snake, deltaTime, out var canMove);
+                if (!canMove)
                     continue;
-
-                GridUtils.DeoccupyTile(world, snake);
-                movementIntervalAccum.Value = 0f;
-
+                
                 Vector3? newMovementDirection = null;
                 if (snake.Has<NewMovementDirection>())
                 {
@@ -54,11 +50,27 @@ namespace WebSnake.Systems
                     snake.Remove<NewMovementDirection>();
                 }
                 
+                GridUtils.DeoccupyTile(world, snake);
                 MoveSegment(snake, newMovementDirection);
                 var segments = PoolList<Entity>.Spawn(100);
                 SnakeUtils.GetOrderedSnakeSegments(world, snake.id, segments);
                 MoveSegments(segments);
                 PoolList<Entity>.Recycle(segments);
+            }
+        }
+
+        private static void UpdateMovementInterval(Entity snake, float deltaTime, out bool canMove)
+        {
+            ref var movementIntervalAccum = ref snake.Get<MovementIntervalAccum>();
+            movementIntervalAccum.Value += deltaTime;
+            if (movementIntervalAccum.Value < snake.Read<MovementInterval>().Value)
+            {
+                canMove = false;
+            }
+            else
+            {
+                movementIntervalAccum.Value = 0f;
+                canMove = true;
             }
         }
 
