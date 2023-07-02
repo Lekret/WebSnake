@@ -1,4 +1,5 @@
-﻿using ME.ECS;
+﻿using System.Collections.Generic;
+using ME.ECS;
 using WebSnake.Components;
 using WebSnake.Utils;
 using Vector3 = UnityEngine.Vector3;
@@ -56,20 +57,24 @@ namespace WebSnake.Systems
                 ref var previousPosition = ref snake.Get<PreviousPosition>();
                 previousPosition.Value = position.Value;
                 position.Value += movementDirection.Value;
-                TryTeleport(ref position, ref previousPosition);
+                TryTeleport(ref position);
+
+                var segmentBuffer = PoolList<Entity>.Spawn(100);
+                SnakeUtils.GetOrderedSnakeSegments(world, snake.id, segmentBuffer);
+                MoveSegments(segmentBuffer);
+                PoolList<Entity>.Recycle(segmentBuffer);
+                
                 TryCollectAtTile(position.Value, snake.id);
                 GridUtils.OccupyTile(world, snake);
-                snake.SetOneShot<Moved>();
             }
         }
 
-        private void TryTeleport(ref Position snakePosition, ref PreviousPosition snakePreviousPosition)
+        private void TryTeleport(ref Position snakePosition)
         {
             foreach (var grid in _gridFilter)
             {
                 var gridSize = grid.Read<GridSize>();
 
-                var positionBeforeTeleport = snakePosition.Value;
                 if (snakePosition.Value.z < 0)
                     snakePosition.Value.z = gridSize.Height - 1;
                 else if (snakePosition.Value.z >= gridSize.Height)
@@ -78,14 +83,29 @@ namespace WebSnake.Systems
                     snakePosition.Value.x = gridSize.Width - 1;
                 else if (snakePosition.Value.x >= gridSize.Width)
                     snakePosition.Value.x = 0;
-
-                if (snakePosition.Value != positionBeforeTeleport)
-                {
-                    snakePreviousPosition.Value = positionBeforeTeleport;
-                }
             }
         }
 
+        private void MoveSegments(IReadOnlyList<Entity> segmentsBuffer)
+        {
+            var onlyHeadExists = segmentsBuffer.Count <= 1;
+            if (onlyHeadExists) 
+                return;
+            
+            for (var i = 1; i < segmentsBuffer.Count; i++)
+            {
+                var prevSegment = segmentsBuffer[i - 1];
+                var curSegment = segmentsBuffer[i];
+                GridUtils.DeoccupyTile(world, curSegment);
+                ref var prevPosition = ref curSegment.Get<PreviousPosition>();
+                ref var curPosition = ref curSegment.Get<Position>();
+                prevPosition.Value = curPosition.Value;
+                curPosition.Value = prevSegment.Read<PreviousPosition>().Value;
+                curSegment.Get<MovementDirection>().Value = curPosition.Value - prevPosition.Value;
+                GridUtils.OccupyTile(world, curSegment);
+            }
+        }
+        
         private void TryCollectAtTile(Vector3 tilePosition, int snakeId)
         {
             var tile = GridUtils.GetTileAtPosition(world, tilePosition);

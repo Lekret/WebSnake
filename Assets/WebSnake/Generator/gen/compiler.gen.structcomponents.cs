@@ -42,7 +42,6 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SendRequest>(false, false, false, false, true, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.CollectedBy>(false, false, false, false, false, false, false, false, true);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GenerateGrid>(false, false, false, false, false, false, false, true, true);
-            WorldUtilities.InitComponentTypeId<WebSnake.Components.Moved>(true, false, false, false, false, false, false, false, true);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SpawnSnake>(true, false, false, false, false, false, false, true, true);
 
         }
@@ -87,7 +86,6 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SendRequest>(false, false, false, false, true, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.CollectedBy>(false, false, false, false, false, false, false, false, true);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GenerateGrid>(false, false, false, false, false, false, false, true, true);
-            WorldUtilities.InitComponentTypeId<WebSnake.Components.Moved>(true, false, false, false, false, false, false, false, true);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SpawnSnake>(true, false, false, false, false, false, false, true, true);
 
             ComponentsInitializerWorld.Setup(ComponentsInitializerWorldGen.Init);
@@ -127,7 +125,6 @@ namespace ME.ECS {
             state.structComponents.ValidateCopyable<WebSnake.Components.SendRequest>(false);
             noState.storage.ValidateOneShot<WebSnake.Components.CollectedBy>(false);
             noState.storage.ValidateOneShot<WebSnake.Components.GenerateGrid>(false);
-            noState.storage.ValidateOneShot<WebSnake.Components.Moved>(true);
             noState.storage.ValidateOneShot<WebSnake.Components.SpawnSnake>(true);
 
         }
@@ -172,7 +169,6 @@ namespace ME.ECS {
             entity.ValidateDataCopyable<WebSnake.Components.SendRequest>(false);
             entity.ValidateDataOneShot<WebSnake.Components.CollectedBy>(false);
             entity.ValidateDataOneShot<WebSnake.Components.GenerateGrid>(false);
-            entity.ValidateDataOneShot<WebSnake.Components.Moved>(true);
             entity.ValidateDataOneShot<WebSnake.Components.SpawnSnake>(true);
 
         }
