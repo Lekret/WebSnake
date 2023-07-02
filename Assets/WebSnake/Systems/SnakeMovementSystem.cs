@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ME.ECS;
+using UnityEngine;
 using WebSnake.Components;
 using WebSnake.Utils;
 
@@ -44,28 +45,20 @@ namespace WebSnake.Systems
                     continue;
 
                 GridUtils.DeoccupyTile(world, snake);
-                
                 movementIntervalAccum.Value = 0f;
-                ref var movementDir = ref snake.Get<MovementDirection>();
-                ref var position = ref snake.Get<Position>();
-                ref var oldMovementDir = ref snake.Get<OldMovementDirection>();
-                oldMovementDir.Value = movementDir.Value;
-                
+
+                Vector3? newMovementDirection = null;
                 if (snake.Has<NewMovementDirection>())
                 {
-                    movementDir.Value = snake.Read<NewMovementDirection>().Value;
+                    newMovementDirection = snake.Read<NewMovementDirection>().Value;
                     snake.Remove<NewMovementDirection>();
                 }
                 
-                position.Value += movementDir.Value;
-                TryTeleport(ref position);
-
+                MoveSegment(snake, newMovementDirection);
                 var segments = PoolList<Entity>.Spawn(100);
                 SnakeUtils.GetOrderedSnakeSegments(world, snake.id, segments);
                 MoveSegments(segments);
                 PoolList<Entity>.Recycle(segments);
-                
-                snake.SetOneShot<Moved>();
             }
         }
 
@@ -80,16 +73,22 @@ namespace WebSnake.Systems
                 var prevSegment = segments[i - 1];
                 var curSegment = segments[i];
                 GridUtils.DeoccupyTile(world, curSegment);
-                ref var position = ref curSegment.Get<Position>();
-                ref var movementDir = ref curSegment.Get<MovementDirection>();
-                ref var oldMovementDir = ref curSegment.Get<OldMovementDirection>();
-                var prevOldMovementDir = prevSegment.Read<OldMovementDirection>();
-                oldMovementDir.Value = movementDir.Value;
-                movementDir.Value = prevOldMovementDir.Value;
-                position.Value += movementDir.Value;
-                TryTeleport(ref position);
+                MoveSegment(curSegment, prevSegment.Read<OldMovementDirection>().Value);
                 GridUtils.OccupyTile(world, curSegment);
             }
+        }
+
+        private void MoveSegment(Entity segment, Vector3? newMovementDirection)
+        {
+            ref var position = ref segment.Get<Position>();
+            ref var movementDir = ref segment.Get<MovementDirection>();
+            ref var oldMovementDir = ref segment.Get<OldMovementDirection>();
+            oldMovementDir.Value = movementDir.Value;
+            if (newMovementDirection.HasValue)
+                movementDir.Value = newMovementDirection.Value;
+            position.Value += movementDir.Value;
+            TryTeleport(ref position);
+            segment.SetOneShot<Moved>();
         }
         
         private void TryTeleport(ref Position segmentPosition)
