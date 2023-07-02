@@ -13,15 +13,15 @@ namespace WebSnake.Systems
 #endif
     public class AppleSpawnSystem : ISystem, IAdvanceTick
     {
-        private Filter _applesFilter;
-        private Filter _emptyGridTiles;
+        private Filter _appleFilter;
+        private Filter _emptyGridTileFilter;
 
         public World world { get; set; }
 
         void ISystemBase.OnConstruct()
         {
-            _applesFilter = Filter.Create().With<AppleTag>().Push();
-            _emptyGridTiles = Filter.Create()
+            _appleFilter = Filter.Create("AppleFilter-AppleSpawnSystem").With<AppleTag>().Push();
+            _emptyGridTileFilter = Filter.Create("EmptyGridTileFilter-AppleSpawnSystem")
                 .With<GridTileTag>()
                 .With<Position>()
                 .Without<OccupiedBy>()
@@ -38,13 +38,13 @@ namespace WebSnake.Systems
                 return;
 
             var configFeature = world.GetFeature<ConfigFeature>();
-            var applesToAdd = configFeature.MaxApplesOnLevel - _applesFilter.Count;
+            var applesToAdd = configFeature.MaxApplesOnLevel - _appleFilter.Count;
             if (applesToAdd <= 0)
                 return;
 
             for (var i = 0; i < applesToAdd; i++)
             {
-                var tile = _emptyGridTiles.GetRandomEntity();
+                var tile = _emptyGridTileFilter.GetRandomEntity();
                 if (tile.IsEmpty())
                 {
                     Debug.LogError("RandomTile is empty entity");

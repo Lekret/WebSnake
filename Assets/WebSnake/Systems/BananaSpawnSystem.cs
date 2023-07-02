@@ -14,14 +14,17 @@ namespace WebSnake.Systems
     public class BananaSpawnSystem : ISystem, IAdvanceTick
     {
         private Filter _appleEatenFilter;
-        private Filter _emptyGridTiles;
+        private Filter _emptyGridTileFilter;
 
         public World world { get; set; }
 
         void ISystemBase.OnConstruct()
         {
-            _appleEatenFilter = Filter.Create().With<AppleTag>().With<CollectedBy>().Push();
-            _emptyGridTiles = Filter.Create()
+            _appleEatenFilter = Filter.Create("AppleEatenFilter-BananaSpawnSystem")
+                .With<AppleTag>()
+                .With<CollectedBy>()
+                .Push();
+            _emptyGridTileFilter = Filter.Create("EmptyGridTileFilter-BananaSpawnSystem")
                 .With<GridTileTag>()
                 .With<Position>()
                 .Without<OccupiedBy>()
@@ -45,7 +48,7 @@ namespace WebSnake.Systems
             if (collectedApplesCount % configFeature.ApplesCollectedToSpawnBanana != 0) 
                 return;
             
-            var tile = _emptyGridTiles.GetRandomEntity();
+            var tile = _emptyGridTileFilter.GetRandomEntity();
             if (tile.IsEmpty())
             {
                 Debug.LogError("RandomTile is empty entity");
