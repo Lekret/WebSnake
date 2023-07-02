@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ConfigFeature
   m_EditorClassIdentifier: 
   editorComment: 
-  TilePrefab: {fileID: 7860541400674361870, guid: c6893c88f431b9f43b8fb7d9456d646a, type: 3}
+  TileView: {fileID: 7860541400674361870, guid: c6893c88f431b9f43b8fb7d9456d646a, type: 3}
   SnakeView: {fileID: 6759398930853582208, guid: 999f07c82fab8ce4388dfc61d5c009ff, type: 3}
   SnakeSegmentView: {fileID: 6759398930853582208, guid: abe10b45a79edf3499df5d2217ec9ea7, type: 3}
   AppleView: {fileID: 6777074369847155950, guid: b69ba96eea320aa43b7d42132e201b50, type: 3}

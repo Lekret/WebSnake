@@ -11,12 +11,12 @@ namespace WebSnake.Features.Config
     [CreateAssetMenu(menuName = "Features/" + nameof(ConfigFeature), fileName = nameof(ConfigFeature))]
     public class ConfigFeature : Feature
     {
-        public GameObject TilePrefab;
+        public GameObject TileView;
         public GameObject SnakeView;
         public GameObject SnakeSegmentView;
         public GameObject AppleView;
         public GameObject BananaView;
-        
+
         [Header("Grid")]
         public int GridWidth = 32;
         public int GridHeight = 32;
@@ -37,6 +37,7 @@ namespace WebSnake.Features.Config
         public ViewId SnakeSegmentViewId { get; private set; }
         public ViewId AppleViewId { get; private set; }
         public ViewId BananaViewId { get; private set; }
+        public ViewId TileViewId { get; private set; }
 
         protected override void OnConstruct()
         {
@@ -44,6 +45,7 @@ namespace WebSnake.Features.Config
             SnakeSegmentViewId = world.RegisterViewSource(SnakeSegmentView);
             AppleViewId = world.RegisterViewSource(AppleView);
             BananaViewId = world.RegisterViewSource(BananaView);
+            TileViewId = world.RegisterViewSource(TileView);
         }
 
         protected override void OnDeconstruct()

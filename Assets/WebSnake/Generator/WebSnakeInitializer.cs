@@ -42,7 +42,8 @@ namespace WebSnake.Generator
                     world.GetModule<StatesHistoryModule>().SetTicksForInput(inputTicks);
                     world.AddModule<NetworkModule>();
                     world.SetState<TState>(WorldUtilities.CreateState<TState>());
-                    world.SetSeed(1u);
+                    var seed = (uint) Random.Range(0, int.MaxValue);
+                    world.SetSeed(seed);
                     ComponentsInitializer.DoInit();
                     world.SetEntitiesCapacity(entitiesCapacity);
                     Initialize(world);

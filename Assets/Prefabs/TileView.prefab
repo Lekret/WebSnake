@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 1abf40ff97bf8ed42bacda5def0fb23f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -107,8 +107,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5777857837139506747}
+  - component: {fileID: 7000046449892392387}
   m_Layer: 0
-  m_Name: Tile
+  m_Name: TileView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -130,3 +131,43 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7000046449892392387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7860541400674361870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4b3c2dc6c554f55af1436b01023b244, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleSystemSimulation:
+    particleItems: []
+    settings:
+      simulationType: 1
+      minSimulationTime: 0.2
+      minEndingTime: 0.1
+      halfEnding: 0.5
+    hasElements: 0
+    hasDefault: 1
+  defaultParameters:
+    useDespawnTime: 0
+    despawnTime: 0
+    cacheCustomViewId: 0
+    useCache: 0
+    useCacheTimeout: 0
+    cacheTimeout: 0
+  interpolationParameters:
+    enabled: 0
+    movementSpeed: 0
+    rotationSpeed: 0
+  parentParameters:
+    enabled: 0
+    parentId: 0
+    roots: []
+  _renderer: {fileID: 3463707703048093291}
+  _materialTextureScale: {x: 0.0625, y: 0.0625}
+  _materialXOffsetRange: {x: 0.0625, y: 0.5}
+  _materialYOffsetRange: {x: 0, y: 1}

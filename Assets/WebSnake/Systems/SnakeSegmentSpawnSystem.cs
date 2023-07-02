@@ -64,7 +64,7 @@ namespace WebSnake.Systems
                     .Set(new Position {Value = position})
                     .Set(new Rotation {Value = Quaternion.identity})
                     .Set(prevMovementDirection);
-                world.InstantiateView(configFeature.SnakeSegmentView, segmentEntity);
+                world.InstantiateView(configFeature.SnakeSegmentViewId, segmentEntity);
                 GridUtils.OccupyTile(world, segmentEntity);
                 prevSegment.Remove<SnakeTailTag>();
                 segmentEntity.Set<SnakeTailTag>();

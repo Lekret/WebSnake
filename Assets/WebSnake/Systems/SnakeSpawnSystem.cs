@@ -77,7 +77,7 @@ namespace WebSnake.Systems
             foreach (var gridEntity in _gridFilter)
             {
                 var gridSize = gridEntity.Read<GridSize>();
-                var gridCenter = new Vector3(gridSize.Width / 2.0f, 0, gridSize.Height / 2.0f);
+                var gridCenter = new Vector3(gridSize.Width / 2f, 0, gridSize.Height / 2f);
                 return gridCenter;
             }
 

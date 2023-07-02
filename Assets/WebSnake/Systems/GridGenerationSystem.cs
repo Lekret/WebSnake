@@ -49,11 +49,6 @@ namespace WebSnake.Systems
                     Height = generateGrid.Height
                 });
 
-            Transform tilesParent = null;
-#if UNITY_EDITOR
-            tilesParent = new GameObject("Tiles").transform;
-#endif
-
             for (var x = 0; x < generateGrid.Width; x++)
             {
                 for (var z = 0; z < generateGrid.Height; z++)
@@ -62,11 +57,7 @@ namespace WebSnake.Systems
                     var tile = world.AddEntity("Tile")
                         .Set<GridTileTag>()
                         .Set(new Position {Value = tilePosition});
-                    Object.Instantiate(
-                        configFeature.TilePrefab,
-                        tilePosition,
-                        Quaternion.identity,
-                        tilesParent);
+                    world.InstantiateView(configFeature.TileViewId, tile);
                     positionToTile.Add(tilePosition, tile.id);
                 }
             }
