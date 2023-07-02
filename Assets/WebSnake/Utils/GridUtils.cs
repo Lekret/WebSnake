@@ -23,7 +23,7 @@ namespace WebSnake.Utils
             }
             else
             {
-                OccupyTile(occupant, tile);
+                OccupyTile(tile, occupant);
             }
         }
 
@@ -47,7 +47,7 @@ namespace WebSnake.Utils
             }
         }
 
-        public static void OccupyTile(Entity occupant, Entity tile)
+        public static void OccupyTile(Entity tile, Entity occupant)
         {
             if (tile.IsEmpty())
             {

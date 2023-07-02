@@ -60,7 +60,7 @@ namespace WebSnake.Systems
                 .Set(new Nutrition {Value = configFeature.BananaNutrition})
                 .Set(tile.Read<Position>());
             world.InstantiateView(configFeature.BananaViewId, banana);
-            GridUtils.OccupyTile(banana, tile);
+            GridUtils.OccupyTile(tile, banana);
         }
     }
 }
