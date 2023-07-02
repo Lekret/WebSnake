@@ -9,7 +9,7 @@ namespace WebSnake.Systems
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
 #endif
-    public class PostSnakeMovementSystem : ISystem, IAdvanceTick
+    public sealed class PostSnakeMovementSystem : ISystem, IAdvanceTick
     {
         private Filter _snakeFilter;
 

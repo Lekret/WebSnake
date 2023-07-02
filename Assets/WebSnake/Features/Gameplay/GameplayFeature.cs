@@ -1,9 +1,7 @@
 ﻿using ME.ECS;
 using ME.ECS.Views;
-using ME.ECS.Views.Providers;
 using UnityEngine;
 using WebSnake.Systems;
-using WebSnake.Utils;
 
 namespace WebSnake.Features.Gameplay
 {
@@ -25,7 +23,9 @@ namespace WebSnake.Features.Gameplay
             CameraViewId = world.RegisterViewSource(_gameSceneProvider.CameraView);
             
             AddModule<ViewsModule>();
-
+            
+            AddSystem<LifetimeSystem>();
+            AddSystem<BananaLifetimeExpiredSystem>();
             AddSystem<CreateGameSystem>();
             AddSystem<GameCreatedResponseSystem>();
             AddSystem<GameEndedResponseSystem>();
@@ -34,17 +34,18 @@ namespace WebSnake.Features.Gameplay
             AddSystem<SnakeMovementSystem>();
             AddSystem<PostSnakeMovementSystem>();
             AddSystem<NutritionCollectSystem>();
-            AddSystem<AppleCollectedSystem>();
 
             AddSystem<GridGenerationSystem>();
             AddSystem<SnakeSpawnSystem>();
             AddSystem<SnakeSegmentSpawnSystem>();
             AddSystem<AppleSpawnSystem>();
             AddSystem<BananaSpawnSystem>();
-            
+            AddSystem<CollectableRotationSystem>();
+
             AddSystem<SnakeRotationSystem>();
+            AddSystem<GameStatsChangedSystem>();
+            AddSystem<GameOverSystem>();
             AddSystem<WebRequestSystem>();
-            AddSystem<DestroySystem>();
         }
 
         protected override void OnDeconstruct()

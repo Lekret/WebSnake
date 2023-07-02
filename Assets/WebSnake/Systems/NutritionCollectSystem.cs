@@ -8,7 +8,7 @@ namespace WebSnake.Systems
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
 #endif
-    public class NutritionCollectSystem : ISystem, IAdvanceTick
+    public sealed class NutritionCollectSystem : ISystem, IAdvanceTick
     {
         private Filter _filter;
 
@@ -41,9 +41,11 @@ namespace WebSnake.Systems
 
                 if (collected.Has<AppleTag>())
                 {
-                    world.AddEntity("AppleCollected", EntityFlag.DestroyWithoutComponents).SetOneShot<AppleCollected>();
+                    ref var applesCollected = ref world.GetSharedData<ApplesCollected>();
+                    applesCollected.Value++;
                 }
-
+                
+                world.AddEntity("GameStatsChanged", EntityFlag.DestroyWithoutComponents).SetOneShot<GameStatsChanged>();
                 collected.Destroy();
             }
         }

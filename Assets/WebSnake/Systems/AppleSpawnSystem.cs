@@ -11,7 +11,7 @@ namespace WebSnake.Systems
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
 #endif
-    public class AppleSpawnSystem : ISystem, IAdvanceTick
+    public sealed class AppleSpawnSystem : ISystem, IAdvanceTick
     {
         private Filter _appleFilter;
         private Filter _emptyGridTileFilter;
@@ -52,7 +52,8 @@ namespace WebSnake.Systems
                     .Set<AppleTag>()
                     .Set<CollectableTag>()
                     .Set(new Nutrition {Value = configFeature.AppleNutrition})
-                    .Set(tile.Read<Position>());
+                    .Set(tile.Read<Position>())
+                    .Set(new Rotation {Value = Quaternion.identity});
                 world.InstantiateView(configFeature.AppleViewId, apple);
                 GridUtils.OccupyTile(tile, apple);
             }

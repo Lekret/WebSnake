@@ -56,10 +56,13 @@ namespace WebSnake.Web
 
             if (!_awaitingResponses.TryDequeue(out var responseType))
             {
-                Debug.LogError("No awaiting response type");
+                Debug.LogError("No awaiting response");
                 return;
             }
 
+            if (responseType == null)
+                return;
+            
             var responses = GetResponsesOfType(responseType);
             var responseObj = JsonConvert.DeserializeObject(e.Data, responseType);
             if (responseObj is null)

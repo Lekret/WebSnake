@@ -31,6 +31,7 @@ namespace WebSnake.Features.Config
         public int BananaNutrition = 2;
         public int ApplesCollectedToSpawnBanana;
         public float BananaLifetime;
+        public float CollectablesRotationSpeed = 100;
 
         public ViewId SnakeViewId { get; private set; }
         public ViewId SnakeSegmentViewId { get; private set; }

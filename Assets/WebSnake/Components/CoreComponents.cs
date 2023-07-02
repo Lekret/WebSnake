@@ -16,6 +16,10 @@ namespace WebSnake.Components
     {
     }
 
+    public struct GameOverTag : IStructComponent, IComponentShared, IComponentsTag
+    {
+    }
+
     public struct CameraTag : IStructComponent, IComponentsTag
     {
     }
@@ -30,7 +34,12 @@ namespace WebSnake.Components
         public int Value;
     }
 
-    public struct DestroyedTag : IStructComponent, IComponentsTag
+    public struct Lifetime : IStructComponent
+    {
+        public float Value;
+    }
+
+    public struct LifetimeExpiredTag : IStructComponent, IComponentsTag
     {
     }
 

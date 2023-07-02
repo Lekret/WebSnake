@@ -11,7 +11,7 @@ namespace WebSnake.Systems
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
 #endif
-    public class SnakeRotationSystem : ISystem, IAdvanceTick
+    public sealed class SnakeRotationSystem : ISystem, IAdvanceTick
     {
         private Filter _snakeFilter;
 

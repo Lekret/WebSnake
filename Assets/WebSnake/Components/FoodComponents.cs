@@ -19,7 +19,7 @@ namespace WebSnake.Components
     {
     }
 
-    public struct AppleCollected : IComponentOneShot
+    public struct GameStatsChanged : IComponentOneShot
     {
     }
 

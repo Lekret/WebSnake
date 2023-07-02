@@ -11,7 +11,7 @@ namespace WebSnake.Systems
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
 #endif
-    public class BananaSpawnSystem : ISystem, IAdvanceTick
+    public sealed class BananaSpawnSystem : ISystem, IAdvanceTick
     {
         private Filter _appleCollectedFilter;
         private Filter _emptyGridTileFilter;
@@ -38,24 +38,26 @@ namespace WebSnake.Systems
         {
             if (!world.HasSharedData<GameLoadedTag>())
                 return;
-            
+
             if (_appleCollectedFilter.Count <= 0)
                 return;
 
             var configFeature = world.GetFeature<ConfigFeature>();
             var collectedApplesCount = world.ReadSharedData<ApplesCollected>().Value;
-            if (collectedApplesCount % configFeature.ApplesCollectedToSpawnBanana != 0) 
+            if (collectedApplesCount % configFeature.ApplesCollectedToSpawnBanana != 0)
                 return;
-            
+
             var tile = _emptyGridTileFilter.GetRandomEntity();
             if (tile.IsEmpty())
                 return;
-                    
+
             var banana = world.AddEntity("Banana")
                 .Set<BananaTag>()
                 .Set<CollectableTag>()
                 .Set(new Nutrition {Value = configFeature.BananaNutrition})
-                .Set(tile.Read<Position>());
+                .Set(new Lifetime {Value = configFeature.BananaLifetime})
+                .Set(tile.Read<Position>())
+                .Set(new Rotation {Value = Quaternion.identity});
             world.InstantiateView(configFeature.BananaViewId, banana);
             GridUtils.OccupyTile(tile, banana);
         }

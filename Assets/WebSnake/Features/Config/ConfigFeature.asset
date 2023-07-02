@@ -27,3 +27,4 @@ MonoBehaviour:
   BananaNutrition: 2
   ApplesCollectedToSpawnBanana: 5
   BananaLifetime: 10
+  CollectablesRotationSpeed: 120

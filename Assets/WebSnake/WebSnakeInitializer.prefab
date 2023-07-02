@@ -186,4 +186,4 @@ MonoBehaviour:
       unityParticlesProviderShowOnScene: 0
   tickTime: 0.033
   inputTicks: 3
-  entitiesCapacity: 200
+  entitiesCapacity: 2000

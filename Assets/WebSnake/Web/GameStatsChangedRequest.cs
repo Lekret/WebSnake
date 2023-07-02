@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace WebSnake.Web
 {
     [Serializable]
-    public class AppleCollectedRequest
+    public class GameStatsChangedRequest
     {
         [Serializable]
         public class Data
@@ -17,7 +17,7 @@ namespace WebSnake.Web
         [JsonProperty("type")] public readonly string Type = "collect-apple";
         [JsonProperty("payload")] public Data Payload;
 
-        public AppleCollectedRequest(int applesCount, int snakeLength, int gameId)
+        public GameStatsChangedRequest(int applesCount, int snakeLength, int gameId)
         {
             Payload = new Data
             {

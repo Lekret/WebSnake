@@ -10,17 +10,17 @@ namespace WebSnake.Systems
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
 #endif
-    public class AppleCollectedSystem : ISystem, IAdvanceTick
+    public sealed class GameStatsChangedSystem : ISystem, IAdvanceTick
     {
-        private Filter _appleCollectedFilter;
+        private Filter _gameStatsChangedFilter;
         private Filter _snakeFilter;
 
         public World world { get; set; }
 
         void ISystemBase.OnConstruct()
         {
-            _appleCollectedFilter = Filter.Create("AppleCollectedFilter-AppleCollectedSystem")
-                .With<AppleCollected>()
+            _gameStatsChangedFilter = Filter.Create("GameStatsChangedFilter-AppleCollectedSystem")
+                .With<GameStatsChanged>()
                 .Push();
 
             _snakeFilter = Filter.Create("SnakeFilter-AppleCollectedSystem")
@@ -35,29 +35,24 @@ namespace WebSnake.Systems
 
         void IAdvanceTick.AdvanceTick(in float deltaTime)
         {
-            if (_appleCollectedFilter.Count == 0)
+            if (_gameStatsChangedFilter.Count == 0)
                 return;
 
-            ref var applesCollected = ref world.GetSharedData<ApplesCollected>();
-            applesCollected.Value += _appleCollectedFilter.Count;
-
-            world.AddEntity(nameof(AppleCollectedRequest), EntityFlag.DestroyWithoutComponents)
+            world.AddEntity(nameof(GameStatsChangedRequest), EntityFlag.DestroyWithoutComponents)
                 .Set(new SendRequest
                 {
-                    Data = new AppleCollectedRequest(
-                        applesCount: applesCollected.Value,
+                    Data = new GameStatsChangedRequest(
+                        applesCount: world.ReadSharedData<ApplesCollected>().Value,
                         snakeLength: GetSnakeLength(),
                         gameId: world.ReadSharedData<GameId>().Value),
-                    ResponseType = typeof(CreateGameResponse)
+                    ResponseType = null
                 });
         }
 
         private int GetSnakeLength()
         {
             foreach (var snake in _snakeFilter)
-            {
                 return snake.Read<BodyLength>().Value;
-            }
 
             Debug.LogError("Snake not found");
             return 0;
