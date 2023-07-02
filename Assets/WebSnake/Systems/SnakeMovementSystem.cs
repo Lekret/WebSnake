@@ -58,42 +58,42 @@ namespace WebSnake.Systems
                 position.Value += movementDirection.Value;
                 TryTeleport(ref position);
 
-                var segmentBuffer = PoolList<Entity>.Spawn(100);
-                SnakeUtils.GetOrderedSnakeSegments(world, snake.id, segmentBuffer);
-                MoveSegments(segmentBuffer);
-                PoolList<Entity>.Recycle(segmentBuffer);
+                var segments = PoolList<Entity>.Spawn(100);
+                SnakeUtils.GetOrderedSnakeSegments(world, snake.id, segments);
+                MoveSegments(segments);
+                PoolList<Entity>.Recycle(segments);
                 
                 snake.SetOneShot<Moved>();
             }
         }
 
-        private void TryTeleport(ref Position snakePosition)
+        private void TryTeleport(ref Position segmentPosition)
         {
             foreach (var grid in _gridFilter)
             {
                 var gridSize = grid.Read<GridSize>();
 
-                if (snakePosition.Value.z < 0)
-                    snakePosition.Value.z = gridSize.Height - 1;
-                else if (snakePosition.Value.z >= gridSize.Height)
-                    snakePosition.Value.z = 0;
-                else if (snakePosition.Value.x < 0)
-                    snakePosition.Value.x = gridSize.Width - 1;
-                else if (snakePosition.Value.x >= gridSize.Width)
-                    snakePosition.Value.x = 0;
+                if (segmentPosition.Value.z < 0)
+                    segmentPosition.Value.z = gridSize.Height - 1;
+                else if (segmentPosition.Value.z >= gridSize.Height)
+                    segmentPosition.Value.z = 0;
+                else if (segmentPosition.Value.x < 0)
+                    segmentPosition.Value.x = gridSize.Width - 1;
+                else if (segmentPosition.Value.x >= gridSize.Width)
+                    segmentPosition.Value.x = 0;
             }
         }
 
-        private void MoveSegments(IReadOnlyList<Entity> segmentsBuffer)
+        private void MoveSegments(IReadOnlyList<Entity> segments)
         {
-            var onlyHeadExists = segmentsBuffer.Count <= 1;
+            var onlyHeadExists = segments.Count <= 1;
             if (onlyHeadExists) 
                 return;
             
-            for (var i = 1; i < segmentsBuffer.Count; i++)
+            for (var i = 1; i < segments.Count; i++)
             {
-                var prevSegment = segmentsBuffer[i - 1];
-                var curSegment = segmentsBuffer[i];
+                var prevSegment = segments[i - 1];
+                var curSegment = segments[i];
                 GridUtils.DeoccupyTile(world, curSegment);
                 ref var prevPosition = ref curSegment.Get<PreviousPosition>();
                 ref var curPosition = ref curSegment.Get<Position>();

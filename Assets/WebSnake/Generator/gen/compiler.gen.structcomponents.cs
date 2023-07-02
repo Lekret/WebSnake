@@ -37,6 +37,7 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GridTileTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SnakeSegmentTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SnakeTag>(true, true, true, false, false, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.SnakeTailTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.TransformView>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GameWebSocketHolder>(false, false, false, false, true, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.PositionToTile>(false, false, false, false, true, false, false, false, false);
@@ -84,6 +85,7 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GridTileTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SnakeSegmentTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SnakeTag>(true, true, true, false, false, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.SnakeTailTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.TransformView>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GameWebSocketHolder>(false, false, false, false, true, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.PositionToTile>(false, false, false, false, true, false, false, false, false);
@@ -126,6 +128,7 @@ namespace ME.ECS {
             state.structComponents.ValidateUnmanaged<WebSnake.Components.GridTileTag>(ref state.allocator, true);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.SnakeSegmentTag>(ref state.allocator, true);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.SnakeTag>(ref state.allocator, true);
+            state.structComponents.ValidateUnmanaged<WebSnake.Components.SnakeTailTag>(ref state.allocator, true);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.TransformView>(ref state.allocator, true);
             state.structComponents.ValidateCopyable<WebSnake.Components.GameWebSocketHolder>(false);
             state.structComponents.ValidateCopyable<WebSnake.Components.PositionToTile>(false);
@@ -173,6 +176,7 @@ namespace ME.ECS {
             entity.ValidateDataUnmanaged<WebSnake.Components.GridTileTag>(true);
             entity.ValidateDataUnmanaged<WebSnake.Components.SnakeSegmentTag>(true);
             entity.ValidateDataUnmanaged<WebSnake.Components.SnakeTag>(true);
+            entity.ValidateDataUnmanaged<WebSnake.Components.SnakeTailTag>(true);
             entity.ValidateDataUnmanaged<WebSnake.Components.TransformView>(true);
             entity.ValidateDataCopyable<WebSnake.Components.GameWebSocketHolder>(false);
             entity.ValidateDataCopyable<WebSnake.Components.PositionToTile>(false);

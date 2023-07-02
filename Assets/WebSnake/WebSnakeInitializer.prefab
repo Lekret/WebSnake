@@ -182,7 +182,7 @@ MonoBehaviour:
     statisticsObject: {fileID: 0}
     showViewsOnScene: 1
     viewsSettings:
-      unityGameObjectProviderShowOnScene: 0
+      unityGameObjectProviderShowOnScene: 1
       unityParticlesProviderShowOnScene: 0
   tickTime: 0.033
   inputTicks: 3

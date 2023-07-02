@@ -25,14 +25,18 @@ namespace WebSnake.Components
         public Vector3 Value;
     }
 
+    public struct MovementDirection : IStructComponent
+    {
+        public Vector3 Value;
+    }
+
     public struct ParentId : IStructComponent
     {
         public int Value;
     }
 
-    public struct MovementDirection : IStructComponent
+    public struct SnakeTailTag : IStructComponent, IComponentsTag
     {
-        public Vector3 Value;
     }
 
     public struct Moved : IComponentOneShot

@@ -42,6 +42,7 @@ namespace WebSnake.Features.Gameplay
             AddSystem<AppleSpawnSystem>();
             AddSystem<BananaSpawnSystem>();
             
+            AddSystem<SnakeRotationSystem>();
             AddSystem<WebRequestSystem>();
             AddSystem<DestroySystem>();
         }
