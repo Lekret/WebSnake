@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 4786263949460101848}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.35, z: 0}
-  m_LocalScale: {x: 40, y: 40, z: 40}
+  m_LocalScale: {x: 50, y: 50, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 941395198197670342}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 941395198197670342}
-  - component: {fileID: 4985167149247756527}
+  - component: {fileID: 4378118300818734946}
   m_Layer: 0
   m_Name: AppleView
   m_TagString: Untagged
@@ -116,7 +116,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4985167149247756527
+--- !u!114 &4378118300818734946
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6777074369847155950}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9ffaed694e049868c4078568c71127d, type: 3}
+  m_Script: {fileID: 11500000, guid: 39292207ced74e6a99dd8f2baf1c382a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   particleSystemSimulation:
@@ -152,4 +152,5 @@ MonoBehaviour:
     enabled: 0
     parentId: 0
     roots: []
-  _meshRenderer: {fileID: 0}
+  _spawnVfx: {fileID: 6658335242097058708, guid: 97ed1dd17d294f342832165ac6650054, type: 3}
+  _collectedVfx: {fileID: 8020123866555965992, guid: f2ea46bcf5e9c4944a2283f2a52b0e18, type: 3}

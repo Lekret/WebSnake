@@ -24,7 +24,7 @@ namespace WebSnake.Components
     {
         public Vector3 Value;
     }
-    
+
     public struct OldMovementDirection : IStructComponent
     {
         public Vector3 Value;

@@ -152,3 +152,4 @@ MonoBehaviour:
     enabled: 0
     parentId: 0
     roots: []
+  _deathVfx: {fileID: 615525925900346730, guid: 6cad168cef1e7034684aba81b8074f88, type: 3}
