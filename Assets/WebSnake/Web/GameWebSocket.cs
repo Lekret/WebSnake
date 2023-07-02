@@ -1,92 +1,94 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net.WebSockets;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using ME.ECS.Buffers;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityWebSocket;
+using ErrorEventArgs = UnityWebSocket.ErrorEventArgs;
+using WebSocket = UnityWebSocket.WebSocket;
 
 namespace WebSnake.Web
 {
     public class GameWebSocket : IGameWebSocket
     {
-        private readonly CancellationTokenSource _cts = new();
-        private readonly ClientWebSocket _webSocket = new();
+        private readonly WebSocket _webSocket;
+        private readonly Queue<Type> _awaitingResponses = new();
         private readonly Dictionary<Type, Queue<object>> _responsesMap = new();
 
-        public async void Connect(string uri)
+        public GameWebSocket(string address)
         {
-            await _webSocket.ConnectAsync(new Uri(uri), _cts.Token);
+            _webSocket = new WebSocket(address);
+        }
+        
+        public void Connect()
+        {
+            _webSocket.OnOpen += OnOpen;
+            _webSocket.OnClose += OnClose;
+            _webSocket.OnError += OnError;
+            _webSocket.OnMessage += OnMessage;
+            _webSocket.ConnectAsync();
+        }
+
+        private static void OnError(object sender, ErrorEventArgs e)
+        {
+            Debug.LogError($"WebSocketError: {e.Exception}");
+        }
+
+        private static void OnClose(object sender, CloseEventArgs e)
+        {
+            Debug.Log($"WebSocket closed: {e.Reason}");
+        }
+
+        private static void OnOpen(object sender, OpenEventArgs e)
+        {
+            Debug.Log("WebSocket opened");
+        }
+
+        private void OnMessage(object sender, MessageEventArgs e)
+        {
+            if (e.Data.Contains("error"))
+            {
+                Debug.LogError($"Error response: {e.Data}");
+                return;
+            }
+
+            Debug.Log($"Response: {e.Data}");
+
+            if (!_awaitingResponses.TryDequeue(out var responseType))
+            {
+                Debug.LogError("No awaiting response type");
+                return;
+            }
+
+            var responses = GetResponsesOfType(responseType);
+            var responseObj = JsonConvert.DeserializeObject(e.Data, responseType);
+            if (responseObj is null)
+            {
+                Debug.LogError($"Cannot deserialize response to type: {responseType}");
+                return;
+            }
+            
+            responses.Enqueue(responseObj);
         }
 
         public async void SendData(object data, Type responseType)
         {
-            while (_webSocket.State == WebSocketState.Connecting)
+            if (_webSocket.ReadyState == WebSocketState.Closing ||
+                _webSocket.ReadyState == WebSocketState.Closed)
+            {
+                Debug.LogError("WebSocket is closing/closed");
+                return;
+            }
+            
+            while (_webSocket.ReadyState == WebSocketState.Connecting)
             {
                 await Task.Yield();
             }
 
-            var requestBytes = ArrayPool<byte>.Shared.Rent(8192);
-            var responseBytes = ArrayPool<byte>.Shared.Rent(8192);
-
-            try
-            {
-                var request = JsonConvert.SerializeObject(data);
-#if UNITY_EDITOR
-                Debug.Log($"Request: {request}");
-#endif
-                var requestBytesCount = Encoding.UTF8.GetBytes(request, requestBytes);
-                await _webSocket.SendAsync(
-                    new ArraySegment<byte>(requestBytes, 0, requestBytesCount),
-                    WebSocketMessageType.Text,
-                    true,
-                    _cts.Token);
-
-                var buffer = new ArraySegment<byte>(responseBytes);
-                using var ms = new MemoryStream();
-                WebSocketReceiveResult result;
-                
-                do
-                {
-                    result = await _webSocket.ReceiveAsync(responseBytes, _cts.Token);
-                    ms.Write(buffer.Array, buffer.Offset, result.Count);
-                } while (!result.EndOfMessage);
-
-                ms.Seek(0, SeekOrigin.Begin);
-
-                if (result.MessageType == WebSocketMessageType.Text)
-                {
-                    using var reader = new StreamReader(ms, Encoding.UTF8);
-                    var response = await reader.ReadLineAsync();
-                    if (response.Contains("error"))
-                    {
-                        Debug.LogError($"Invalid response: {response}");
-                        return;
-                    }
-
-#if UNITY_EDITOR
-                    Debug.Log($"Response: {response}");
-#endif
-                    var responses = GetResponsesOfType(responseType);
-                    responses.Enqueue(JsonConvert.DeserializeObject(response, responseType));
-                }
-                else
-                {
-                    Debug.LogError($"Unhandled socket message type: {result.MessageType}");
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"Unhandled exception: {e}");
-            }
-            finally
-            {
-                ArrayPool<byte>.Shared.Return(requestBytes);
-                ArrayPool<byte>.Shared.Return(responseBytes);
-            }
+            var request = JsonConvert.SerializeObject(data);
+            Debug.Log($"Request: {request}");
+            _awaitingResponses.Enqueue(responseType);
+            _webSocket.SendAsync(request);
         }
 
         public bool TryRead<T>(out T data)
@@ -104,8 +106,7 @@ namespace WebSnake.Web
 
         public void Dispose()
         {
-            _cts?.Dispose();
-            _webSocket?.Dispose();
+            _webSocket.CloseAsync();
         }
 
         private Queue<object> GetResponsesOfType(Type type)

@@ -26,8 +26,8 @@ namespace WebSnake.Systems
             if (world.HasSharedData<GameLaunchedTag>())
                 return;
 
-            var webSocket = new GameWebSocket();
-            webSocket.Connect("wss://dev.match.qubixinfinity.io/snake");
+            var webSocket = new GameWebSocket("wss://dev.match.qubixinfinity.io/snake");
+            webSocket.Connect();
             world.SetSharedData(new GameWebSocketHolder {Value = webSocket});
             world.AddEntity(nameof(CreateGameRequest), EntityFlag.DestroyWithoutComponents)
                 .Set(new SendRequest

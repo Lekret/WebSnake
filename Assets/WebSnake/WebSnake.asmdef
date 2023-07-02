@@ -8,7 +8,8 @@
         "ME.ECS.IL2CPP",
         "ME.ECS.Markers",
         "Unity.Collections",
-        "Cinemachine"
+        "Cinemachine",
+        "UnityWebSocket.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

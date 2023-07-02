@@ -50,10 +50,7 @@ namespace WebSnake.Systems
             
             var tile = _emptyGridTileFilter.GetRandomEntity();
             if (tile.IsEmpty())
-            {
-                Debug.LogError("RandomTile is empty entity");
                 return;
-            }
                     
             var banana = world.AddEntity("Banana")
                 .Set<AppleTag>()
