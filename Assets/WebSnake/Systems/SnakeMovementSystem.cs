@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using ME.ECS;
-using UnityEngine;
+﻿using ME.ECS;
 using WebSnake.Components;
 using WebSnake.Utils;
 using Vector3 = UnityEngine.Vector3;
@@ -15,6 +13,7 @@ namespace WebSnake.Systems
     public sealed class SnakeMovementSystem : ISystem, IAdvanceTick
     {
         private Filter _snakeFilter;
+        private Filter _gridFilter;
 
         public World world { get; set; }
 
@@ -23,6 +22,11 @@ namespace WebSnake.Systems
             _snakeFilter = Filter.Create("SnakeFilter-SnakeMovementSystem")
                 .With<SnakeTag>()
                 .Without<DeadTag>()
+                .Push();
+            
+            _gridFilter = Filter.Create("GridFilter-SnakeMovementSystem")
+                .With<GridTag>()
+                .With<GridSize>()
                 .Push();
         }
 
@@ -49,11 +53,52 @@ namespace WebSnake.Systems
 
                 GridUtils.DeoccupyTile(world, snake);
                 ref var position = ref snake.Get<Position>();
-                snake.Get<PreviousPosition>().Value = position.Value;
+                ref var previousPosition = ref snake.Get<PreviousPosition>();
+                previousPosition.Value = position.Value;
                 position.Value += movementDirection.Value;
+                TryTeleport(ref position, ref previousPosition);
+                TryCollectAtTile(position.Value, snake.id);
                 GridUtils.OccupyTile(world, snake);
                 snake.SetOneShot<Moved>();
             }
+        }
+
+        private void TryTeleport(ref Position snakePosition, ref PreviousPosition snakePreviousPosition)
+        {
+            foreach (var grid in _gridFilter)
+            {
+                var gridSize = grid.Read<GridSize>();
+
+                var positionBeforeTeleport = snakePosition.Value;
+                if (snakePosition.Value.z < 0)
+                    snakePosition.Value.z = gridSize.Height - 1;
+                else if (snakePosition.Value.z >= gridSize.Height)
+                    snakePosition.Value.z = 0;
+                else if (snakePosition.Value.x < 0)
+                    snakePosition.Value.x = gridSize.Width - 1;
+                else if (snakePosition.Value.x >= gridSize.Width)
+                    snakePosition.Value.x = 0;
+
+                if (snakePosition.Value != positionBeforeTeleport)
+                {
+                    snakePreviousPosition.Value = positionBeforeTeleport;
+                }
+            }
+        }
+
+        private void TryCollectAtTile(Vector3 tilePosition, int snakeId)
+        {
+            var tile = GridUtils.GetTileAtPosition(world, tilePosition);
+            if (!tile.Has<OccupiedBy>())
+                return;
+            
+            var occupantId = tile.Read<OccupiedBy>().Value;
+            var occupant = world.GetEntityById(occupantId);
+            occupant.SetOneShot(new CollectedBy
+            {
+                Value = snakeId
+            });
+            GridUtils.DeoccupyTile(tile);
         }
     }
 }

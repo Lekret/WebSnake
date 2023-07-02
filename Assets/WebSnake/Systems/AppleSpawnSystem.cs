@@ -24,7 +24,7 @@ namespace WebSnake.Systems
             _emptyGridTiles = Filter.Create()
                 .With<GridTileTag>()
                 .With<Position>()
-                .Without<OccupiedById>()
+                .Without<OccupiedBy>()
                 .Push();
         }
 

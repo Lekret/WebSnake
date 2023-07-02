@@ -21,7 +21,6 @@ namespace WebSnake.Systems
         {
             _snakeFilter = Filter.Create("SnakeFilter-SnakeSegmentSpawnSystem")
                 .With<SnakeTag>()
-                .With<Position>()
                 .OnChanged<BodyLength>()
                 .Push();
         }

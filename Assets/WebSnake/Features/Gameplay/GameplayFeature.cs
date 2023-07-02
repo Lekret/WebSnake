@@ -27,17 +27,20 @@ namespace WebSnake.Features.Gameplay
             AddModule<ViewsModule>();
 
             AddSystem<CreateGameSystem>();
-            AddSystem<GameCreatedSystem>();
+            AddSystem<GameCreatedResponseSystem>();
+            AddSystem<GameEndedResponseSystem>();
+
+            AddSystem<SnakeHandleInputSystem>();
+            AddSystem<SnakeMovementSystem>();
+            AddSystem<SnakeSegmentMoveSystem>();
+            AddSystem<NutritionCollectSystem>();
+
             AddSystem<GridGenerationSystem>();
             AddSystem<SnakeSpawnSystem>();
             AddSystem<SnakeSegmentSpawnSystem>();
             AddSystem<AppleSpawnSystem>();
             AddSystem<BananaSpawnSystem>();
-            AddSystem<SnakeHandleInputSystem>();
-            AddSystem<SnakeMovementSystem>();
-            AddSystem<SnakeSegmentMoveSystem>();
-            AddSystem<SnakeTeleportSystem>();
-            AddSystem<GameEndedSystem>();
+            
             AddSystem<WebRequestSystem>();
             AddSystem<DestroySystem>();
         }

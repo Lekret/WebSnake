@@ -19,7 +19,7 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.MovementIntervalAccum>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.NewMovementDirection>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Nutrition>(false, true, true, false, false, false, false, false, false);
-            WorldUtilities.InitComponentTypeId<WebSnake.Components.OccupiedById>(false, true, true, false, false, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.OccupiedBy>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.ParentId>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Position>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.PreviousPosition>(false, true, true, false, false, false, false, false, false);
@@ -40,7 +40,7 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GameWebSocket>(false, false, false, false, true, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.PositionToTile>(false, false, false, false, true, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SendRequest>(false, false, false, false, true, false, false, false, false);
-            WorldUtilities.InitComponentTypeId<WebSnake.Components.Collected>(true, false, false, false, false, false, false, false, true);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.CollectedBy>(false, false, false, false, false, false, false, false, true);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GenerateGrid>(false, false, false, false, false, false, false, true, true);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Moved>(true, false, false, false, false, false, false, false, true);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SpawnSnake>(true, false, false, false, false, false, false, true, true);
@@ -64,7 +64,7 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.MovementIntervalAccum>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.NewMovementDirection>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Nutrition>(false, true, true, false, false, false, false, false, false);
-            WorldUtilities.InitComponentTypeId<WebSnake.Components.OccupiedById>(false, true, true, false, false, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.OccupiedBy>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.ParentId>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Position>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.PreviousPosition>(false, true, true, false, false, false, false, false, false);
@@ -85,7 +85,7 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GameWebSocket>(false, false, false, false, true, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.PositionToTile>(false, false, false, false, true, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SendRequest>(false, false, false, false, true, false, false, false, false);
-            WorldUtilities.InitComponentTypeId<WebSnake.Components.Collected>(true, false, false, false, false, false, false, false, true);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.CollectedBy>(false, false, false, false, false, false, false, false, true);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.GenerateGrid>(false, false, false, false, false, false, false, true, true);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.Moved>(true, false, false, false, false, false, false, false, true);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SpawnSnake>(true, false, false, false, false, false, false, true, true);
@@ -104,7 +104,7 @@ namespace ME.ECS {
             state.structComponents.ValidateUnmanaged<WebSnake.Components.MovementIntervalAccum>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.NewMovementDirection>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.Nutrition>(ref state.allocator, false);
-            state.structComponents.ValidateUnmanaged<WebSnake.Components.OccupiedById>(ref state.allocator, false);
+            state.structComponents.ValidateUnmanaged<WebSnake.Components.OccupiedBy>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.ParentId>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.Position>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.PreviousPosition>(ref state.allocator, false);
@@ -125,7 +125,7 @@ namespace ME.ECS {
             state.structComponents.ValidateCopyable<WebSnake.Components.GameWebSocket>(false);
             state.structComponents.ValidateCopyable<WebSnake.Components.PositionToTile>(false);
             state.structComponents.ValidateCopyable<WebSnake.Components.SendRequest>(false);
-            noState.storage.ValidateOneShot<WebSnake.Components.Collected>(true);
+            noState.storage.ValidateOneShot<WebSnake.Components.CollectedBy>(false);
             noState.storage.ValidateOneShot<WebSnake.Components.GenerateGrid>(false);
             noState.storage.ValidateOneShot<WebSnake.Components.Moved>(true);
             noState.storage.ValidateOneShot<WebSnake.Components.SpawnSnake>(true);
@@ -149,7 +149,7 @@ namespace ME.ECS {
             entity.ValidateDataUnmanaged<WebSnake.Components.MovementIntervalAccum>(false);
             entity.ValidateDataUnmanaged<WebSnake.Components.NewMovementDirection>(false);
             entity.ValidateDataUnmanaged<WebSnake.Components.Nutrition>(false);
-            entity.ValidateDataUnmanaged<WebSnake.Components.OccupiedById>(false);
+            entity.ValidateDataUnmanaged<WebSnake.Components.OccupiedBy>(false);
             entity.ValidateDataUnmanaged<WebSnake.Components.ParentId>(false);
             entity.ValidateDataUnmanaged<WebSnake.Components.Position>(false);
             entity.ValidateDataUnmanaged<WebSnake.Components.PreviousPosition>(false);
@@ -170,7 +170,7 @@ namespace ME.ECS {
             entity.ValidateDataCopyable<WebSnake.Components.GameWebSocket>(false);
             entity.ValidateDataCopyable<WebSnake.Components.PositionToTile>(false);
             entity.ValidateDataCopyable<WebSnake.Components.SendRequest>(false);
-            entity.ValidateDataOneShot<WebSnake.Components.Collected>(true);
+            entity.ValidateDataOneShot<WebSnake.Components.CollectedBy>(false);
             entity.ValidateDataOneShot<WebSnake.Components.GenerateGrid>(false);
             entity.ValidateDataOneShot<WebSnake.Components.Moved>(true);
             entity.ValidateDataOneShot<WebSnake.Components.SpawnSnake>(true);

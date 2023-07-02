@@ -20,11 +20,11 @@ namespace WebSnake.Systems
 
         void ISystemBase.OnConstruct()
         {
-            _appleEatenFilter = Filter.Create().With<AppleTag>().With<Collected>().Push();
+            _appleEatenFilter = Filter.Create().With<AppleTag>().With<CollectedBy>().Push();
             _emptyGridTiles = Filter.Create()
                 .With<GridTileTag>()
                 .With<Position>()
-                .Without<OccupiedById>()
+                .Without<OccupiedBy>()
                 .Push();
         }
 

@@ -1,7 +1,5 @@
 ﻿using ME.ECS;
 using WebSnake.Components;
-using WebSnake.Web;
-using GameWebSocket = WebSnake.Components.GameWebSocket;
 
 namespace WebSnake.Systems
 {
@@ -10,12 +8,19 @@ namespace WebSnake.Systems
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
 #endif
-    public sealed class GameEndedSystem : ISystem, IAdvanceTick
+    public class NutritionCollectSystem : ISystem, IAdvanceTick
     {
+        private Filter _filter;
+
         public World world { get; set; }
 
         void ISystemBase.OnConstruct()
         {
+            _filter = Filter
+                .Create("CollectFilter-CollectSystem")
+                .With<CollectedBy>()
+                .With<Nutrition>()
+                .Push();
         }
 
         void ISystemBase.OnDeconstruct()
@@ -24,19 +29,17 @@ namespace WebSnake.Systems
 
         void IAdvanceTick.AdvanceTick(in float deltaTime)
         {
-            if (!world.HasSharedData<GameWebSocket>())
-                return;
-
-            var webSocket = world.ReadSharedData<GameWebSocket>();
-            while (webSocket.Value.TryRead(out EndGameResponse response))
+            foreach (var collected in _filter)
             {
-                EndGame(response);
+                var nutrition = collected.Read<Nutrition>();
+                var collectedBy = collected.ReadOneShot<CollectedBy>();
+                var collector = world.GetEntityById(collectedBy.Value);
+                if (collector.Has<BodyLength>())
+                {
+                    collector.Get<BodyLength>().Value += nutrition.Value;
+                }
+                collected.Destroy();
             }
-        }
-
-        private void EndGame(EndGameResponse response)
-        {
-            
         }
     }
 }

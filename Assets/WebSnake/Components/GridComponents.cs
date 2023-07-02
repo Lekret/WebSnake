@@ -33,7 +33,7 @@ namespace WebSnake.Components
     {
     }
 
-    public struct OccupiedById : IStructComponent
+    public struct OccupiedBy : IStructComponent
     {
         public int Value;
     }

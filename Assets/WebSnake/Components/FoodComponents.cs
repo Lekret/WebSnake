@@ -15,7 +15,8 @@ namespace WebSnake.Components
         public int Value;
     }
 
-    public struct Collected : IComponentOneShot
+    public struct CollectedBy : IComponentOneShot
     {
+        public int Value;
     }
 }
