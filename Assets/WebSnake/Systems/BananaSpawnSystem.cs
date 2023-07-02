@@ -13,16 +13,15 @@ namespace WebSnake.Systems
 #endif
     public class BananaSpawnSystem : ISystem, IAdvanceTick
     {
-        private Filter _appleEatenFilter;
+        private Filter _appleCollectedFilter;
         private Filter _emptyGridTileFilter;
 
         public World world { get; set; }
 
         void ISystemBase.OnConstruct()
         {
-            _appleEatenFilter = Filter.Create("AppleEatenFilter-BananaSpawnSystem")
-                .With<AppleTag>()
-                .With<CollectedBy>()
+            _appleCollectedFilter = Filter.Create("AppleCollectedFilter-BananaSpawnSystem")
+                .With<GameStatsChanged>()
                 .Push();
             _emptyGridTileFilter = Filter.Create("EmptyGridTileFilter-BananaSpawnSystem")
                 .With<GridTileTag>()
@@ -40,7 +39,7 @@ namespace WebSnake.Systems
             if (!world.HasSharedData<GameLoadedTag>())
                 return;
             
-            if (_appleEatenFilter.Count <= 0)
+            if (_appleCollectedFilter.Count <= 0)
                 return;
 
             var configFeature = world.GetFeature<ConfigFeature>();
@@ -53,7 +52,7 @@ namespace WebSnake.Systems
                 return;
                     
             var banana = world.AddEntity("Banana")
-                .Set<AppleTag>()
+                .Set<BananaTag>()
                 .Set<CollectableTag>()
                 .Set(new Nutrition {Value = configFeature.BananaNutrition})
                 .Set(tile.Read<Position>());

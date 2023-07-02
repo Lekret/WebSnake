@@ -25,4 +25,5 @@ MonoBehaviour:
   AppleNutrition: 1
   MaxApplesOnLevel: 5
   BananaNutrition: 2
-  BananaLifetime: 0
+  ApplesCollectedToSpawnBanana: 5
+  BananaLifetime: 10
