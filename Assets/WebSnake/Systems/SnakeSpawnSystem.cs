@@ -8,6 +8,7 @@ using UnityEngine;
 using WebSnake.Components;
 using WebSnake.Features.Config;
 using WebSnake.Features.Gameplay;
+using WebSnake.Utils;
 using WebSnake.Views;
 
 namespace WebSnake.Systems
@@ -47,16 +48,20 @@ namespace WebSnake.Systems
         private Entity CreateSnake()
         {
             var configFeature = world.GetFeature<ConfigFeature>();
+            var snakePosition = GetSnakePosition();
+            var snakeDirection = Vector3.forward;
             var snake = world.AddEntity("Snake")
                 .Set<SnakeTag>()
                 .Set<SnakeSegmentTag>()
                 .Set(new SnakeSegmentIndex {Value = 0})
                 .Set(new BodyLength {Value = configFeature.SnakeLength})
-                .Set(new Position {Value = GetSnakePosition()})
+                .Set(new Position {Value = snakePosition})
+                .Set(new PreviousPosition {Value = snakePosition - snakeDirection})
                 .Set(new Rotation {Value = Quaternion.identity})
-                .Set(new MovementDirection {Value = Vector3.forward})
+                .Set(new MovementDirection {Value = snakeDirection})
                 .Set(new MovementInterval {Value = configFeature.SnakeMovementInterval});
             world.InstantiateView(configFeature.SnakeViewId, snake);
+            GridUtils.OccupyTile(world, snake);
             return snake;
         }
 

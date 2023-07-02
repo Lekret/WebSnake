@@ -26,17 +26,23 @@ namespace WebSnake.Features.Config
         public float SnakeMovementInterval = 0.33f;
         
         [Header("Food")]
-        public int AppleFoodBodyLenghtGain = 1;
-        public int BananaFoodBodyLengthGain = 2;
-        public float BananaExistTimer;
+        public int AppleNutrition = 1;
+        public int MaxApplesOnLevel = 5;
+        public int BananaNutrition = 2;
+        public int ApplesCollectedToSpawnBanana;
+        public float BananaLifetime;
 
         public ViewId SnakeViewId { get; private set; }
         public ViewId SnakeSegmentViewId { get; private set; }
-        
+        public ViewId AppleViewId { get; private set; }
+        public ViewId BananaViewId { get; private set; }
+
         protected override void OnConstruct()
         {
             SnakeViewId = world.RegisterViewSource(SnakeView);
             SnakeSegmentViewId = world.RegisterViewSource(SnakeSegmentView);
+            AppleViewId = world.RegisterViewSource(AppleView);
+            BananaViewId = world.RegisterViewSource(BananaView);
         }
 
         protected override void OnDeconstruct()

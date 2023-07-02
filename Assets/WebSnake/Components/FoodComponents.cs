@@ -10,8 +10,12 @@ namespace WebSnake.Components
     {
     }
 
-    public struct FoodBodyLenghtGain : IStructComponent
+    public struct Nutrition : IStructComponent
     {
         public int Value;
+    }
+
+    public struct Collected : IComponentOneShot
+    {
     }
 }

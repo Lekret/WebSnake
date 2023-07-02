@@ -15,7 +15,6 @@ namespace WebSnake.Systems
     public sealed class SnakeMovementSystem : ISystem, IAdvanceTick
     {
         private Filter _snakeFilter;
-        private Filter _segmentFilter;
 
         public World world { get; set; }
 
@@ -24,10 +23,6 @@ namespace WebSnake.Systems
             _snakeFilter = Filter.Create("SnakeFilter-SnakeMovementSystem")
                 .With<SnakeTag>()
                 .Without<DeadTag>()
-                .Push();
-
-            _segmentFilter = Filter.Create("SegmentFilter-SnakeMovementSystem")
-                .With<SnakeSegmentTag>()
                 .Push();
         }
 
@@ -52,32 +47,12 @@ namespace WebSnake.Systems
                     snake.Remove<NewMovementDirection>();
                 }
 
+                GridUtils.DeoccupyTile(world, snake);
                 ref var position = ref snake.Get<Position>();
                 snake.Get<PreviousPosition>().Value = position.Value;
                 position.Value += movementDirection.Value;
-
-                var segmentBuffer = PoolList<Entity>.Spawn(100);
-                SnakeUtils.GetOrderedSegments(_segmentFilter, segmentBuffer, snake.id);
-                MoveSegments(segmentBuffer);
-                PoolList<Entity>.Recycle(segmentBuffer);
-            }
-        }
-
-        private void MoveSegments(List<Entity> segmentsBuffer)
-        {
-            var onlyHeadExists = segmentsBuffer.Count <= 1;
-            if (onlyHeadExists) 
-                return;
-            
-            for (var i = 1; i < segmentsBuffer.Count; i++)
-            {
-                var prevSegment = segmentsBuffer[i - 1];
-                var currentSegment = segmentsBuffer[i];
-                ref var curPosition = ref currentSegment.Get<Position>();
-                ref var prevPosition = ref currentSegment.Get<PreviousPosition>();
-                prevPosition.Value = curPosition.Value;
-                curPosition.Value = prevSegment.Read<PreviousPosition>().Value;
-                currentSegment.Get<MovementDirection>().Value = curPosition.Value - prevPosition.Value;
+                GridUtils.OccupyTile(world, snake);
+                snake.SetOneShot<Moved>();
             }
         }
     }

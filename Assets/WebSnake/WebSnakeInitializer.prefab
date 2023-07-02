@@ -136,6 +136,13 @@ MonoBehaviour:
   selectedConfiguration: Debug
   featuresListCategories:
     items:
+    - folderCaption: SharedFilters
+      features:
+        features:
+        - enabled: 1
+          feature: {fileID: 11400000, guid: fcef13df97f5c604197a69cdf96e463f, type: 2}
+          innerFeatures:
+            features: []
     - folderCaption: Config
       features:
         features:

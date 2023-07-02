@@ -16,12 +16,13 @@ MonoBehaviour:
   TilePrefab: {fileID: 7860541400674361870, guid: c6893c88f431b9f43b8fb7d9456d646a, type: 3}
   SnakeView: {fileID: 6759398930853582208, guid: 999f07c82fab8ce4388dfc61d5c009ff, type: 3}
   SnakeSegmentView: {fileID: 6759398930853582208, guid: abe10b45a79edf3499df5d2217ec9ea7, type: 3}
-  AppleView: {fileID: 0}
-  BananaView: {fileID: 0}
+  AppleView: {fileID: 6777074369847155950, guid: b69ba96eea320aa43b7d42132e201b50, type: 3}
+  BananaView: {fileID: 3106816290563380615, guid: a5bb1a29afca7bc44af23d424e608ad9, type: 3}
   GridWidth: 32
   GridHeight: 32
   SnakeLength: 3
   SnakeMovementInterval: 0.33
-  AppleFoodBodyLenghtGain: 1
-  BananaFoodBodyLengthGain: 2
-  BananaExistTimer: 0
+  AppleNutrition: 1
+  MaxApplesOnLevel: 5
+  BananaNutrition: 2
+  BananaLifetime: 0

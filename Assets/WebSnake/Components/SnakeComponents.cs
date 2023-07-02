@@ -1,10 +1,9 @@
 ﻿using ME.ECS;
-using Unity.Collections;
 using UnityEngine;
 
 namespace WebSnake.Components
 {
-    public struct SpawnSnake : IComponentOneShot
+    public struct SpawnSnake : IComponentShared, IComponentOneShot
     {
     }
 
@@ -14,7 +13,6 @@ namespace WebSnake.Components
 
     public struct SnakeSegmentTag : IStructComponent, IComponentsTag
     {
-        
     }
 
     public struct SnakeSegmentIndex : IStructComponent
@@ -26,10 +24,14 @@ namespace WebSnake.Components
     {
         public Vector3 Value;
     }
-    
+
     public struct ParentId : IStructComponent
     {
         public int Value;
+    }
+
+    public struct Moved : IComponentOneShot
+    {
     }
 
     public struct MovementDirection : IStructComponent

@@ -14,14 +14,6 @@ namespace WebSnake.Views
         
         public override bool applyStateJob => false;
 
-        public override void OnInitialize()
-        {
-        }
-
-        public override void OnDeInitialize()
-        {
-        }
-        
         public override void ApplyState(float deltaTime, bool immediately)
         {
             if (!entity.Has<CameraTarget>())

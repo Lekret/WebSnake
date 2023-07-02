@@ -13,10 +13,7 @@ namespace WebSnake.Components
 
         public void OnRecycle() => Value = null;
         
-        public void OnDispose(ref MemoryAllocator allocator)
-        {
-            Value.Dispose();
-        }
+        public void OnDispose(ref MemoryAllocator allocator) => Value.Dispose();
 
         public void ReplaceWith(ref MemoryAllocator allocator, in GameWebSocket other)
         {

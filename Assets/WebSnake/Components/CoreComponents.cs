@@ -18,9 +18,8 @@ namespace WebSnake.Components
 
     public struct CameraTag : IStructComponent, IComponentsTag
     {
-        
     }
-    
+
     public struct CameraTarget : IStructComponent
     {
         public int EntityId;
@@ -29,6 +28,10 @@ namespace WebSnake.Components
     public struct CollectedApplesCount : IStructComponent, IComponentShared
     {
         public int Value;
+    }
+
+    public struct DestroyedTag : IStructComponent, IComponentsTag
+    {
     }
 
     public struct Position : IStructComponent
@@ -43,6 +46,5 @@ namespace WebSnake.Components
 
     public struct TransformView : IStructComponent
     {
-        
     }
 }

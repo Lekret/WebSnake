@@ -1,4 +1,5 @@
-﻿using ME.ECS;
+﻿using System.Collections.Generic;
+using ME.ECS;
 using UnityEngine;
 using WebSnake.Components;
 using WebSnake.Features.Config;
@@ -13,10 +14,13 @@ namespace WebSnake.Systems
 #endif
     public sealed class GridGenerationSystem : ISystem, IAdvanceTick
     {
+        private Filter _gridFilter;
+
         public World world { get; set; }
 
         void ISystemBase.OnConstruct()
         {
+            _gridFilter = Filter.Create("GridFilter-GridGenerationSystem").With<GridTag>().Push();
         }
 
         void ISystemBase.OnDeconstruct()
@@ -28,10 +32,17 @@ namespace WebSnake.Systems
             if (!world.HasSharedDataOneShot<GenerateGrid>())
                 return;
 
-            var configFeature = world.GetFeature<ConfigFeature>();
-            var generateGrid = world.GetSharedDataOneShot<GenerateGrid>();
+            if (_gridFilter.Count > 0)
+            {
+                Debug.LogError("Attempt to generate second grid");
+                return;
+            }
 
-            world.AddEntity("Grid")
+            var configFeature = world.GetFeature<ConfigFeature>();
+            var generateGrid = world.ReadSharedDataOneShot<GenerateGrid>();
+
+            var positionToTile = new Dictionary<Vector3, int>();
+            var grid = world.AddEntity("Grid")
                 .Set<GridTag>()
                 .Set(new GridSize
                 {
@@ -48,14 +59,20 @@ namespace WebSnake.Systems
             {
                 for (var z = 0; z < generateGrid.Height; z++)
                 {
-                    var spawnPosition = new Vector3(x, 0, z);
+                    var tilePosition = new Vector3(x, 0, z);
+                    var tile = world.AddEntity("Tile")
+                        .Set<GridTileTag>()
+                        .Set(new Position {Value = tilePosition});
                     Object.Instantiate(
                         configFeature.TilePrefab,
-                        spawnPosition,
+                        tilePosition,
                         Quaternion.identity,
                         tilesParent);
+                    positionToTile.Add(tilePosition, tile.id);
                 }
             }
+
+            grid.Set(new PositionToTile {Value = positionToTile});
         }
     }
 }

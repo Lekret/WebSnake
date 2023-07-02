@@ -14,7 +14,6 @@ namespace WebSnake.Systems
     public class SnakeSegmentSpawnSystem : ISystem, IAdvanceTick
     {
         private Filter _snakeFilter;
-        private Filter _segmentFilter;
 
         public World world { get; set; }
 
@@ -24,11 +23,6 @@ namespace WebSnake.Systems
                 .With<SnakeTag>()
                 .With<Position>()
                 .OnChanged<BodyLength>()
-                .Push();
-
-            _segmentFilter = Filter.Create("SegmentFilter-SnakeSegmentSpawnSystem")
-                .With<SnakeSegmentTag>()
-                .With<SnakeSegmentIndex>()
                 .Push();
         }
 
@@ -43,8 +37,8 @@ namespace WebSnake.Systems
             foreach (var snake in _snakeFilter)
             {
                 var segmentBuffer = PoolList<Entity>.Spawn(100);
-                SnakeUtils.GetOrderedSegments(_segmentFilter, segmentBuffer, snake.id);
-                if (segmentBuffer.Count == 0)
+                SnakeUtils.GetOrderedSnakeSegments(world, snake.id, segmentBuffer);
+                if (segmentBuffer.Count <= 0)
                 {
                     Debug.LogError("You probably forgot to create snake head");
                     continue;
@@ -55,16 +49,16 @@ namespace WebSnake.Systems
                 {
                     var prevSegment = segmentBuffer[idx - 1];
                     var prevMovementDirection = prevSegment.Read<MovementDirection>();
-                    var segmentPosition = prevSegment.Read<Position>().Value -
-                                          prevMovementDirection.Value;
-
+                    var segmentPosition = prevSegment.Read<PreviousPosition>().Value;
                     var segmentEntity = world.AddEntity("SnakeSegment")
                         .Set<SnakeSegmentTag>()
                         .Set(new SnakeSegmentIndex {Value = idx})
                         .Set(new ParentId {Value = snake.id})
                         .Set(new Position {Value = segmentPosition})
+                        .Set(new PreviousPosition {Value = segmentPosition - prevMovementDirection.Value})
                         .Set(prevMovementDirection);
                     world.InstantiateView(configFeature.SnakeSegmentView, segmentEntity);
+                    GridUtils.OccupyTile(world, segmentEntity);
                     segmentBuffer.Add(segmentEntity);
                     
                     Debug.Log($"Created ({idx}) snake segment  at ({segmentPosition})");

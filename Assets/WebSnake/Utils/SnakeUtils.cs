@@ -1,13 +1,18 @@
 ﻿using System.Collections.Generic;
 using ME.ECS;
 using WebSnake.Components;
+using WebSnake.Features.SharedFilters;
 
 namespace WebSnake.Utils
 {
     public static class SnakeUtils
     {
-        public static void GetOrderedSegments(Filter filter, List<Entity> buffer, int parentId)
+        public static void GetOrderedSnakeSegments(World world, int parentId, List<Entity> buffer)
         {
+            var filter = world.GetFeature<SharedFiltersFeature>().SnakeSegmentFilter;
+            if (filter.Count == 0)
+                return;
+
             foreach (var entity in filter)
             {
                 if (!entity.Has<SnakeSegmentIndex>())
