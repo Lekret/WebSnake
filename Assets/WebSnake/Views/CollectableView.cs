@@ -9,17 +9,19 @@ namespace WebSnake.Views
     {
         [SerializeField] private GameObject _spawnVfx;
         [SerializeField] private GameObject _collectedVfx;
-        
+
         public override bool applyStateJob => false;
 
         public override void OnInitialize()
         {
-            Instantiate(_spawnVfx, entity.Read<Position>().Value, Quaternion.identity);
+            var position = entity.Read<Position>().Value;
+            Instantiate(_spawnVfx, position, Quaternion.identity);
         }
 
         public override void OnDeInitialize()
         {
-            Instantiate(_collectedVfx, transform.position, Quaternion.identity);
+            var position = transform.position;
+            Instantiate(_collectedVfx, position, Quaternion.identity);
         }
 
         public override void ApplyState(float deltaTime, bool immediately)

@@ -639,7 +639,6 @@ MonoBehaviour:
   _gameIdText: {fileID: 2599545685160605038}
   _animationRoot: {fileID: 2936449898298629459}
   _appearSpeed: 1
-  _disappearSpeed: 1
 --- !u!223 &8604111579812173894
 Canvas:
   m_ObjectHideFlags: 0
@@ -1355,6 +1354,7 @@ GameObject:
   - component: {fileID: 9053660747992390773}
   - component: {fileID: 4922912346760146411}
   - component: {fileID: 897914490196092407}
+  - component: {fileID: 2689232090605382590}
   m_Layer: 5
   m_Name: RestartButton
   m_TagString: Untagged
@@ -1450,9 +1450,9 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 21300020, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
     m_PressedSprite: {fileID: 21300020, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 21300020, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -1465,6 +1465,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2689232090605382590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7726501176262414394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dc58045876644cabb66857ed6813298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _preset: {fileID: 11400000, guid: 85c1be54ed28b404a8a7a83b884d09bb, type: 2}
 --- !u!1 &8320519160595510080
 GameObject:
   m_ObjectHideFlags: 0

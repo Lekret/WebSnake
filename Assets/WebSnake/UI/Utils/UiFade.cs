@@ -1,10 +1,9 @@
 ﻿using System;
 using DG.Tweening;
-using ME.ECS.Views.Providers;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace WebSnake.UI.Impl
+namespace WebSnake.UI.Utils
 {
     public class UiFade : MonoBehaviour
     {

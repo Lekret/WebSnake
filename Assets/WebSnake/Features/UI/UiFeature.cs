@@ -5,6 +5,7 @@ using WebSnake.Components;
 using WebSnake.Systems;
 using WebSnake.UI;
 using WebSnake.UI.Impl;
+using WebSnake.UI.Utils;
 using Object = UnityEngine.Object;
 
 namespace WebSnake.Features.UI
