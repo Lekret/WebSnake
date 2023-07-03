@@ -4,17 +4,17 @@ using UnityEngine.UI;
 
 namespace WebSnake.UI.Utils
 {
-    [RequireComponent(typeof(Button))]
-    public class UiButtonAudio : MonoBehaviour, IPointerEnterHandler
+    [RequireComponent(typeof(Toggle))]
+    public class UiToggleAudio : MonoBehaviour, IPointerEnterHandler
     {
         [SerializeField] private UiAudioPreset _preset;
 
-        private Button _button;
+        private Toggle _toggle;
         private static AudioSource _sharedAudioSource;
 
         private void Awake()
         {
-            _button = GetComponent<Button>();
+            _toggle = GetComponent<Toggle>();
             
             if (!_sharedAudioSource)
             {
@@ -31,22 +31,22 @@ namespace WebSnake.UI.Utils
 
         private void OnEnable()
         {
-            _button.onClick.AddListener(OnClick);
+            _toggle.onValueChanged.AddListener(OnValueChanged);
         }
 
         private void OnDisable()
         {
-            _button.onClick.RemoveListener(OnClick);
+            _toggle.onValueChanged.RemoveListener(OnValueChanged);
         }
         
-        private void OnClick()
+        private void OnValueChanged(bool _)
         {
             _sharedAudioSource.PlayOneShot(_preset.ClickAudio);
         }
 
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
         {
-            if (_button.IsInteractable())
+            if (_toggle.IsInteractable())
                 _sharedAudioSource.PlayOneShot(_preset.HoverAudio);
         }
     }

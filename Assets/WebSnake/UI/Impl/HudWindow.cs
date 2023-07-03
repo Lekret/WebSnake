@@ -1,6 +1,7 @@
 ﻿using ME.ECS;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using WebSnake.Components;
 using WebSnake.Markers;
 using WebSnake.UI.Utils;
@@ -11,16 +12,34 @@ namespace WebSnake.UI.Impl
     {
         [SerializeField] private TextMeshProUGUI _applesCollectedText;
         [SerializeField] private float _delayAfterGameOver = 2f;
-        [SerializeField] private PointerUpDownButton _upButton;
-        [SerializeField] private PointerUpDownButton _downButton;
-        [SerializeField] private PointerUpDownButton _leftButton;
-        [SerializeField] private PointerUpDownButton _rightButton;
+        [SerializeField] private Toggle _showMobileInputToggle;
+        [SerializeField] private MobileInputButton _upButton;
+        [SerializeField] private MobileInputButton _downButton;
+        [SerializeField] private MobileInputButton _leftButton;
+        [SerializeField] private MobileInputButton _rightButton;
 
         private int _prevApplesCollected = -1;
 
         protected override void OnInit()
         {
             _applesCollectedText.text = "0";
+            _showMobileInputToggle.SetIsOnWithoutNotify(true);
+            OnShowMobileInputChanged(true);
+            _showMobileInputToggle.onValueChanged.AddListener(OnShowMobileInputChanged);
+        }
+
+        public override void Dispose()
+        {
+            if (_showMobileInputToggle)
+                _showMobileInputToggle.onValueChanged.RemoveListener(OnShowMobileInputChanged);
+        }
+
+        private void OnShowMobileInputChanged(bool value)
+        {
+            _upButton.SetVisible(value);
+            _downButton.SetVisible(value);
+            _leftButton.SetVisible(value);
+            _rightButton.SetVisible(value);
         }
 
         public override void Tick(in float deltaTime)
