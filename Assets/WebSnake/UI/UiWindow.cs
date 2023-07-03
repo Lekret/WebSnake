@@ -1,19 +1,22 @@
 ﻿using System;
 using ME.ECS;
 using UnityEngine;
+using WebSnake.Features.UI;
 
 namespace WebSnake.UI
 {
     public abstract class UiWindow : MonoBehaviour, IDisposable
     {
         private UiController _uiController;
-
+        
+        protected RectTransform RectTransform { get; private set; }
         protected World World { get; private set; }
 
-        public void Init(World world, UiController uiController)
+        public virtual void Init(UiFeature uiFeature)
         {
-            World = world;
-            _uiController = uiController;
+            _uiController = uiFeature.Controller;
+            World = uiFeature.world;
+            RectTransform = (RectTransform) transform;
             gameObject.SetActive(false);
             OnInit();
         }

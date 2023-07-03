@@ -1,9 +1,11 @@
 ﻿using System;
 using ME.ECS;
 using UnityEngine;
+using WebSnake.Components;
 using WebSnake.Systems;
 using WebSnake.UI;
 using WebSnake.UI.Impl;
+using Object = UnityEngine.Object;
 
 namespace WebSnake.Features.UI
 {
@@ -15,27 +17,37 @@ namespace WebSnake.Features.UI
     [CreateAssetMenu(menuName = "Features/" + nameof(UiFeature), fileName = nameof(UiFeature))]
     public class UiFeature : Feature
     {
+        [SerializeField] private UiFade _uiFade;
         [SerializeField] private UiWindow[] _windows = Array.Empty<UiWindow>();
 
-        private UiController _controller;
+        private Transform _uiRoot;
         
+        public UiController Controller { get; private set; }
+        public UiFade Fade { get; private set; }
+
         protected override void OnConstruct()
         {
+            _uiRoot = new GameObject("UiRoot").transform;
+            Fade = Instantiate(_uiFade, _uiRoot);
+            Controller = new UiController(_uiRoot);
+            Controller.Init(this, _windows);
+            Controller.ChangeWindow<LoadingWindow>(window =>
+            {
+                window.SetOnTick(() =>
+                {
+                    if (world.HasSharedData<GameLoadedTag>())
+                        Controller.ChangeWindow<HudWindow>();
+                });
+            });
+
             AddSystem<UiUpdateSystem>();
-            
-            _controller = new UiController();
-            _controller.Init(world, _windows);
-            _controller.ChangeWindow<LoadingWindow>();
         }
 
         protected override void OnDeconstruct()
         {
-            _controller.Dispose();
-        }
-
-        public void UpdateUi(in float deltaTime)
-        {
-            _controller.Tick(deltaTime);
+            Controller.Dispose();
+            if (_uiRoot)
+                Destroy(_uiRoot);
         }
     }
 }

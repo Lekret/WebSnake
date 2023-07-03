@@ -1,5 +1,4 @@
-﻿using ME.ECS;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using WebSnake.Components;
 
@@ -8,6 +7,7 @@ namespace WebSnake.UI.Impl
     public class HudWindow : UiWindow
     {
         [SerializeField] private TextMeshProUGUI _applesCollectedText;
+        [SerializeField] private float _delayAfterGameOver = 2f;
 
         private int _prevApplesCollected = -1;
 
@@ -27,10 +27,15 @@ namespace WebSnake.UI.Impl
 
             if (World.HasSharedData<GameOverTag>())
             {
-                ChangeWindow<LoadingWindow>(window =>
+                ChangeWindow<LoadingWindow>(loadingWindow =>
                 {
-                    window.SetVisibleDuringTransitionDelay(false);
-                    window.SetTransitionDelay(3);
+                    loadingWindow.SetTickDelay(_delayAfterGameOver);
+                    loadingWindow.SetVisibleDuringTickDelay(false);
+                    loadingWindow.SetOnTick(() =>
+                    {
+                        if (World.HasSharedData<GameOverTag>() && World.HasSharedData<EndGameResponseHolder>())
+                            ChangeWindow<GameOverWindow>();
+                    });
                 });
             }
         }

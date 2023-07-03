@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: UiFeature
   m_EditorClassIdentifier: 
   editorComment: 
+  _uiFade: {fileID: 5839436475972698757, guid: b1f3c878b1e8ab14eabd27fc507279d3, type: 3}
   _windows:
   - {fileID: -7682749209296484757, guid: 8a27e6880de7d4c4d999b3e4fdecf70e, type: 3}
   - {fileID: -165922395990137494, guid: 93bd4c89e88b57f4ebe86cec1002c527, type: 3}

@@ -1,53 +1,34 @@
-﻿using WebSnake.Components;
+﻿using System;
 
 namespace WebSnake.UI.Impl
 {
     public class LoadingWindow : UiWindow
     {
-        private bool _visibleDuringTransition = true;
-        private float _transitionDelay = -1f;
+        private Action _onTick;
+        private bool _visibleDuringTick = true;
+        private float _tickDelay = -1f;
+        
+        public void SetOnTick(Action onTick) => _onTick = onTick;
 
-        public void SetTransitionDelay(int delay)
-        {
-            _transitionDelay = delay;
-        }
+        public void SetTickDelay(float tickDelay) => _tickDelay = tickDelay;
 
-        public void SetVisibleDuringTransitionDelay(bool value)
-        {
-            _visibleDuringTransition = value;
-        }
+        public void SetVisibleDuringTickDelay(bool value) => _visibleDuringTick = value;
 
         public override void Tick(in float deltaTime)
         {
-            UpdateTransitionDelay(deltaTime, out var canTransition);
-            gameObject.SetActive(canTransition || _visibleDuringTransition);
-            if (canTransition)
-                HandleTransitions();
+            var canTick = UpdateCanTick(deltaTime);
+            gameObject.SetActive(canTick || _visibleDuringTick);
+            if (canTick)
+                _onTick?.Invoke();
         }
 
-        private void UpdateTransitionDelay(float deltaTime, out bool canTransition)
+        private bool UpdateCanTick(float deltaTime)
         {
-            if (_transitionDelay <= 0)
-            {
-                canTransition = true;
-                return;
-            }
+            if (_tickDelay <= 0)
+                return true;
 
-            _transitionDelay -= deltaTime;
-            canTransition = _transitionDelay <= 0;
-        }
-        
-        private void HandleTransitions()
-        {
-            if (World.HasSharedData<GameOverTag>())
-            {
-                if (World.HasSharedData<EndGameResponseHolder>())
-                    ChangeWindow<GameOverWindow>();
-            }
-            else if (World.HasSharedData<GameLoadedTag>())
-            {
-                ChangeWindow<HudWindow>();
-            }
+            _tickDelay -= deltaTime;
+            return _tickDelay <= 0;
         }
     }
 }

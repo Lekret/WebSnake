@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ME.ECS;
 using UnityEngine;
+using WebSnake.Features.UI;
 using Object = UnityEngine.Object;
 
 namespace WebSnake.UI
@@ -10,17 +11,20 @@ namespace WebSnake.UI
     {
         private readonly List<UiWindow> _windows = new();
         private UiWindow _currentWindow;
-        private Transform _windowsRoot;
+        private readonly Transform _uiRoot;
 
-        public void Init(World world, UiWindow[] windowPrefabs)
+        public UiController(Transform uiRoot)
         {
-            _windowsRoot = new GameObject("UiWindows").transform;
-            
+            _uiRoot = uiRoot;
+        }
+        
+        public void Init(UiFeature uiFeature, UiWindow[] windowPrefabs)
+        {
             foreach (var windowPrefab in windowPrefabs)
             {
-                var windowInstance = Object.Instantiate(windowPrefab, _windowsRoot);
+                var windowInstance = Object.Instantiate(windowPrefab, _uiRoot);
                 _windows.Add(windowInstance);
-                windowInstance.Init(world, this);
+                windowInstance.Init(uiFeature);
             }
         }
 
@@ -52,11 +56,15 @@ namespace WebSnake.UI
         {
             foreach (var window in _windows)
             {
-                window.Dispose();
+                if (window)
+                {
+                    window.Dispose();
+                    Object.Destroy(window);
+                }
             }
             
-            if (_windowsRoot)
-                Object.Destroy(_windowsRoot.gameObject);
+            if (_uiRoot)
+                Object.Destroy(_uiRoot.gameObject);
         }
     }
 }
