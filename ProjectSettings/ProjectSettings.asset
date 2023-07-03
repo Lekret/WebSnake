@@ -798,7 +798,7 @@ PlayerSettings:
   webGLWasmArithmeticExceptions: 0
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
-  webGLDecompressionFallback: 0
+  webGLDecompressionFallback: 1
   scriptingDefineSymbols:
     Standalone: VIEWS_MODULE_SUPPORT;GAMEOBJECT_VIEWS_MODULE_SUPPORT
     WebGL: VIEWS_MODULE_SUPPORT;GAMEOBJECT_VIEWS_MODULE_SUPPORT
