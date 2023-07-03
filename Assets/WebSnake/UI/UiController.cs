@@ -20,36 +20,32 @@ namespace WebSnake.UI
             {
                 var windowInstance = Object.Instantiate(windowPrefab, _windowsRoot);
                 _windows.Add(windowInstance);
-                windowInstance.Init(world, ChangeWindow);
+                windowInstance.Init(world, this);
             }
         }
 
-        public void Tick()
+        public void Tick(in float deltaTime)
         {
-            _currentWindow.Tick();
+            _currentWindow.Tick(deltaTime);
         }
         
-        public void ChangeWindow<T>() where T : UiWindow
-        {
-            ChangeWindow(typeof(T));
-        }
-
-        private void ChangeWindow(Type type)
+        public void ChangeWindow<T>(Action<T> beforeChange = null) where T : UiWindow
         {
             foreach (var window in _windows)
             {
-                if (type.IsInstanceOfType(window))
+                if (window is T concreteWindow)
                 {
                     if (_currentWindow)
                         _currentWindow.Hide();
                     
-                    _currentWindow = window;
+                    _currentWindow = concreteWindow;
+                    beforeChange?.Invoke(concreteWindow);
                     _currentWindow.Show();
                     return;
                 }
             }
 
-            Debug.LogError($"Window of type {type} not found");
+            Debug.LogError($"Window of type {typeof(T)} not found");
         }
 
         public void Dispose()

@@ -11,7 +11,12 @@ namespace WebSnake.UI.Impl
 
         private int _prevApplesCollected = -1;
 
-        public override void Tick()
+        protected override void OnInit()
+        {
+            _applesCollectedText.text = "0";
+        }
+
+        public override void Tick(in float deltaTime)
         {
             var applesCollected = World.ReadSharedData<ApplesCollected>();
             if (_prevApplesCollected != applesCollected.Value)
@@ -21,7 +26,13 @@ namespace WebSnake.UI.Impl
             } 
 
             if (World.HasSharedData<GameOverTag>())
-                ChangeWindow<LoadingWindow>();
+            {
+                ChangeWindow<LoadingWindow>(window =>
+                {
+                    window.SetVisibleDuringTransitionDelay(false);
+                    window.SetTransitionDelay(3);
+                });
+            }
         }
     }
 }

@@ -33,9 +33,9 @@ namespace WebSnake.Features.UI
             _controller.Dispose();
         }
 
-        public void UpdateUi()
+        public void UpdateUi(in float deltaTime)
         {
-            _controller.Tick();
+            _controller.Tick(deltaTime);
         }
     }
 }

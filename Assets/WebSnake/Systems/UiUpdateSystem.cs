@@ -22,7 +22,7 @@ namespace WebSnake.Systems
 
         void IUpdatePost.UpdatePost(in float deltaTime)
         {
-            world.GetFeature<UiFeature>().UpdateUi();
+            world.GetFeature<UiFeature>().UpdateUi(deltaTime);
         }
     }
 }

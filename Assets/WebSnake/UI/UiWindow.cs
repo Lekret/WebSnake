@@ -6,19 +6,19 @@ namespace WebSnake.UI
 {
     public abstract class UiWindow : MonoBehaviour, IDisposable
     {
-        private Action<Type> _changeWindow;
+        private UiController _uiController;
 
         protected World World { get; private set; }
 
-        public void Init(World world, Action<Type> changeWindow)
+        public void Init(World world, UiController uiController)
         {
             World = world;
-            _changeWindow = changeWindow;
+            _uiController = uiController;
             gameObject.SetActive(false);
             OnInit();
         }
 
-        public virtual void Tick()
+        public virtual void Tick(in float deltaTime)
         {
         }
         
@@ -50,9 +50,9 @@ namespace WebSnake.UI
         {
         }
 
-        protected void ChangeWindow<T>() where T : UiWindow
+        protected void ChangeWindow<T>(Action<T> beforeChange = null) where T : UiWindow
         {
-            _changeWindow.Invoke(typeof(T));
+            _uiController.ChangeWindow(beforeChange);
         }
     }
 }
