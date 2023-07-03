@@ -8,8 +8,8 @@ namespace WebSnake.UI.Utils
     {
         [SerializeField] private CanvasGroup _alphaTarget;
         [SerializeField] private float _maxAlpha = 0.35f;
-        [SerializeField] private float _visibleAlphaIncreaseDuration = 0.4f;
-        [SerializeField] private float _invisibleAlphaDecreaseDuration = 0.4f;
+        [SerializeField] private float _alphaIncreaseDuration = 0.4f;
+        [SerializeField] private float _alphaDecreaseDuration = 0.4f;
 
         private Tween _activeTween;
         private bool _isVisible;
@@ -31,9 +31,9 @@ namespace WebSnake.UI.Utils
             _isVisible = value;
             
             if (value)
-                TweenAlphaTo(_maxAlpha, _visibleAlphaIncreaseDuration);
+                TweenAlphaTo(_maxAlpha, _alphaIncreaseDuration);
             else
-                TweenAlphaTo(0, _invisibleAlphaDecreaseDuration);
+                TweenAlphaTo(0, _alphaDecreaseDuration);
         }
 
         private void TweenAlphaTo(float alpha, float duration)
