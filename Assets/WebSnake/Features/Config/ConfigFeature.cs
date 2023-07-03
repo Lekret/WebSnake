@@ -31,8 +31,8 @@ namespace WebSnake.Features.Config
         public int AppleNutrition = 1;
         public int MaxApplesOnLevel = 5;
         public int BananaNutrition = 2;
-        public int ApplesCollectedToSpawnBanana;
-        public float BananaLifetime;
+        public int ApplesCollectedToSpawnBanana = 5;
+        public float BananaLifetime = 10;
         public float CollectablesRotationSpeed = 100;
 
         public ViewId SnakeViewId { get; private set; }

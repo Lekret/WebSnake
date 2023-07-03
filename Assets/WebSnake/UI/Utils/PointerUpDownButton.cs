@@ -9,8 +9,9 @@ namespace WebSnake.UI.Utils
     {
         [SerializeField] private CanvasGroup _alphaTarget;
         [SerializeField] private float _maxAlpha = 0.35f;
-        [SerializeField] private float _alphaIncreaseDuration = 0.3f;
-        [SerializeField] private float _alphaDecreaseDuration = 0.15f;
+        [SerializeField] private float _alphaIncreaseDurationOnDown = 0.3f;
+        [SerializeField] private float _alphaDecreaseDurationOnUp = 0.3f;
+        [SerializeField] private float _alphaDecreaseDurationOnEnable = 5f;
 
         private Tween _activeTween;
 
@@ -19,19 +20,19 @@ namespace WebSnake.UI.Utils
         private void OnEnable()
         {
             _alphaTarget.alpha = _maxAlpha;
-            TweenAlphaTo(0f, 5f);
+            TweenAlphaTo(0f, _alphaDecreaseDurationOnEnable);
         }
 
         void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
         {
             IsPressed = true;
-            TweenAlphaTo(_maxAlpha, _alphaIncreaseDuration);
+            TweenAlphaTo(_maxAlpha, _alphaIncreaseDurationOnDown);
         }
 
         void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
         {
             IsPressed = false;
-            TweenAlphaTo(0, _alphaDecreaseDuration);
+            TweenAlphaTo(0, _alphaDecreaseDurationOnUp);
         }
 
         private void TweenAlphaTo(float alpha, float duration)

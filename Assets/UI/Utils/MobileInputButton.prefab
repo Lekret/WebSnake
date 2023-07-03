@@ -55,8 +55,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _alphaTarget: {fileID: 3854708058690687127}
   _maxAlpha: 0.35
-  _alphaIncreaseDuration: 0.3
-  _alphaDecreaseDuration: 0.15
+  _alphaIncreaseDurationOnDown: 0.3
+  _alphaDecreaseDurationOnUp: 0.3
+  _alphaDecreaseDurationOnEnable: 5
 --- !u!225 &3854708058690687127
 CanvasGroup:
   m_ObjectHideFlags: 0
