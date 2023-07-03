@@ -19,10 +19,8 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [
-        "FPS_MODULE_SUPPORT",
         "VIEWS_MODULE_SUPPORT",
-        "GAMEOBJECT_VIEWS_MODULE_SUPPORT",
-        "PARTICLES_VIEWS_MODULE_SUPPORT"
+        "GAMEOBJECT_VIEWS_MODULE_SUPPORT"
     ],
     "versionDefines": [],
     "noEngineReferences": false
