@@ -24,17 +24,10 @@ namespace WebSnake.Systems
         void IUpdate.Update(in float deltaTime)
         {
             var direction = Vector2Int.zero;
-            if (Input.GetKeyDown(KeyCode.W))
-                direction.y += 1;
-
-            if (Input.GetKeyDown(KeyCode.S))
-                direction.y -= 1;
-
-            if (Input.GetKeyDown(KeyCode.A))
-                direction.x -= 1;
-
-            if (Input.GetKeyDown(KeyCode.D))
-                direction.x += 1;
+            if (Input.GetKeyDown(KeyCode.W)) direction.y += 1;
+            if (Input.GetKeyDown(KeyCode.S)) direction.y -= 1;
+            if (Input.GetKeyDown(KeyCode.A)) direction.x -= 1;
+            if (Input.GetKeyDown(KeyCode.D)) direction.x += 1;
 
             if (direction != Vector2Int.zero)
             {

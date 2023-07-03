@@ -18,7 +18,11 @@ namespace WebSnake.UI.Utils
         private void ToAlpha(float alpha, float duration, Action onComplete)
         {
             DOTween
-                .ToAlpha(() => _fadeTarget.color, newColor => _fadeTarget.color = newColor, alpha, duration)
+                .ToAlpha(
+                    () => _fadeTarget.color, 
+                    newColor => _fadeTarget.color = newColor,
+                    alpha,
+                    duration)
                 .OnComplete(() => onComplete?.Invoke());
         }
     }
