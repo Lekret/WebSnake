@@ -98,5 +98,23 @@ namespace WebSnake.Utils
             Debug.LogError("Grid not found");
             return Entity.Empty;
         }
+
+        public static void TryTeleport(World world, ref Vector3 position)
+        {
+            var filter = world.GetFeature<SharedFiltersFeature>().GridFilter;
+            foreach (var grid in filter)
+            {
+                var gridSize = grid.Read<GridSize>();
+
+                if (position.z < 0)
+                    position.z = gridSize.Height - 1;
+                else if (position.z >= gridSize.Height)
+                    position.z = 0;
+                else if (position.x < 0)
+                    position.x = gridSize.Width - 1;
+                else if (position.x >= gridSize.Width)
+                    position.x = 0;
+            }
+        }
     }
 }

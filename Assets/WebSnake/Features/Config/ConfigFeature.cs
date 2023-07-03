@@ -23,7 +23,9 @@ namespace WebSnake.Features.Config
         
         [Header("Snake")]
         public int SnakeLength = 3;
-        public float SnakeMovementInterval = 0.33f;
+        public float InitialSnakeMovementInterval = 0.33f;
+        public float MinSnakeMovementInterval = 0.05f;
+        public float MovementIntervalDecreaseForEachSegment = 0.005f;
         
         [Header("Food")]
         public int AppleNutrition = 1;

@@ -9,7 +9,7 @@ namespace WebSnake.Systems
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
 #endif
-    public sealed class PostSnakeMovementSystem : ISystem, IAdvanceTick
+    public sealed class SnakePostMovementSystem : ISystem, IAdvanceTick
     {
         private Filter _snakeFilter;
 
@@ -35,24 +35,12 @@ namespace WebSnake.Systems
             {
                 var position = snake.Read<Position>();
                 var tile = GridUtils.GetTileAtPosition(world, position.Value);
-                if (tile.Has<OccupiedBy>())
+                var result = SnakeUtils.HandleSnakeTileInteraction(world, snake, tile);
+                if (result == TileInteractionResult.Unoccupied ||
+                    result == TileInteractionResult.Collectable)
                 {
-                    var occupantId = tile.Read<OccupiedBy>().Value;
-                    var occupant = world.GetEntityById(occupantId);
-                    if (occupant.Has<SnakeSegmentTag>())
-                    {
-                        snake.Set<DeadTag>();
-                        continue;
-                    }
-
-                    if (occupant.Has<CollectableTag>())
-                    {
-                        occupant.SetOneShot(new CollectedBy {Value = snake.id});
-                        GridUtils.DeoccupyTile(tile);
-                    }
+                    GridUtils.OccupyTile(tile, snake);
                 }
-                
-                GridUtils.OccupyTile(tile, snake);
             }
         }
     }

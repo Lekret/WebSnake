@@ -22,7 +22,8 @@ namespace WebSnake.Systems
         {
             _snakeFilter = Filter.Create("SnakeFilter-SnakeSegmentSpawnSystem")
                 .With<SnakeTag>()
-                .OnChanged<BodyLength>()
+                .With<BodyLength>()
+                .With<BodyLengthDirtyTag>()
                 .Push();
         }
 
@@ -34,6 +35,7 @@ namespace WebSnake.Systems
         {
             foreach (var snake in _snakeFilter)
             {
+                snake.Remove<BodyLengthDirtyTag>();
                 var segments = PoolList<Entity>.Spawn(100);
                 SpawnSegmentsForBodyLength(snake, segments);
                 PoolList<Entity>.Recycle(segments);
@@ -51,12 +53,23 @@ namespace WebSnake.Systems
             
             var configFeature = world.GetFeature<ConfigFeature>();
             var bodyLength = snake.Read<BodyLength>();
+            var segmentsCreated = 0;
             for (var idx = segments.Count; idx < bodyLength.Value; idx++)
             {
                 var prevSegment = segments[idx - 1];
                 var prevMovementDirection = prevSegment.Read<MovementDirection>();
                 var prevPosition = prevSegment.Read<Position>();
                 var position = prevPosition.Value - prevMovementDirection.Value;
+                var tile = GridUtils.GetTileAtPosition(world, position);
+                if (tile.IsEmpty())
+                {
+                    GridUtils.TryTeleport(world, ref position);
+                    tile = GridUtils.GetTileAtPosition(world, position);
+                    var result = SnakeUtils.HandleSnakeTileInteraction(world, snake, tile);
+                    if (result == TileInteractionResult.Dead)
+                        return;
+                }
+                
                 var segmentEntity = world.AddEntity("SnakeSegment")
                     .Set<SnakeSegmentTag>()
                     .Set(new SnakeSegmentIndex {Value = idx})
@@ -70,8 +83,17 @@ namespace WebSnake.Systems
                 segmentEntity.Set<SnakeTailTag>();
                 segments.Add(segmentEntity);
 
+                segmentsCreated++;
                 Debug.Log($"Created ({idx}) snake segment  at {position}");
             }
+
+            if (segments.Count == configFeature.SnakeLength)
+                return;
+
+            ref var movementInterval = ref snake.Get<MovementInterval>();
+            movementInterval.Value = Mathf.Max(
+                movementInterval.Value - configFeature.MovementIntervalDecreaseForEachSegment * segmentsCreated,
+                configFeature.MinSnakeMovementInterval);
         }
     }
 }

@@ -37,6 +37,7 @@ namespace WebSnake.Systems
                 if (collector.Has<BodyLength>())
                 {
                     collector.Get<BodyLength>().Value += nutrition.Value;
+                    collector.Set<BodyLengthDirtyTag>();
                 }
 
                 if (collected.Has<AppleTag>())

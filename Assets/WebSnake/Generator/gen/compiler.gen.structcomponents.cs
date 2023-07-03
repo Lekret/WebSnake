@@ -29,6 +29,7 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SnakeSegmentIndex>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.AppleTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.BananaTag>(true, true, true, false, false, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.BodyLengthDirtyTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.CameraTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.CollectableTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.DeadTag>(true, true, true, false, false, true, false, false, false);
@@ -81,6 +82,7 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<WebSnake.Components.SnakeSegmentIndex>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.AppleTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.BananaTag>(true, true, true, false, false, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<WebSnake.Components.BodyLengthDirtyTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.CameraTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.CollectableTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<WebSnake.Components.DeadTag>(true, true, true, false, false, true, false, false, false);
@@ -128,6 +130,7 @@ namespace ME.ECS {
             state.structComponents.ValidateUnmanaged<WebSnake.Components.SnakeSegmentIndex>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.AppleTag>(ref state.allocator, true);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.BananaTag>(ref state.allocator, true);
+            state.structComponents.ValidateUnmanaged<WebSnake.Components.BodyLengthDirtyTag>(ref state.allocator, true);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.CameraTag>(ref state.allocator, true);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.CollectableTag>(ref state.allocator, true);
             state.structComponents.ValidateUnmanaged<WebSnake.Components.DeadTag>(ref state.allocator, true);
@@ -180,6 +183,7 @@ namespace ME.ECS {
             entity.ValidateDataUnmanaged<WebSnake.Components.SnakeSegmentIndex>(false);
             entity.ValidateDataUnmanaged<WebSnake.Components.AppleTag>(true);
             entity.ValidateDataUnmanaged<WebSnake.Components.BananaTag>(true);
+            entity.ValidateDataUnmanaged<WebSnake.Components.BodyLengthDirtyTag>(true);
             entity.ValidateDataUnmanaged<WebSnake.Components.CameraTag>(true);
             entity.ValidateDataUnmanaged<WebSnake.Components.CollectableTag>(true);
             entity.ValidateDataUnmanaged<WebSnake.Components.DeadTag>(true);

@@ -14,7 +14,6 @@ namespace WebSnake.Systems
     public sealed class SnakeMovementSystem : ISystem, IAdvanceTick
     {
         private Filter _snakeFilter;
-        private Filter _gridFilter;
 
         public World world { get; set; }
 
@@ -23,11 +22,6 @@ namespace WebSnake.Systems
             _snakeFilter = Filter.Create("SnakeFilter-SnakeMovementSystem")
                 .With<SnakeTag>()
                 .Without<DeadTag>()
-                .Push();
-            
-            _gridFilter = Filter.Create("GridFilter-SnakeMovementSystem")
-                .With<GridTag>()
-                .With<GridSize>()
                 .Push();
         }
 
@@ -99,25 +93,8 @@ namespace WebSnake.Systems
             if (newMovementDirection.HasValue)
                 movementDir.Value = newMovementDirection.Value;
             position.Value += movementDir.Value;
-            TryTeleport(ref position);
+            GridUtils.TryTeleport(world, ref position.Value);
             segment.SetOneShot<Moved>();
-        }
-        
-        private void TryTeleport(ref Position segmentPosition)
-        {
-            foreach (var grid in _gridFilter)
-            {
-                var gridSize = grid.Read<GridSize>();
-
-                if (segmentPosition.Value.z < 0)
-                    segmentPosition.Value.z = gridSize.Height - 1;
-                else if (segmentPosition.Value.z >= gridSize.Height)
-                    segmentPosition.Value.z = 0;
-                else if (segmentPosition.Value.x < 0)
-                    segmentPosition.Value.x = gridSize.Width - 1;
-                else if (segmentPosition.Value.x >= gridSize.Width)
-                    segmentPosition.Value.x = 0;
-            }
         }
     }
 }

@@ -49,11 +49,12 @@ namespace WebSnake.Systems
                 .Set<SnakeSegmentTag>()
                 .Set(new SnakeSegmentIndex {Value = 0})
                 .Set(new BodyLength {Value = configFeature.SnakeLength})
+                .Set<BodyLengthDirtyTag>()
                 .Set(new Position {Value = snakePosition})
                 .Set(new Rotation {Value = Quaternion.identity})
                 .Set(new MovementDirection {Value = snakeDirection})
                 .Set(new OldMovementDirection {Value = snakeDirection})
-                .Set(new MovementInterval {Value = configFeature.SnakeMovementInterval});
+                .Set(new MovementInterval {Value = configFeature.InitialSnakeMovementInterval});
             world.InstantiateView(configFeature.SnakeViewId, snake);
             GridUtils.OccupyTile(world, snake);
             return snake;

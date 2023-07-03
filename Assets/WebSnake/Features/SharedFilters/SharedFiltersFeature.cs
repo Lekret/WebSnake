@@ -24,6 +24,7 @@ namespace WebSnake.Features.SharedFilters
             
             GridFilter = Filter.Create("GridFilter-SharedFilterFeature")
                 .With<GridTag>()
+                .With<GridSize>()
                 .With<PositionToTile>()
                 .Push();
         }

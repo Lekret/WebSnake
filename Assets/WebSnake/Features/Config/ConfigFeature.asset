@@ -21,7 +21,9 @@ MonoBehaviour:
   GridWidth: 32
   GridHeight: 32
   SnakeLength: 3
-  SnakeMovementInterval: 0.16
+  InitialSnakeMovementInterval: 0.28
+  MinSnakeMovementInterval: 0.05
+  MovementIntervalDecreaseForEachSegment: 0.01
   AppleNutrition: 1
   MaxApplesOnLevel: 10
   BananaNutrition: 2

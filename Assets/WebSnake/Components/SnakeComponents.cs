@@ -63,6 +63,10 @@ namespace WebSnake.Components
         public int Value;
     }
 
+    public struct BodyLengthDirtyTag : IStructComponent, IComponentsTag
+    {
+    }
+
     public struct DeadTag : IStructComponent, IComponentsTag, IVersioned
     {
     }
