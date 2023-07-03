@@ -164,6 +164,13 @@ MonoBehaviour:
           feature: {fileID: 11400000, guid: 2a85427053d6e934387a03321154fc29, type: 2}
           innerFeatures:
             features: []
+    - folderCaption: UI
+      features:
+        features:
+        - enabled: 1
+          feature: {fileID: 11400000, guid: 90d7b387fabc46f46b72bfd507cf992e, type: 2}
+          innerFeatures:
+            features: []
   worldSettings:
     useJobsForSystems: 1
     useJobsForViews: 1

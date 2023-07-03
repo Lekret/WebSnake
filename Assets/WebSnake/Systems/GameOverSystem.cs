@@ -1,4 +1,5 @@
 ﻿using ME.ECS;
+using UnityEngine;
 using WebSnake.Components;
 using WebSnake.Web;
 
@@ -34,7 +35,8 @@ namespace WebSnake.Systems
             
             if (_snakeFilter.Count == 0)
                 return;
-            
+
+            Debug.Log("Game Over");
             world.SetSharedData(new GameOverTag());
             world.AddEntity(nameof(EndGameRequest), EntityFlag.DestroyWithoutComponents)
                 .Set(new SendRequest

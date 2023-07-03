@@ -1,4 +1,5 @@
 ﻿using ME.ECS;
+using UnityEngine;
 using WebSnake.Components;
 using WebSnake.Web;
 
@@ -29,13 +30,8 @@ namespace WebSnake.Systems
             var webSocket = world.ReadSharedData<GameWebSocketHolder>();
             while (webSocket.Value.TryRead(out EndGameResponse response))
             {
-                EndGame(response);
+                world.SetSharedData(new EndGameResponseHolder {Value = response});
             }
-        }
-
-        private void EndGame(EndGameResponse response)
-        {
-            
         }
     }
 }

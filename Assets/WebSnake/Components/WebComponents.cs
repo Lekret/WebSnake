@@ -41,4 +41,13 @@ namespace WebSnake.Components
             ResponseType = null;
         }
     }
+
+    public struct EndGameResponseHolder : IStructCopyable<EndGameResponseHolder>, IComponentShared 
+    {
+        public EndGameResponse Value;
+        
+        public void CopyFrom(in EndGameResponseHolder other) => Value = other.Value;
+
+        public void OnRecycle() => Value = null;
+    }
 }

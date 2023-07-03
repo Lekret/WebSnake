@@ -23,7 +23,8 @@ namespace WebSnake.Features.Gameplay
             CameraViewId = world.RegisterViewSource(_gameSceneProvider.CameraView);
             
             AddModule<ViewsModule>();
-            
+
+            AddSystem<RestartSystem>();
             AddSystem<LifetimeSystem>();
             AddSystem<BananaLifetimeExpiredSystem>();
             AddSystem<CreateGameSystem>();

@@ -54,12 +54,19 @@ namespace WebSnake.Web
 
             Debug.Log($"Response: {e.Data}");
 
-            if (!_awaitingResponses.TryDequeue(out var responseType))
+            if (_awaitingResponses.Count == 0)
             {
-                Debug.LogError("No awaiting response");
+                Debug.LogError("No awaiting responses");
                 return;
             }
-
+            
+            Type responseType;
+            while (_awaitingResponses.TryDequeue(out responseType))
+            {
+                if (responseType != null)
+                    break;
+            }
+  
             if (responseType == null)
                 return;
             

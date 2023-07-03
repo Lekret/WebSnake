@@ -13,16 +13,12 @@ namespace WebSnake.Systems
 #endif
     public sealed class BananaSpawnSystem : ISystem, IAdvanceTick
     {
-        private Filter _appleCollectedFilter;
         private Filter _emptyGridTileFilter;
 
         public World world { get; set; }
 
         void ISystemBase.OnConstruct()
         {
-            _appleCollectedFilter = Filter.Create("AppleCollectedFilter-BananaSpawnSystem")
-                .With<GameStatsChanged>()
-                .Push();
             _emptyGridTileFilter = Filter.Create("EmptyGridTileFilter-BananaSpawnSystem")
                 .With<GridTileTag>()
                 .With<Position>()
@@ -39,27 +35,35 @@ namespace WebSnake.Systems
             if (!world.HasSharedData<GameLoadedTag>())
                 return;
 
-            if (_appleCollectedFilter.Count <= 0)
+            ref var lastBananaSpawnAppleCount = ref world.GetSharedData<LastBananaSpawnAppleCount>();
+            var collectedApplesCount = world.ReadSharedData<ApplesCollected>();
+            var unhandledApplesCount = collectedApplesCount.Value - lastBananaSpawnAppleCount.Value;
+            if (unhandledApplesCount <= 0)
                 return;
-
+            
             var configFeature = world.GetFeature<ConfigFeature>();
-            var collectedApplesCount = world.ReadSharedData<ApplesCollected>().Value;
-            if (collectedApplesCount % configFeature.ApplesCollectedToSpawnBanana != 0)
+            var bananasToSpawn = unhandledApplesCount / configFeature.ApplesCollectedToSpawnBanana;
+            if (bananasToSpawn <= 0)
                 return;
+            
+            lastBananaSpawnAppleCount.Value = collectedApplesCount.Value;
+            
+            for (var i = 0; i < bananasToSpawn; i++)
+            {
+                var tile = _emptyGridTileFilter.GetRandomEntity();
+                if (tile.IsEmpty())
+                    continue;
 
-            var tile = _emptyGridTileFilter.GetRandomEntity();
-            if (tile.IsEmpty())
-                return;
-
-            var banana = world.AddEntity("Banana")
-                .Set<BananaTag>()
-                .Set<CollectableTag>()
-                .Set(new Nutrition {Value = configFeature.BananaNutrition})
-                .Set(new Lifetime {Value = configFeature.BananaLifetime})
-                .Set(tile.Read<Position>())
-                .Set(new Rotation {Value = Quaternion.identity});
-            world.InstantiateView(configFeature.BananaViewId, banana);
-            GridUtils.OccupyTile(tile, banana);
+                var banana = world.AddEntity("Banana")
+                    .Set<BananaTag>()
+                    .Set<CollectableTag>()
+                    .Set(new Nutrition {Value = configFeature.BananaNutrition})
+                    .Set(new Lifetime {Value = configFeature.BananaLifetime})
+                    .Set(tile.Read<Position>())
+                    .Set(new Rotation {Value = Quaternion.identity});
+                world.InstantiateView(configFeature.BananaViewId, banana);
+                GridUtils.OccupyTile(tile, banana);
+            }
         }
     }
 }

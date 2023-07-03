@@ -9,7 +9,8 @@
         "ME.ECS.Markers",
         "Unity.Collections",
         "Cinemachine",
-        "UnityWebSocket.Runtime"
+        "UnityWebSocket.Runtime",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

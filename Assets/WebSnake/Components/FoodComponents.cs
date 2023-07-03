@@ -27,4 +27,9 @@ namespace WebSnake.Components
     {
         public int Value;
     }
+
+    public struct LastBananaSpawnAppleCount : IStructComponent, IComponentShared
+    {
+        public int Value;
+    }
 }
