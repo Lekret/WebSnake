@@ -19,7 +19,7 @@ namespace WebSnake.UI.Utils
         private void OnEnable()
         {
             _alphaTarget.alpha = _maxAlpha;
-            TweenAlphaTo(0f, 4f);
+            TweenAlphaTo(0f, 5f);
         }
 
         void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
