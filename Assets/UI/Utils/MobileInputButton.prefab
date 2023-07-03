@@ -54,9 +54,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _alphaTarget: {fileID: 3854708058690687127}
-  _maxAlpha: 0.2
-  _visibleAlphaIncreaseDuration: 0.4
-  _invisibleAlphaDecreaseDuration: 0.4
+  _maxAlpha: 0.25
+  _alphaIncreaseDuration: 0.4
+  _alphaDecreaseDuration: 0.4
 --- !u!225 &3854708058690687127
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -65,7 +65,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3720978376271713336}
   m_Enabled: 1
-  m_Alpha: 0.2
+  m_Alpha: 0.25
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
