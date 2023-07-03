@@ -34,6 +34,7 @@ namespace WebSnake.Features.Gameplay
             AddSystem<SnakeHandleInputSystem>();
             AddSystem<SnakeMovementSystem>();
             AddSystem<SnakePostMovementSystem>();
+            AddSystem<NutritionCollectSystem>();
 
             AddSystem<GridGenerationSystem>();
             AddSystem<SnakeSpawnSystem>();
@@ -41,8 +42,7 @@ namespace WebSnake.Features.Gameplay
             AddSystem<AppleSpawnSystem>();
             AddSystem<BananaSpawnSystem>();
             AddSystem<CollectableRotationSystem>();
-
-            AddSystem<NutritionCollectSystem>();
+            
             AddSystem<SnakeRotationSystem>();
             AddSystem<GameStatsChangedSystem>();
             AddSystem<GameOverSystem>();
