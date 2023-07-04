@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace WebSnake.UI.Utils
 {
     [RequireComponent(typeof(Button))]
-    public class UiButtonAudio : MonoBehaviour, IPointerEnterHandler
+    public class UiButtonAudio : MonoBehaviour
     {
         [SerializeField] private UiAudioPreset _preset;
 
@@ -42,12 +41,6 @@ namespace WebSnake.UI.Utils
         private void OnClick()
         {
             _sharedAudioSource.PlayOneShot(_preset.ClickAudio);
-        }
-
-        void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
-        {
-            if (_button.IsInteractable())
-                _sharedAudioSource.PlayOneShot(_preset.HoverAudio);
         }
     }
 }

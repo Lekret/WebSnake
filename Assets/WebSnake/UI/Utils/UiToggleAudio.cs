@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace WebSnake.UI.Utils
 {
     [RequireComponent(typeof(Toggle))]
-    public class UiToggleAudio : MonoBehaviour, IPointerEnterHandler
+    public class UiToggleAudio : MonoBehaviour
     {
         [SerializeField] private UiAudioPreset _preset;
 
@@ -42,12 +41,6 @@ namespace WebSnake.UI.Utils
         private void OnValueChanged(bool _)
         {
             _sharedAudioSource.PlayOneShot(_preset.ClickAudio);
-        }
-
-        void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
-        {
-            if (_toggle.IsInteractable())
-                _sharedAudioSource.PlayOneShot(_preset.HoverAudio);
         }
     }
 }
